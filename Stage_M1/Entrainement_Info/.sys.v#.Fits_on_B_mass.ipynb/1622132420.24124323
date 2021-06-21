@@ -2,38 +2,19 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "id": "simple-seeking",
+   "execution_count": 19,
+   "id": "greatest-seven",
    "metadata": {},
    "outputs": [
     {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "/eos/user/m/mahartma/.local/lib/python3.8/site-packages/zfit/__init__.py:48: UserWarning: TensorFlow warnings are by default suppressed by zfit. In order to show them, set the environment variable ZFIT_DISABLE_TF_WARNINGS=0. In order to suppress the TensorFlow warnings AND this warning, set ZFIT_DISABLE_TF_WARNINGS=1.\n",
-      "  warnings.warn(\"TensorFlow warnings are by default suppressed by zfit.\"\n"
-     ]
-    },
-    {
-     "ename": "ImportError",
-     "evalue": "This version of TensorFlow Probability requires TensorFlow version >= 2.4; Detected an installation of version 2.3.0. Please upgrade TensorFlow to proceed.",
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'zfit'",
      "output_type": "error",
      "traceback": [
       "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mImportError\u001b[0m                               Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-1-fd7cc66c7088>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     70\u001b[0m                        f\" only with TF >= 2\")\n\u001b[1;32m     71\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 72\u001b[0;31m from . import (constraint, core, data, dimension, exception, func, loss,\n\u001b[0m\u001b[1;32m     73\u001b[0m                minimize, param, pdf, sample, z)\n\u001b[1;32m     74\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mcore\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdata\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mData\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/constraint.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtensorflow\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mtf\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 5\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mcore\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconstraint\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mGaussianConstraint\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mSimpleConstraint\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      6\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mutil\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mztyping\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      7\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/core/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#  Copyright (c) 2021 zfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m from . import (basefunc, basemodel, baseobject, basepdf, data, integration,\n\u001b[0m\u001b[1;32m      4\u001b[0m                interfaces, loss, operations, parameter, sample, space)\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/core/basefunc.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     16\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msettings\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mztypes\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     17\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mutil\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mztyping\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 18\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mbasemodel\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mBaseModel\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     19\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0minterfaces\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mZfitFunc\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     20\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/core/basemodel.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     17\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtensorflow\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mtf\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     18\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mdotmap\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mDotMap\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 19\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mtensorflow_probability\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpython\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mmcmc\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mmc\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     20\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     21\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0;34m.\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mz\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     18\u001b[0m \u001b[0;31m# `python/__init__.py` as necessary.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     19\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 20\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mtensorflow_probability\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0msubstrates\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     21\u001b[0m \u001b[0;31m# from tensorflow_probability.google import staging  # DisableOnExport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     22\u001b[0m \u001b[0;31m# from tensorflow_probability.google import tfp_google  # DisableOnExport\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/substrates/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     19\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0m__future__\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mprint_function\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     20\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 21\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0mtensorflow_probability\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpython\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0minternal\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mall_util\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     22\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mtensorflow_probability\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpython\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0minternal\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mlazy_loader\u001b[0m  \u001b[0;31m# pylint: disable=g-direct-tensorflow-import\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     23\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/python/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m    140\u001b[0m   \u001b[0;31m# Non-lazy load of packages that register with tensorflow or keras.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    141\u001b[0m   \u001b[0;32mfor\u001b[0m \u001b[0mpkg_name\u001b[0m \u001b[0;32min\u001b[0m \u001b[0m_maybe_nonlazy_load\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 142\u001b[0;31m     \u001b[0mdir\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mglobals\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mpkg_name\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m  \u001b[0;31m# Forces loading the package from its lazy loader.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    143\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    144\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/python/internal/lazy_loader.py\u001b[0m in \u001b[0;36m__dir__\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     59\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     60\u001b[0m   \u001b[0;32mdef\u001b[0m \u001b[0m__dir__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 61\u001b[0;31m     \u001b[0mmodule\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_load\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     62\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mdir\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodule\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     63\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/python/internal/lazy_loader.py\u001b[0m in \u001b[0;36m_load\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     39\u001b[0m     \u001b[0;34m\"\"\"Load the module and insert it into the parent's globals.\"\"\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     40\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mcallable\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_on_first_access\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 41\u001b[0;31m       \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_on_first_access\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     42\u001b[0m       \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_on_first_access\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     43\u001b[0m     \u001b[0;31m# Import the target module and insert it into the parent's namespace\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/.local/lib/python3.8/site-packages/tensorflow_probability/python/__init__.py\u001b[0m in \u001b[0;36m_validate_tf_environment\u001b[0;34m(package)\u001b[0m\n\u001b[1;32m     61\u001b[0m   if (distutils.version.LooseVersion(tf.__version__) <\n\u001b[1;32m     62\u001b[0m       distutils.version.LooseVersion(required_tensorflow_version)):\n\u001b[0;32m---> 63\u001b[0;31m     raise ImportError(\n\u001b[0m\u001b[1;32m     64\u001b[0m         \u001b[0;34m'This version of TensorFlow Probability requires TensorFlow '\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     65\u001b[0m         \u001b[0;34m'version >= {required}; Detected an installation of version {present}. '\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mImportError\u001b[0m: This version of TensorFlow Probability requires TensorFlow version >= 2.4; Detected an installation of version 2.3.0. Please upgrade TensorFlow to proceed."
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-19-fd7cc66c7088>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'zfit'"
      ]
     }
    ],
@@ -43,8 +24,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "id": "formal-somewhere",
+   "execution_count": 9,
+   "id": "corresponding-senior",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -53,8 +34,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "charming-agent",
+   "execution_count": 10,
+   "id": "scientific-capital",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -63,8 +44,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "applicable-spotlight",
+   "execution_count": 11,
+   "id": "disciplinary-loading",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -73,8 +54,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
-   "id": "violent-robertson",
+   "execution_count": 12,
+   "id": "acquired-hamilton",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -83,8 +64,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
-   "id": "elementary-madison",
+   "execution_count": 13,
+   "id": "genuine-incidence",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -93,18 +74,30 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "right-terry",
+   "execution_count": 14,
+   "id": "subtle-amplifier",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'mplhep'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-14-95a92a8da0c2>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'mplhep'"
+     ]
+    }
+   ],
    "source": [
     "import mplhep"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
-   "id": "genuine-worry",
+   "execution_count": 15,
+   "id": "liable-factor",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -113,19 +106,19 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
-   "id": "least-mistress",
+   "execution_count": null,
+   "id": "corrected-baker",
    "metadata": {},
    "outputs": [],
    "source": [
-    "from matplotlib import rc\n",
-    "rc('font',**{'family':'serif','serif':['Roman']})\n",
-    "rc('text', usetex=True)"
+    "#from matplotlib import rc\n",
+    "#rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "#rc('text', usetex=True)"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "incoming-reggae",
+   "id": "encouraging-reputation",
    "metadata": {},
    "source": [
     "# Création d'un DataFrame contenant la masse du méson B"
@@ -134,7 +127,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "ceramic-watershed",
+   "id": "accurate-exploration",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -144,7 +137,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "shared-durham",
+   "id": "random-forestry",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -154,7 +147,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "elect-atlanta",
+   "id": "brief-association",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -164,7 +157,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "mexican-bidder",
+   "id": "rising-lotus",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -176,7 +169,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fitted-engineer",
+   "id": "foster-athens",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -186,7 +179,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "willing-designation",
+   "id": "clear-buffalo",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -196,7 +189,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "robust-separation",
+   "id": "three-characterization",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -205,7 +198,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "clear-change",
+   "id": "natural-blocking",
    "metadata": {},
    "source": [
     "# Application de filtres pour s'assurer que la masse que nous avons reconstruite est bien celle du méson B->K+K-K+"
@@ -213,7 +206,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "failing-thursday",
+   "id": "manual-vampire",
    "metadata": {},
    "source": [
     "##### Filtre sur Hi_ProbK (proba que la particule Hi soit un kaon)"
@@ -222,7 +215,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "worthy-jesus",
+   "id": "processed-socket",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -232,7 +225,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "failing-turning",
+   "id": "surrounded-garlic",
    "metadata": {},
    "source": [
     "##### Filtre sur Hi_ProbPi (proba que la particule Hi soit un pion)"
@@ -241,7 +234,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "three-default",
+   "id": "cross-harris",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -250,7 +243,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "welsh-peoples",
+   "id": "popular-processor",
    "metadata": {},
    "source": [
     "##### Histogramme de la masse pour voir si notre résultat est satisfaisant"
@@ -259,7 +252,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "extraordinary-uruguay",
+   "id": "animal-standing",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -269,7 +262,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "oriented-toddler",
+   "id": "explicit-accused",
    "metadata": {},
    "source": [
     "# Mise en place des outils nécessaires aux fits"
@@ -277,7 +270,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "amino-spread",
+   "id": "sought-starter",
    "metadata": {},
    "source": [
     "##### Définition de l'espace observable"
@@ -286,7 +279,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "regional-above",
+   "id": "rapid-albania",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -295,7 +288,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "atlantic-consequence",
+   "id": "polished-variance",
    "metadata": {},
    "source": [
     "##### Définition des data"
@@ -304,7 +297,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "absolute-applicant",
+   "id": "covered-label",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -316,7 +309,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "restricted-consultancy",
+   "id": "piano-missouri",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -325,10 +318,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "radio-clothing",
+   "execution_count": 2,
+   "id": "intensive-original",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'B_M' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-2-5deba1b98824>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'écart type de B_M = {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mB_M\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstd\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'nombre de données de B_M = {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mB_M\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'B_M' is not defined"
+     ]
+    }
+   ],
    "source": [
     "print('écart type de B_M = {}'.format(B_M.std()))\n",
     "print('nombre de données de B_M = {}'.format(len(B_M)))"
@@ -336,7 +341,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "egyptian-prerequisite",
+   "id": "coupled-poker",
    "metadata": {},
    "source": [
     "# FITS"
@@ -345,7 +350,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lesser-affiliate",
+   "id": "executed-native",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -355,7 +360,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "precise-jacket",
+   "id": "statistical-headquarters",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -366,7 +371,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "affecting-content",
+   "id": "located-flour",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -376,7 +381,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "proprietary-airplane",
+   "id": "paperback-inside",
    "metadata": {},
    "source": [
     "Dans la partie histogramme, il vaut mieux utiliser df['B_M'] plutôt que data.\n",
@@ -385,7 +390,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "integrated-hierarchy",
+   "id": "revolutionary-school",
    "metadata": {},
    "source": [
     "## GAUSS"
@@ -393,7 +398,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "radio-hobby",
+   "id": "cloudy-exposure",
    "metadata": {},
    "source": [
     "### Gauss classique"
@@ -401,7 +406,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "extreme-leisure",
+   "id": "caroline-pantyhose",
    "metadata": {},
    "source": [
     "##### Définition des paramètres"
@@ -410,7 +415,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "public-nylon",
+   "id": "marked-chorus",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -420,7 +425,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "forty-palestinian",
+   "id": "quality-isaac",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -429,7 +434,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "piano-intervention",
+   "id": "olympic-bubble",
    "metadata": {},
    "source": [
     "##### Définition du modèle"
@@ -438,7 +443,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "choice-appreciation",
+   "id": "advisory-dodge",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -447,7 +452,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "commercial-festival",
+   "id": "experimental-training",
    "metadata": {},
    "source": [
     "##### Définition de la 'loss function'"
@@ -456,7 +461,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "valid-label",
+   "id": "american-arabic",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -465,7 +470,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "satisfactory-delivery",
+   "id": "arabic-secret",
    "metadata": {},
    "source": [
     "##### Définition du minimizer"
@@ -473,7 +478,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "higher-substitute",
+   "id": "banned-taste",
    "metadata": {},
    "source": [
     "#voir en dessous de fit, je définis le même pour tout le monde"
@@ -481,7 +486,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "detected-model",
+   "id": "warming-template",
    "metadata": {},
    "source": [
     "##### Minimisation du modèle et impression de résultats obtenus pour les paramètres"
@@ -490,7 +495,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "significant-welding",
+   "id": "infrared-turtle",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -500,7 +505,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "recreational-pollution",
+   "id": "wound-material",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -509,17 +514,29 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "flying-prompt",
+   "execution_count": 3,
+   "id": "guilty-operator",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'result_gauss' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-3-07a2b7de82fe>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'The value of the B meson mass is : {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresult_gauss\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mmu_gauss\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m: name 'result_gauss' is not defined"
+     ]
+    }
+   ],
    "source": [
     "print('The value of the B meson mass is : {}'.format(result_gauss.params[mu_gauss]))"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "latter-sydney",
+   "id": "urban-cover",
    "metadata": {},
    "source": [
     "##### Vérification de la validité de notre fit"
@@ -528,7 +545,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "contemporary-change",
+   "id": "graphic-skirt",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -538,7 +555,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "threatened-element",
+   "id": "measured-graphic",
    "metadata": {},
    "source": [
     "##### Tracé de l'histogramme"
@@ -547,7 +564,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "bound-monaco",
+   "id": "champion-transaction",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -557,7 +574,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "adopted-baker",
+   "id": "changed-clarity",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -568,7 +585,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "higher-detective",
+   "id": "turned-haven",
    "metadata": {},
    "source": [
     "### Extended Gauss"
@@ -576,7 +593,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "adapted-plain",
+   "id": "valued-africa",
    "metadata": {},
    "source": [
     "##### Opérations zfit"
@@ -584,7 +601,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "excellent-tomato",
+   "id": "statewide-assessment",
    "metadata": {},
    "source": [
     "Le yield est un paramètre qu'il faut définir lorsque l'on veut effectuer un extended fit. On lui donnera comme valeur maximale la len(df['B_M'])."
@@ -593,7 +610,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "recreational-luxembourg",
+   "id": "fourth-horizon",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -602,7 +619,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "compatible-ecuador",
+   "id": "starting-boutique",
    "metadata": {},
    "source": [
     "Un extended fit s'effectue à partir d'un modèle déjà défini. Ici on réutilise le model gauss défini précedemment."
@@ -611,7 +628,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "signed-induction",
+   "id": "fourth-interstate",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -620,7 +637,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "classified-austin",
+   "id": "assured-hebrew",
    "metadata": {},
    "source": [
     "La loss function est légeremment différente pour les extended fits."
@@ -629,7 +646,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "congressional-finish",
+   "id": "black-composer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -638,7 +655,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "allied-jurisdiction",
+   "id": "european-margin",
    "metadata": {},
    "source": [
     "On obtient les résultats de la même manière que pour une extended fit."
@@ -647,7 +664,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "graphic-nashville",
+   "id": "simplified-taxation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -657,7 +674,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "anticipated-congo",
+   "id": "bored-graduation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -667,7 +684,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "great-burns",
+   "id": "czech-there",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -678,7 +695,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "optical-sandwich",
+   "id": "polar-suggestion",
    "metadata": {},
    "source": [
     "##### Tracé de l'histogramme"
@@ -686,10 +703,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "talented-cancellation",
+   "execution_count": 4,
+   "id": "alert-grocery",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-4-89820b1472d1>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0my_plot_ex_gauss\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mex_gauss\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnorm_range\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0mbin_edges\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0myerr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'blue'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mhisttype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'errorbar'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_plot_ex_gauss\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m/\u001b[0m\u001b[0;36m100\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0marea\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'pink'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshow\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
    "source": [
     "y_plot_ex_gauss = zfit.run(ex_gauss.pdf(x_plot, norm_range=obs))\n",
     "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
@@ -699,7 +728,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "aquatic-europe",
+   "id": "sound-jungle",
    "metadata": {},
    "source": [
     "Remarque : l'histogramme est le même dans les deux cas. La seule chose qui a changé, c'est que l'on a accès au nombre d'évènements dans le pic."
@@ -707,7 +736,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "decreased-raise",
+   "id": "certain-curtis",
    "metadata": {},
    "source": [
     "  "
@@ -715,7 +744,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "biological-vitamin",
+   "id": "collected-taxation",
    "metadata": {},
    "source": [
     "         "
@@ -723,7 +752,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "still-miniature",
+   "id": "digital-termination",
    "metadata": {},
    "source": [
     "       "
@@ -731,7 +760,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "coordinate-harmony",
+   "id": "coastal-chocolate",
    "metadata": {},
    "source": [
     "## CRISTAL BALL"
@@ -739,7 +768,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "centered-livestock",
+   "id": "micro-sydney",
    "metadata": {},
    "source": [
     "##### Paramètres"
@@ -748,7 +777,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "every-fifth",
+   "id": "noted-detroit",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -758,7 +787,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "seeing-welding",
+   "id": "built-copyright",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -769,7 +798,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "considered-queens",
+   "id": "mature-hazard",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -779,7 +808,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "round-component",
+   "id": "complicated-reliance",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -789,7 +818,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "handed-quest",
+   "id": "related-federal",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -798,7 +827,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "tamil-moore",
+   "id": "supported-indicator",
    "metadata": {},
    "source": [
     "##### Model et Extended Model"
@@ -807,7 +836,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "widespread-control",
+   "id": "green-latest",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -817,7 +846,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "personalized-nigeria",
+   "id": "dental-dutch",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -826,7 +855,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "accompanied-sessions",
+   "id": "excess-circle",
    "metadata": {},
    "source": [
     "##### Loss functions"
@@ -835,7 +864,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "dependent-purpose",
+   "id": "analyzed-perfume",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -845,7 +874,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "chronic-house",
+   "id": "endangered-elder",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -854,7 +883,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "civil-skirt",
+   "id": "architectural-northeast",
    "metadata": {},
    "source": [
     "##### Résultas"
@@ -863,7 +892,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "directed-engine",
+   "id": "laden-officer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -874,7 +903,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "resident-saturday",
+   "id": "historical-sense",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -886,7 +915,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "entertaining-batman",
+   "id": "bridal-hollywood",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -897,7 +926,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "radio-skill",
+   "id": "divided-sleep",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -908,7 +937,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "bulgarian-seating",
+   "id": "relative-blade",
    "metadata": {},
    "source": [
     "##### Histogrammes"
@@ -917,7 +946,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "prime-grill",
+   "id": "stainless-memphis",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -930,10 +959,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "concrete-patent",
+   "execution_count": 5,
+   "id": "acquired-dress",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-5-e6ab57dd4240>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0my_plot_cb\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcb\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnorm_range\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0mbin_edges\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0myerr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'blue'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mhisttype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'errorbar'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_plot_cb\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m/\u001b[0m\u001b[0;36m100\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0marea\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'pink'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtitle\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Fit with Extended Cristal Ball'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshow\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
    "source": [
     "y_plot_cb = zfit.run(cb.pdf(x_plot, norm_range=obs))\n",
     "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
@@ -944,7 +985,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "stretch-speaking",
+   "id": "boxed-maryland",
    "metadata": {},
    "source": [
     "  "
@@ -952,7 +993,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "descending-arabic",
+   "id": "cellular-switch",
    "metadata": {},
    "source": [
     "     "
@@ -960,7 +1001,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "charitable-cinema",
+   "id": "occupied-maple",
    "metadata": {},
    "source": [
     "      "
@@ -968,7 +1009,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "patent-pitch",
+   "id": "different-seattle",
    "metadata": {},
    "source": [
     "  "
@@ -976,7 +1017,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "biblical-national",
+   "id": "painted-morocco",
    "metadata": {},
    "source": [
     "# FIT_TRAINING"
@@ -984,7 +1025,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "pediatric-small",
+   "id": "identified-bishop",
    "metadata": {},
    "source": [
     "### _Paramètres_"
@@ -993,7 +1034,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "inside-float",
+   "id": "legendary-madagascar",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1004,7 +1045,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "specified-martin",
+   "id": "balanced-domestic",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1015,7 +1056,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "renewable-guess",
+   "id": "universal-strength",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1026,7 +1067,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "primary-humanitarian",
+   "id": "pointed-floating",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1037,7 +1078,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lesbian-journal",
+   "id": "minor-laugh",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1048,7 +1089,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "antique-italian",
+   "id": "enormous-aggregate",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1059,7 +1100,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "successful-jonathan",
+   "id": "fitted-jonathan",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1070,7 +1111,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lonely-relation",
+   "id": "restricted-schedule",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1081,7 +1122,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "satellite-square",
+   "id": "hawaiian-rating",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1092,7 +1133,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "egyptian-pregnancy",
+   "id": "impressive-millennium",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1103,7 +1144,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "swiss-marine",
+   "id": "vulnerable-department",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1113,7 +1154,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "competent-twist",
+   "id": "western-virus",
    "metadata": {},
    "source": [
     "\n",
@@ -1122,7 +1163,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "marine-statement",
+   "id": "future-parish",
    "metadata": {},
    "source": [
     "### _Modèles_"
@@ -1130,7 +1171,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "consistent-conversation",
+   "id": "certain-playing",
    "metadata": {},
    "source": [
     "**Exponentielle + Crystal Ball**"
@@ -1138,7 +1179,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "automatic-marketing",
+   "id": "common-triangle",
    "metadata": {},
    "source": [
     "On va sommer des pdf extended qui vont donner un SumPDF qui le sera également. Pour cette raison, je ne précise pas ex pour extended sauf pour les composantes initiales."
@@ -1146,7 +1187,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "sticky-xerox",
+   "id": "banner-eating",
    "metadata": {},
    "source": [
     "On précise n_bkg_ et n_sig car il n'y a pas autant d'évènements de bruits que de signal."
@@ -1155,7 +1196,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "bored-treat",
+   "id": "after-portuguese",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1168,7 +1209,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "united-roommate",
+   "id": "cubic-completion",
    "metadata": {
     "scrolled": true
    },
@@ -1180,7 +1221,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "decent-stereo",
+   "id": "completed-shame",
    "metadata": {},
    "source": [
     "**Two Crystall Ball pdfs**"
@@ -1189,7 +1230,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "therapeutic-beach",
+   "id": "acknowledged-paste",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1200,17 +1241,29 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "precious-viking",
+   "execution_count": 6,
+   "id": "found-transcript",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-6-7981b42f1698>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mtwo_cb\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSumPDF\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpdfs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mex_cb\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mex_cb_bis\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
    "source": [
     "two_cb = zfit.pdf.SumPDF(pdfs=[ex_cb, ex_cb_bis])"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "constant-cologne",
+   "id": "parental-stanford",
    "metadata": {},
    "source": [
     "   "
@@ -1218,7 +1271,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "specialized-slovakia",
+   "id": "large-canon",
    "metadata": {},
    "source": [
     "**Two Gaussians**"
@@ -1227,7 +1280,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "delayed-trouble",
+   "id": "turned-wheel",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1238,7 +1291,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "parallel-greeting",
+   "id": "abstract-saver",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1248,7 +1301,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "connected-dover",
+   "id": "human-constitution",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1257,7 +1310,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "regular-jewel",
+   "id": "ranging-cabinet",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1266,7 +1319,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fewer-theory",
+   "id": "potential-isaac",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1276,7 +1329,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "celtic-suicide",
+   "id": "likely-grenada",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1287,7 +1340,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "defined-resistance",
+   "id": "apart-brook",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1296,7 +1349,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "compound-senegal",
+   "id": "relevant-endorsement",
    "metadata": {},
    "source": [
     "### _Loss Function_"
@@ -1304,7 +1357,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "polished-charlotte",
+   "id": "structural-melissa",
    "metadata": {},
    "source": [
     "**Exponentielle + Crystal Ball**"
@@ -1313,7 +1366,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "missing-pacific",
+   "id": "naked-reward",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1322,7 +1375,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "virtual-trace",
+   "id": "material-canadian",
    "metadata": {},
    "source": [
     "**Two Crystall Ball pdfs**"
@@ -1331,7 +1384,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "basic-contemporary",
+   "id": "accepted-difficulty",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1340,7 +1393,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "precise-paraguay",
+   "id": "aware-worcester",
    "metadata": {},
    "source": [
     "**Two Gaussians**"
@@ -1349,7 +1402,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "periodic-polyester",
+   "id": "inclusive-salmon",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1358,7 +1411,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "successful-philadelphia",
+   "id": "extended-disaster",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1367,7 +1420,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "eligible-filename",
+   "id": "addressed-advantage",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1376,7 +1429,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "brutal-westminster",
+   "id": "brilliant-memory",
    "metadata": {},
    "source": [
     "    "
@@ -1384,7 +1437,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "qualified-receipt",
+   "id": "african-aberdeen",
    "metadata": {},
    "source": [
     "### _Résultats_"
@@ -1392,7 +1445,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "classified-socket",
+   "id": "compact-youth",
    "metadata": {},
    "source": [
     "**Exponential + CB**"
@@ -1401,7 +1454,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "right-appearance",
+   "id": "medium-yorkshire",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1412,7 +1465,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "clean-analyst",
+   "id": "ultimate-rubber",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1428,7 +1481,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "minus-democrat",
+   "id": "legal-activation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1446,7 +1499,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "italian-enclosure",
+   "id": "whole-zoning",
    "metadata": {},
    "source": [
     "Two CB"
@@ -1455,7 +1508,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fancy-kazakhstan",
+   "id": "visible-heading",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1466,7 +1519,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "awful-virus",
+   "id": "accredited-request",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1478,7 +1531,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "functional-engine",
+   "id": "driven-blink",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1497,7 +1550,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "impaired-process",
+   "id": "cloudy-kansas",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -1505,7 +1558,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "subject-release",
+   "id": "catholic-marriage",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1516,7 +1569,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "liquid-corruption",
+   "id": "charged-electric",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1529,7 +1582,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "great-recovery",
+   "id": "charged-jacob",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1551,7 +1604,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "nonprofit-charm",
+   "id": "forbidden-spell",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1560,7 +1613,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "painted-standard",
+   "id": "written-scout",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1571,7 +1624,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "passing-packet",
+   "id": "composed-layer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1585,10 +1638,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "pending-metadata",
+   "execution_count": 7,
+   "id": "victorian-tennessee",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'obs' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-7-27b8d15ab39c>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mlower\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlimits\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mnb_bins\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;36m50\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbin_edges\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistogram\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbins\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnb_bins\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrange\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlower\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mx_plot\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlinspace\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlower\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnum\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m1000\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mstarting_bin\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mbin_edges\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'obs' is not defined"
+     ]
+    }
+   ],
    "source": [
     "lower, upper = obs.limits\n",
     "nb_bins = 50\n",
@@ -1601,7 +1666,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "residential-hunter",
+   "id": "emotional-meaning",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1626,7 +1691,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "expressed-pollution",
+   "id": "herbal-account",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -1634,7 +1699,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "subtle-plumbing",
+   "id": "accessible-thesaurus",
    "metadata": {},
    "outputs": [],
    "source": []

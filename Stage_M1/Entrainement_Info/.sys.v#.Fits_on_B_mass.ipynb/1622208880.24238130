@@ -2,8 +2,8 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "id": "simple-seeking",
+   "execution_count": 9,
+   "id": "computational-contribution",
    "metadata": {},
    "outputs": [
     {
@@ -21,7 +21,7 @@
      "traceback": [
       "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
       "\u001b[0;31mImportError\u001b[0m                               Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-1-fd7cc66c7088>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m<ipython-input-9-fd7cc66c7088>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
       "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     70\u001b[0m                        f\" only with TF >= 2\")\n\u001b[1;32m     71\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 72\u001b[0;31m from . import (constraint, core, data, dimension, exception, func, loss,\n\u001b[0m\u001b[1;32m     73\u001b[0m                minimize, param, pdf, sample, z)\n\u001b[1;32m     74\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mcore\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdata\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mData\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
       "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/constraint.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtensorflow\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mtf\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 5\u001b[0;31m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mcore\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconstraint\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mGaussianConstraint\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mSimpleConstraint\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      6\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;34m.\u001b[0m\u001b[0mutil\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mztyping\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      7\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
       "\u001b[0;32m~/.local/lib/python3.8/site-packages/zfit/core/__init__.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#  Copyright (c) 2021 zfit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m from . import (basefunc, basemodel, baseobject, basepdf, data, integration,\n\u001b[0m\u001b[1;32m      4\u001b[0m                interfaces, loss, operations, parameter, sample, space)\n",
@@ -44,7 +44,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "formal-somewhere",
+   "id": "reverse-foundation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -54,7 +54,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "charming-agent",
+   "id": "above-recognition",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -64,7 +64,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "applicable-spotlight",
+   "id": "proud-tyler",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -74,7 +74,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "violent-robertson",
+   "id": "violent-gathering",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -84,7 +84,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "elementary-madison",
+   "id": "pediatric-letters",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -94,7 +94,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "right-terry",
+   "id": "pacific-placement",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -104,7 +104,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "genuine-worry",
+   "id": "clinical-portable",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -114,7 +114,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "least-mistress",
+   "id": "integrated-percentage",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -125,7 +125,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "incoming-reggae",
+   "id": "consolidated-roberts",
    "metadata": {},
    "source": [
     "# Création d'un DataFrame contenant la masse du méson B"
@@ -134,7 +134,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "ceramic-watershed",
+   "id": "connected-integer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -144,7 +144,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "shared-durham",
+   "id": "soviet-roberts",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -154,7 +154,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "elect-atlanta",
+   "id": "mature-cookbook",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -164,7 +164,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "mexican-bidder",
+   "id": "confidential-mixer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -176,7 +176,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fitted-engineer",
+   "id": "confused-painting",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -186,7 +186,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "willing-designation",
+   "id": "competitive-bennett",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -196,7 +196,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "robust-separation",
+   "id": "impressed-prisoner",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -205,7 +205,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "clear-change",
+   "id": "alien-catalog",
    "metadata": {},
    "source": [
     "# Application de filtres pour s'assurer que la masse que nous avons reconstruite est bien celle du méson B->K+K-K+"
@@ -213,7 +213,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "failing-thursday",
+   "id": "remarkable-cycling",
    "metadata": {},
    "source": [
     "##### Filtre sur Hi_ProbK (proba que la particule Hi soit un kaon)"
@@ -222,7 +222,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "worthy-jesus",
+   "id": "green-projection",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -232,7 +232,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "failing-turning",
+   "id": "cleared-hospital",
    "metadata": {},
    "source": [
     "##### Filtre sur Hi_ProbPi (proba que la particule Hi soit un pion)"
@@ -241,7 +241,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "three-default",
+   "id": "utility-gravity",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -250,7 +250,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "welsh-peoples",
+   "id": "nuclear-uruguay",
    "metadata": {},
    "source": [
     "##### Histogramme de la masse pour voir si notre résultat est satisfaisant"
@@ -259,7 +259,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "extraordinary-uruguay",
+   "id": "beginning-winner",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -269,7 +269,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "oriented-toddler",
+   "id": "breathing-device",
    "metadata": {},
    "source": [
     "# Mise en place des outils nécessaires aux fits"
@@ -277,7 +277,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "amino-spread",
+   "id": "unknown-decision",
    "metadata": {},
    "source": [
     "##### Définition de l'espace observable"
@@ -286,7 +286,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "regional-above",
+   "id": "distinguished-drain",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -295,7 +295,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "atlantic-consequence",
+   "id": "sticky-governor",
    "metadata": {},
    "source": [
     "##### Définition des data"
@@ -304,7 +304,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "absolute-applicant",
+   "id": "serious-multiple",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -316,7 +316,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "restricted-consultancy",
+   "id": "elegant-review",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -326,7 +326,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "radio-clothing",
+   "id": "affected-bulgaria",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -336,7 +336,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "egyptian-prerequisite",
+   "id": "public-norfolk",
    "metadata": {},
    "source": [
     "# FITS"
@@ -345,7 +345,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lesser-affiliate",
+   "id": "based-absence",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -355,7 +355,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "precise-jacket",
+   "id": "incoming-short",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -366,7 +366,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "affecting-content",
+   "id": "friendly-wayne",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -376,7 +376,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "proprietary-airplane",
+   "id": "smoking-table",
    "metadata": {},
    "source": [
     "Dans la partie histogramme, il vaut mieux utiliser df['B_M'] plutôt que data.\n",
@@ -385,7 +385,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "integrated-hierarchy",
+   "id": "written-hanging",
    "metadata": {},
    "source": [
     "## GAUSS"
@@ -393,7 +393,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "radio-hobby",
+   "id": "organic-happening",
    "metadata": {},
    "source": [
     "### Gauss classique"
@@ -401,7 +401,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "extreme-leisure",
+   "id": "signed-costume",
    "metadata": {},
    "source": [
     "##### Définition des paramètres"
@@ -410,7 +410,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "public-nylon",
+   "id": "positive-commonwealth",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -420,7 +420,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "forty-palestinian",
+   "id": "raised-reputation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -429,7 +429,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "piano-intervention",
+   "id": "improving-castle",
    "metadata": {},
    "source": [
     "##### Définition du modèle"
@@ -438,7 +438,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "choice-appreciation",
+   "id": "union-password",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -447,7 +447,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "commercial-festival",
+   "id": "central-bonus",
    "metadata": {},
    "source": [
     "##### Définition de la 'loss function'"
@@ -456,7 +456,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "valid-label",
+   "id": "divine-project",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -465,7 +465,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "satisfactory-delivery",
+   "id": "congressional-sandwich",
    "metadata": {},
    "source": [
     "##### Définition du minimizer"
@@ -473,7 +473,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "higher-substitute",
+   "id": "golden-humanitarian",
    "metadata": {},
    "source": [
     "#voir en dessous de fit, je définis le même pour tout le monde"
@@ -481,7 +481,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "detected-model",
+   "id": "martial-great",
    "metadata": {},
    "source": [
     "##### Minimisation du modèle et impression de résultats obtenus pour les paramètres"
@@ -490,7 +490,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "significant-welding",
+   "id": "protective-termination",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -500,7 +500,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "recreational-pollution",
+   "id": "adjacent-scale",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -510,7 +510,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "flying-prompt",
+   "id": "proved-cement",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -519,7 +519,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "latter-sydney",
+   "id": "biological-wedding",
    "metadata": {},
    "source": [
     "##### Vérification de la validité de notre fit"
@@ -528,7 +528,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "contemporary-change",
+   "id": "proprietary-kenya",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -538,7 +538,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "threatened-element",
+   "id": "advance-diameter",
    "metadata": {},
    "source": [
     "##### Tracé de l'histogramme"
@@ -547,7 +547,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "bound-monaco",
+   "id": "ecological-johnston",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -557,7 +557,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "adopted-baker",
+   "id": "ecological-repository",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -568,7 +568,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "higher-detective",
+   "id": "missing-aerospace",
    "metadata": {},
    "source": [
     "### Extended Gauss"
@@ -576,7 +576,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "adapted-plain",
+   "id": "portuguese-fundamentals",
    "metadata": {},
    "source": [
     "##### Opérations zfit"
@@ -584,7 +584,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "excellent-tomato",
+   "id": "conceptual-settle",
    "metadata": {},
    "source": [
     "Le yield est un paramètre qu'il faut définir lorsque l'on veut effectuer un extended fit. On lui donnera comme valeur maximale la len(df['B_M'])."
@@ -593,7 +593,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "recreational-luxembourg",
+   "id": "posted-siemens",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -602,7 +602,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "compatible-ecuador",
+   "id": "empirical-hygiene",
    "metadata": {},
    "source": [
     "Un extended fit s'effectue à partir d'un modèle déjà défini. Ici on réutilise le model gauss défini précedemment."
@@ -611,7 +611,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "signed-induction",
+   "id": "grateful-public",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -620,7 +620,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "classified-austin",
+   "id": "complete-jefferson",
    "metadata": {},
    "source": [
     "La loss function est légeremment différente pour les extended fits."
@@ -629,7 +629,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "congressional-finish",
+   "id": "innocent-solution",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -638,7 +638,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "allied-jurisdiction",
+   "id": "military-demonstration",
    "metadata": {},
    "source": [
     "On obtient les résultats de la même manière que pour une extended fit."
@@ -647,7 +647,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "graphic-nashville",
+   "id": "underlying-exclusive",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -657,7 +657,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "anticipated-congo",
+   "id": "extra-supervision",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -667,7 +667,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "great-burns",
+   "id": "reflected-newspaper",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -678,7 +678,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "optical-sandwich",
+   "id": "handy-tuning",
    "metadata": {},
    "source": [
     "##### Tracé de l'histogramme"
@@ -687,7 +687,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "talented-cancellation",
+   "id": "severe-large",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -699,7 +699,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "aquatic-europe",
+   "id": "southern-timothy",
    "metadata": {},
    "source": [
     "Remarque : l'histogramme est le même dans les deux cas. La seule chose qui a changé, c'est que l'on a accès au nombre d'évènements dans le pic."
@@ -707,7 +707,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "decreased-raise",
+   "id": "heard-closer",
    "metadata": {},
    "source": [
     "  "
@@ -715,7 +715,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "biological-vitamin",
+   "id": "tested-singing",
    "metadata": {},
    "source": [
     "         "
@@ -723,7 +723,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "still-miniature",
+   "id": "reflected-pattern",
    "metadata": {},
    "source": [
     "       "
@@ -731,7 +731,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "coordinate-harmony",
+   "id": "compact-girlfriend",
    "metadata": {},
    "source": [
     "## CRISTAL BALL"
@@ -739,7 +739,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "centered-livestock",
+   "id": "loaded-default",
    "metadata": {},
    "source": [
     "##### Paramètres"
@@ -748,7 +748,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "every-fifth",
+   "id": "aging-retailer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -758,7 +758,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "seeing-welding",
+   "id": "hollywood-directory",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -769,7 +769,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "considered-queens",
+   "id": "whole-muslim",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -779,7 +779,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "round-component",
+   "id": "pregnant-regular",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -789,7 +789,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "handed-quest",
+   "id": "blond-purse",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -798,7 +798,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "tamil-moore",
+   "id": "nutritional-proxy",
    "metadata": {},
    "source": [
     "##### Model et Extended Model"
@@ -807,7 +807,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "widespread-control",
+   "id": "responsible-jurisdiction",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -817,7 +817,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "personalized-nigeria",
+   "id": "sunset-twins",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -826,7 +826,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "accompanied-sessions",
+   "id": "lovely-silicon",
    "metadata": {},
    "source": [
     "##### Loss functions"
@@ -835,7 +835,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "dependent-purpose",
+   "id": "bridal-dylan",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -845,7 +845,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "chronic-house",
+   "id": "smart-essex",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -854,7 +854,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "civil-skirt",
+   "id": "objective-bullet",
    "metadata": {},
    "source": [
     "##### Résultas"
@@ -863,7 +863,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "directed-engine",
+   "id": "laden-march",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -874,7 +874,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "resident-saturday",
+   "id": "directed-nudist",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -886,7 +886,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "entertaining-batman",
+   "id": "ambient-newspaper",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -897,7 +897,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "radio-skill",
+   "id": "essential-motivation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -908,7 +908,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "bulgarian-seating",
+   "id": "executed-portfolio",
    "metadata": {},
    "source": [
     "##### Histogrammes"
@@ -917,7 +917,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "prime-grill",
+   "id": "virtual-percentage",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -931,7 +931,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "concrete-patent",
+   "id": "entitled-forth",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -944,7 +944,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "stretch-speaking",
+   "id": "fiscal-protection",
    "metadata": {},
    "source": [
     "  "
@@ -952,7 +952,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "descending-arabic",
+   "id": "apart-miami",
    "metadata": {},
    "source": [
     "     "
@@ -960,7 +960,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "charitable-cinema",
+   "id": "recognized-wedding",
    "metadata": {},
    "source": [
     "      "
@@ -968,7 +968,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "patent-pitch",
+   "id": "hungry-covering",
    "metadata": {},
    "source": [
     "  "
@@ -976,7 +976,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "biblical-national",
+   "id": "primary-saturday",
    "metadata": {},
    "source": [
     "# FIT_TRAINING"
@@ -984,7 +984,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "pediatric-small",
+   "id": "activated-sperm",
    "metadata": {},
    "source": [
     "### _Paramètres_"
@@ -993,7 +993,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "inside-float",
+   "id": "serial-damages",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1004,7 +1004,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "specified-martin",
+   "id": "convenient-filter",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1015,7 +1015,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "renewable-guess",
+   "id": "curious-broad",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1026,7 +1026,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "primary-humanitarian",
+   "id": "compatible-transfer",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1037,7 +1037,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lesbian-journal",
+   "id": "strong-bookmark",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1048,7 +1048,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "antique-italian",
+   "id": "informed-translation",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1059,7 +1059,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "successful-jonathan",
+   "id": "corporate-influence",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1070,7 +1070,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "lonely-relation",
+   "id": "considerable-console",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1081,7 +1081,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "satellite-square",
+   "id": "raised-modeling",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1092,7 +1092,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "egyptian-pregnancy",
+   "id": "instrumental-beatles",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1103,7 +1103,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "swiss-marine",
+   "id": "certified-mission",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1113,7 +1113,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "competent-twist",
+   "id": "satisfactory-overall",
    "metadata": {},
    "source": [
     "\n",
@@ -1122,7 +1122,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "marine-statement",
+   "id": "operational-table",
    "metadata": {},
    "source": [
     "### _Modèles_"
@@ -1130,7 +1130,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "consistent-conversation",
+   "id": "interracial-arthur",
    "metadata": {},
    "source": [
     "**Exponentielle + Crystal Ball**"
@@ -1138,7 +1138,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "automatic-marketing",
+   "id": "quarterly-domestic",
    "metadata": {},
    "source": [
     "On va sommer des pdf extended qui vont donner un SumPDF qui le sera également. Pour cette raison, je ne précise pas ex pour extended sauf pour les composantes initiales."
@@ -1146,7 +1146,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "sticky-xerox",
+   "id": "conceptual-decimal",
    "metadata": {},
    "source": [
     "On précise n_bkg_ et n_sig car il n'y a pas autant d'évènements de bruits que de signal."
@@ -1155,7 +1155,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "bored-treat",
+   "id": "composed-saint",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1168,7 +1168,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "united-roommate",
+   "id": "interstate-feature",
    "metadata": {
     "scrolled": true
    },
@@ -1180,7 +1180,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "decent-stereo",
+   "id": "foster-moderator",
    "metadata": {},
    "source": [
     "**Two Crystall Ball pdfs**"
@@ -1189,7 +1189,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "therapeutic-beach",
+   "id": "familiar-terminology",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1201,7 +1201,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "precious-viking",
+   "id": "adequate-letters",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1210,7 +1210,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "constant-cologne",
+   "id": "filled-melbourne",
    "metadata": {},
    "source": [
     "   "
@@ -1218,7 +1218,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "specialized-slovakia",
+   "id": "known-december",
    "metadata": {},
    "source": [
     "**Two Gaussians**"
@@ -1227,7 +1227,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "delayed-trouble",
+   "id": "secure-graduate",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1238,7 +1238,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "parallel-greeting",
+   "id": "gentle-boating",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1248,7 +1248,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "connected-dover",
+   "id": "established-dodge",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1257,7 +1257,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "regular-jewel",
+   "id": "refined-mountain",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1266,7 +1266,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fewer-theory",
+   "id": "electrical-stockholm",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1276,7 +1276,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "celtic-suicide",
+   "id": "solid-survey",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1287,7 +1287,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "defined-resistance",
+   "id": "sound-hacker",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1296,7 +1296,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "compound-senegal",
+   "id": "eleven-harmony",
    "metadata": {},
    "source": [
     "### _Loss Function_"
@@ -1304,7 +1304,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "polished-charlotte",
+   "id": "nutritional-multimedia",
    "metadata": {},
    "source": [
     "**Exponentielle + Crystal Ball**"
@@ -1313,7 +1313,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "missing-pacific",
+   "id": "perceived-protest",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1322,7 +1322,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "virtual-trace",
+   "id": "norwegian-contract",
    "metadata": {},
    "source": [
     "**Two Crystall Ball pdfs**"
@@ -1331,7 +1331,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "basic-contemporary",
+   "id": "auburn-sydney",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1340,7 +1340,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "precise-paraguay",
+   "id": "flying-native",
    "metadata": {},
    "source": [
     "**Two Gaussians**"
@@ -1349,7 +1349,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "periodic-polyester",
+   "id": "colonial-screw",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1358,7 +1358,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "successful-philadelphia",
+   "id": "improving-times",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1367,7 +1367,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "eligible-filename",
+   "id": "clean-maker",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1376,7 +1376,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "brutal-westminster",
+   "id": "substantial-brazil",
    "metadata": {},
    "source": [
     "    "
@@ -1384,7 +1384,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "qualified-receipt",
+   "id": "divine-norman",
    "metadata": {},
    "source": [
     "### _Résultats_"
@@ -1392,7 +1392,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "classified-socket",
+   "id": "tight-myanmar",
    "metadata": {},
    "source": [
     "**Exponential + CB**"
@@ -1401,7 +1401,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "right-appearance",
+   "id": "accompanied-poverty",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1412,7 +1412,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "clean-analyst",
+   "id": "desirable-jaguar",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1428,7 +1428,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "minus-democrat",
+   "id": "south-stewart",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1446,7 +1446,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "italian-enclosure",
+   "id": "legal-victor",
    "metadata": {},
    "source": [
     "Two CB"
@@ -1455,7 +1455,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "fancy-kazakhstan",
+   "id": "challenging-desire",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1466,7 +1466,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "awful-virus",
+   "id": "quiet-crystal",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1478,7 +1478,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "functional-engine",
+   "id": "documented-athletics",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1497,7 +1497,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "impaired-process",
+   "id": "impaired-intellectual",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -1505,7 +1505,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "subject-release",
+   "id": "patent-senator",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1516,7 +1516,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "liquid-corruption",
+   "id": "latin-attachment",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1529,7 +1529,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "great-recovery",
+   "id": "breathing-destination",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1551,7 +1551,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "nonprofit-charm",
+   "id": "treated-tablet",
    "metadata": {},
    "source": [
     "**Two Gaussians + exp**"
@@ -1560,7 +1560,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "painted-standard",
+   "id": "determined-incident",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1571,7 +1571,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "passing-packet",
+   "id": "genuine-shirt",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1586,7 +1586,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "pending-metadata",
+   "id": "baking-hudson",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1601,7 +1601,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "residential-hunter",
+   "id": "located-adrian",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1626,7 +1626,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "expressed-pollution",
+   "id": "defensive-rotation",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -1634,7 +1634,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "subtle-plumbing",
+   "id": "suitable-complement",
    "metadata": {},
    "outputs": [],
    "source": []

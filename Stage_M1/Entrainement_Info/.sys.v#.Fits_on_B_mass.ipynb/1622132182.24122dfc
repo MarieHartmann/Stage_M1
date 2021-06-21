@@ -1,0 +1,2168 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "eligible-sailing",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "SyntaxError",
+     "evalue": "invalid syntax (<ipython-input-17-02158b00fadd>, line 1)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-17-02158b00fadd>\"\u001b[0;36m, line \u001b[0;32m1\u001b[0m\n\u001b[0;31m    pip install zfit\u001b[0m\n\u001b[0m        ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "import zfit"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "popular-norwegian",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting zfit\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/27/ed/88315b184c3e18638f6c2b16f323d3cbb329d9c104129703382389ef8257/zfit-0.6.6-py2.py3-none-any.whl (311kB)\n",
+      "\u001b[K     |████████████████████████████████| 317kB 7.1MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting tensorflow-addons (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/bf/57/1f478ae21b8cfefc1a55c764f8fbd6e016528b830b279a908002b9f9b9f5/tensorflow_addons-0.13.0-cp38-cp38-manylinux2010_x86_64.whl (679kB)\n",
+      "\u001b[K     |████████████████████████████████| 686kB 9.3MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting uproot<5,>=4 (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/a5/99/bf1b3995f9cafad30c8df34a99ab286f522cf762a2eb2152ac47609be04e/uproot-4.0.8-py2.py3-none-any.whl (241kB)\n",
+      "\u001b[K     |████████████████████████████████| 245kB 17.7MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: numpy>=1.16 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from zfit) (1.18.2)\n",
+      "Collecting tabulate (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/ca/80/7c0cad11bd99985cfe7c09427ee0b4f9bd6b048bd13d4ffb32c6db237dfb/tabulate-0.8.9-py3-none-any.whl\n",
+      "Collecting colorlog (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/32/e6/e9ddc6fa1104fda718338b341e4b3dc31cd8039ab29e52fc73b508515361/colorlog-5.0.1-py2.py3-none-any.whl\n",
+      "Collecting nlopt (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/a2/bc/0690f6b9b74eb615b8c305859bcaedce13bdda9f6c313fd5ab3e982b4b66/nlopt-2.6.2-cp38-cp38-manylinux2010_x86_64.whl (416kB)\n",
+      "\u001b[K     |████████████████████████████████| 419kB 18.0MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting tensorflow-probability~=0.12 (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/9c/c0/d6a9212d3e74748474b59e077e85ca577308c808eee93f9d2e11c3f1cc16/tensorflow_probability-0.12.2-py2.py3-none-any.whl (4.8MB)\n",
+      "\u001b[K     |████████████████████████████████| 4.8MB 20.9MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: scipy>=1.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from zfit) (1.5.1)\n",
+      "Collecting tensorflow~=2.4 (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/59/9b/b52336903d837dc21289b9659bfb89ebfb6c2328045da8cb1e5969b8cc3e/tensorflow-2.5.0-cp38-cp38-manylinux2010_x86_64.whl (454.4MB)\n",
+      "\u001b[K     |████████████████████████████████| 454.4MB 72kB/s s eta 0:00:01   |▏                               | 2.5MB 10.5MB/s eta 0:00:44     |███████████▊                    | 167.2MB 52.9MB/s eta 0:00:06     |████████████████▊               | 237.1MB 53.2MB/s eta 0:00:05     |████████████████▉               | 239.2MB 53.2MB/s eta 0:00:05\n",
+      "\u001b[?25hCollecting numdifftools (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/ab/c0/b0d967160ecc8db52ae34e063937d85e8d386f140ad4826aae2086245a5e/numdifftools-0.9.39-py2.py3-none-any.whl (953kB)\n",
+      "\u001b[K     |████████████████████████████████| 962kB 25.9MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting dotmap (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/17/6f/c94adbb0e6d418ededbf1082a3067f178fb012573b960d446e5655e6fbe1/dotmap-1.3.23-py3-none-any.whl\n",
+      "Requirement already satisfied: pandas in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from zfit) (0.24.2)\n",
+      "Collecting ordered-set (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/f5/ab/8252360bfe965bba31ec05112b3067bd129ce4800d89e0b85613bc6044f6/ordered-set-4.0.2.tar.gz\n",
+      "Collecting texttable (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/06/f5/46201c428aebe0eecfa83df66bf3e6caa29659dbac5a56ddfd83cae0d4a4/texttable-1.6.3-py2.py3-none-any.whl\n",
+      "Collecting iminuit>=2.3 (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/c2/c8/0f6ddd099ee6c7ba4344127055248b13507e611ff1bc7fb2dd020bd18ce8/iminuit-2.6.1-cp38-cp38-manylinux2010_x86_64.whl (317kB)\n",
+      "\u001b[K     |████████████████████████████████| 317kB 38.8MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting colored (from zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/b2/16/04827e24c14266d9161bd86bad50069fea453fa006c3d2b31da39251184a/colored-1.4.2.tar.gz (56kB)\n",
+      "\u001b[K     |████████████████████████████████| 61kB 11.3MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting colorama (from zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/44/98/5b86278fbbf250d239ae0ecb724f8572af1c91f4a11edf4d36a206189440/colorama-0.4.4-py2.py3-none-any.whl\n",
+      "Requirement already satisfied: typeguard>=2.7 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow-addons->zfit) (2.7.0)\n",
+      "Requirement already satisfied: setuptools in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from uproot<5,>=4->zfit) (44.1.0)\n",
+      "Collecting dm-tree (from tensorflow-probability~=0.12->zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/ec/45/be407a60068204dd5248dae5a4d325370d9b1b3c2cb2a1adb0d673a0d3ae/dm-tree-0.1.6.tar.gz\n",
+      "Collecting cloudpickle>=1.3 (from tensorflow-probability~=0.12->zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/e7/e3/898487e5dbeb612054cf2e0c188463acb358167fef749c53c8bb8918cea1/cloudpickle-1.6.0-py3-none-any.whl\n",
+      "Requirement already satisfied: six>=1.10.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow-probability~=0.12->zfit) (1.12.0)\n",
+      "Requirement already satisfied: decorator in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow-probability~=0.12->zfit) (4.3.2)\n",
+      "Requirement already satisfied: gast>=0.3.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow-probability~=0.12->zfit) (0.3.3)\n",
+      "Collecting tensorflow-estimator<2.6.0,>=2.5.0rc0 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/ec/78/b27f73e923becc6e79e18fe112cf75e3200d1ee35b0dba8fa46181bce56c/tensorflow_estimator-2.5.0-py2.py3-none-any.whl (462kB)\n",
+      "\u001b[K     |████████████████████████████████| 471kB 43.7MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: keras-preprocessing~=1.1.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (1.1.2)\n",
+      "Requirement already satisfied: google-pasta~=0.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (0.2.0)\n",
+      "Requirement already satisfied: termcolor~=1.1.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (1.1.0)\n",
+      "Collecting flatbuffers~=1.12.0 (from tensorflow~=2.4->zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/eb/26/712e578c5f14e26ae3314c39a1bdc4eb2ec2f4ddc89b708cf8e0a0d20423/flatbuffers-1.12-py2.py3-none-any.whl\n",
+      "Collecting opt-einsum~=3.3.0 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/bc/19/404708a7e54ad2798907210462fd950c3442ea51acc8790f3da48d2bee8b/opt_einsum-3.3.0-py3-none-any.whl (65kB)\n",
+      "\u001b[K     |████████████████████████████████| 71kB 11.7MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: typing-extensions~=3.7.4 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (3.7.4.3)\n",
+      "Collecting grpcio~=1.34.0 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/36/52/80efc7940138da5c19d22ac688376329d09c147b83a14f0eb77c4fe10dda/grpcio-1.34.1-cp38-cp38-manylinux2010_x86_64.whl (3.9MB)\n",
+      "\u001b[K     |████████████████████████████████| 3.9MB 19.2MB/s eta 0:00:01   |██▏                             | 266kB 19.2MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting keras-nightly~=2.5.0.dev (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/aa/e7/53bc896aa4e11a87aac10a625c676b3a3d57d1c8d9929e4809d31fa0b7d5/keras_nightly-2.5.0.dev2021032900-py2.py3-none-any.whl (1.2MB)\n",
+      "\u001b[K     |████████████████████████████████| 1.2MB 36.0MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting h5py~=3.1.0 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/67/b2/c20d2f11ca86132f70799da2fc213772676025f556e1f4404754d000600a/h5py-3.1.0-cp38-cp38-manylinux1_x86_64.whl (4.4MB)\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\u001b[K     |████████████▍                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▌                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▌                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▋                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▊                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▊                   | 1.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████▉                   | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████                   | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████                   | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████                   | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▏                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▏                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▎                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▍                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▍                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▌                  | 1.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▋                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▋                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▊                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▉                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████▉                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████                  | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▏                 | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▎                 | 1.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▎                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▍                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▌                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▋                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▋                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▊                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▉                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████▉                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████                 | 2.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████                 | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▏                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▎                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▎                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▍                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▌                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▌                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▋                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▊                | 2.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▊                | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████▉                | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████                | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████                | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████                | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▏               | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▏               | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▎               | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▍               | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▍               | 2.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▌               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▋               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▋               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▊               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▉               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████▉               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████               | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▏              | 2.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▎              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▎              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▍              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▌              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▋              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▋              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▊              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▉              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████▉              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████              | 2.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████              | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████              | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▏             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▎             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▎             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▍             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▌             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▌             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▋             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▊             | 2.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▊             | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████▉             | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████             | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████             | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████             | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▏            | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▏            | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▎            | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▍            | 2.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▍            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▌            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▋            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▋            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▊            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▉            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████▉            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████            | 2.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▏           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▎           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▍           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▍           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▌           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▋           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▋           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▊           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▉           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████▉           | 2.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████           | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████           | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████           | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▏          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▎          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▎          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▍          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▌          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▌          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▋          | 2.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▊          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▊          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████▉          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████          | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▏         | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▏         | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▎         | 3.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▍         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▍         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▌         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▋         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▋         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▊         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▉         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████▉         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████         | 3.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████         | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▏        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▎        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▍        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▍        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▌        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▋        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▋        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▊        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▉        | 3.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████▉        | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████        | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████        | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████        | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▏       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▎       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▎       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▍       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▌       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▌       | 3.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▋       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▊       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▊       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████▉       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████       | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▏      | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▏      | 3.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▎      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▍      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▍      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▌      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▋      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▋      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▊      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▉      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████▉      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████      | 3.5MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████      | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▏     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▏     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▎     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▍     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▍     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▌     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▋     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▋     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▊     | 3.6MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▉     | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████▉     | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████     | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████     | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████     | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▏    | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▎    | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▎    | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▍    | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▌    | 3.7MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▌    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▋    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▊    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▊    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████▉    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████    | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▏   | 3.8MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▏   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▎   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▍   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▍   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▌   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▋   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▋   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▊   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▉   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████▉   | 3.9MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████   | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████   | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▏  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▏  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▎  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▍  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▍  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▌  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▋  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▋  | 4.0MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▊  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▉  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |█████████████████████████████▉  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████  | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▏ | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▎ | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▎ | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▍ | 4.1MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▌ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▌ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▋ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▊ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▊ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |██████████████████████████████▉ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████ | 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▏| 4.2MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▏| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▎| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▍| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▍| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▌| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▋| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▋| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▊| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |███████████████████████████████▉| 4.3MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████████| 4.4MB 40.0MB/s eta 0:00:01\r",
+      "\u001b[K     |████████████████████████████████| 4.4MB 40.0MB/s eta 0:00:01"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\u001b[K     |████████████████████████████████| 4.4MB 40.0MB/s \n",
+      "\u001b[?25hCollecting wrapt~=1.12.1 (from tensorflow~=2.4->zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/82/f7/e43cefbe88c5fd371f4cf0cf5eb3feccd07515af9fd6cf7dbf1d1793a797/wrapt-1.12.1.tar.gz\n",
+      "Collecting wheel~=0.35 (from tensorflow~=2.4->zfit)\n",
+      "  Downloading https://files.pythonhosted.org/packages/65/63/39d04c74222770ed1589c0eaba06c05891801219272420b40311cd60c880/wheel-0.36.2-py2.py3-none-any.whl\n",
+      "Requirement already satisfied: protobuf>=3.9.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (3.13.0)\n",
+      "Requirement already satisfied: astunparse~=1.6.3 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorflow~=2.4->zfit) (1.6.3)\n",
+      "Collecting absl-py~=0.10 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/92/c9/ef0fae29182d7a867d203f0eff8296b60da92098cc41db33a434f4be84bf/absl_py-0.12.0-py3-none-any.whl (129kB)\n",
+      "\u001b[K     |████████████████████████████████| 133kB 45.6MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting tensorboard~=2.5 (from tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/44/f5/7feea02a3fb54d5db827ac4b822a7ba8933826b36de21880518250b8733a/tensorboard-2.5.0-py3-none-any.whl (6.0MB)\n",
+      "\u001b[K     |████████████████████████████████| 6.0MB 39.4MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: python-dateutil>=2.5.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from pandas->zfit) (2.8.0)\n",
+      "Requirement already satisfied: pytz>=2011k in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from pandas->zfit) (2019.1)\n",
+      "Requirement already satisfied: markdown>=2.6.8 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (3.1.1)\n",
+      "Requirement already satisfied: werkzeug>=0.11.15 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (0.15.4)\n",
+      "Requirement already satisfied: google-auth<2,>=1.6.3 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (1.6.3)\n",
+      "Requirement already satisfied: requests<3,>=2.21.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (2.22.0)\n",
+      "Requirement already satisfied: tensorboard-plugin-wit>=1.6.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (1.7.0)\n",
+      "Collecting tensorboard-data-server<0.7.0,>=0.6.0 (from tensorboard~=2.5->tensorflow~=2.4->zfit)\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/60/f9/802efd84988bffd9f644c03b6e66fde8e76c3aa33db4279ddd11c5d61f4b/tensorboard_data_server-0.6.1-py3-none-manylinux2010_x86_64.whl (4.9MB)\n",
+      "\u001b[K     |████████████████████████████████| 4.9MB 30.3MB/s eta 0:00:01\n",
+      "\u001b[?25hRequirement already satisfied: google-auth-oauthlib<0.5,>=0.4.1 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from tensorboard~=2.5->tensorflow~=2.4->zfit) (0.4.1)\n",
+      "Requirement already satisfied: pyasn1-modules>=0.2.1 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from google-auth<2,>=1.6.3->tensorboard~=2.5->tensorflow~=2.4->zfit) (0.2.5)\n",
+      "Requirement already satisfied: rsa>=3.1.4 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from google-auth<2,>=1.6.3->tensorboard~=2.5->tensorflow~=2.4->zfit) (4.0)\n",
+      "Requirement already satisfied: cachetools>=2.0.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from google-auth<2,>=1.6.3->tensorboard~=2.5->tensorflow~=2.4->zfit) (3.1.1)\n",
+      "Requirement already satisfied: chardet<3.1.0,>=3.0.2 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard~=2.5->tensorflow~=2.4->zfit) (3.0.4)\n",
+      "Requirement already satisfied: idna<2.9,>=2.5 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard~=2.5->tensorflow~=2.4->zfit) (2.8)\n",
+      "Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard~=2.5->tensorflow~=2.4->zfit) (1.25.3)\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard~=2.5->tensorflow~=2.4->zfit) (2019.3.9)\n",
+      "Requirement already satisfied: requests-oauthlib>=0.7.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from google-auth-oauthlib<0.5,>=0.4.1->tensorboard~=2.5->tensorflow~=2.4->zfit) (1.2.0)\n",
+      "Requirement already satisfied: pyasn1<0.5.0,>=0.4.1 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from pyasn1-modules>=0.2.1->google-auth<2,>=1.6.3->tensorboard~=2.5->tensorflow~=2.4->zfit) (0.4.5)\n",
+      "Requirement already satisfied: oauthlib>=3.0.0 in /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<0.5,>=0.4.1->tensorboard~=2.5->tensorflow~=2.4->zfit) (3.0.1)\n",
+      "Building wheels for collected packages: ordered-set, colored, dm-tree, wrapt\n",
+      "  Building wheel for ordered-set (setup.py) ... \u001b[?25ldone\n",
+      "\u001b[?25h  Stored in directory: /tmp/mahartma/.cache/pip/wheels/e1/c6/9b/651d8a21d59b51a75ab9c070838f9231b8126421bc0569af47\n",
+      "  Building wheel for colored (setup.py) ... \u001b[?25ldone\n",
+      "\u001b[?25h  Stored in directory: /tmp/mahartma/.cache/pip/wheels/ec/10/5e/d17d5ef644e1051a753bd98f3796789ec39bc3337cd36637f3\n",
+      "  Building wheel for dm-tree (setup.py) ... \u001b[?25lerror\n",
+      "\u001b[31m  ERROR: Complete output from command /cvmfs/sft.cern.ch/lcg/views/LCG_99/x86_64-centos7-gcc8-opt/bin/python3 -u -c 'import setuptools, tokenize;__file__='\"'\"'/tmp/pip-install-ht69gysy/dm-tree/setup.py'\"'\"';f=getattr(tokenize, '\"'\"'open'\"'\"', open)(__file__);code=f.read().replace('\"'\"'\\r\\n'\"'\"', '\"'\"'\\n'\"'\"');f.close();exec(compile(code, __file__, '\"'\"'exec'\"'\"'))' bdist_wheel -d /tmp/pip-wheel-jh7o81i8 --python-tag cp38:\u001b[0m\n",
+      "\u001b[31m  ERROR: running bdist_wheel\n",
+      "  running build\n",
+      "  running build_py\n",
+      "  creating build\n",
+      "  creating build/lib.linux-x86_64-3.8\n",
+      "  creating build/lib.linux-x86_64-3.8/tree\n",
+      "  copying tree/__init__.py -> build/lib.linux-x86_64-3.8/tree\n",
+      "  copying tree/tree_benchmark.py -> build/lib.linux-x86_64-3.8/tree\n",
+      "  copying tree/tree_test.py -> build/lib.linux-x86_64-3.8/tree\n",
+      "  running build_ext\n",
+      "  bazel build //tree:_tree --symlink_prefix=build/temp.linux-x86_64-3.8/bazel- --compilation_mode=opt\n",
+      "  unable to execute 'bazel': No such file or directory\n",
+      "  error: command 'bazel' failed with exit status 1\n",
+      "  ----------------------------------------\u001b[0m\n",
+      "\u001b[31m  ERROR: Failed building wheel for dm-tree\u001b[0m\n",
+      "\u001b[?25h  Running setup.py clean for dm-tree\n",
+      "  Building wheel for wrapt (setup.py) ... \u001b[?25ldone\n",
+      "\u001b[?25h  Stored in directory: /tmp/mahartma/.cache/pip/wheels/b1/c2/ed/d62208260edbd3fa7156545c00ef966f45f2063d0a84f8208a\n",
+      "Successfully built ordered-set colored wrapt\n",
+      "Failed to build dm-tree\n",
+      "\u001b[31mERROR: tensorflow-cpu 2.3.0 has requirement h5py<2.11.0,>=2.10.0, but you'll have h5py 3.1.0 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: tensorflow-cpu 2.3.0 has requirement scipy==1.4.1, but you'll have scipy 1.5.1 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: tensorflow-cpu 2.3.0 has requirement tensorflow-estimator<2.4.0,>=2.3.0, but you'll have tensorflow-estimator 2.5.0 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: distributed 1.28.1 has requirement dask>=0.18.0, but you'll have dask 0+unknown which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: astroid 2.3.3 has requirement wrapt==1.11.*, but you'll have wrapt 1.12.1 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: tensorflow 2.5.0 has requirement gast==0.4.0, but you'll have gast 0.3.3 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: tensorflow 2.5.0 has requirement numpy~=1.19.2, but you'll have numpy 1.18.2 which is incompatible.\u001b[0m\n",
+      "\u001b[31mERROR: tensorflow 2.5.0 has requirement six~=1.15.0, but you'll have six 1.12.0 which is incompatible.\u001b[0m\n",
+      "Installing collected packages: tensorflow-addons, uproot, tabulate, colorlog, nlopt, dm-tree, cloudpickle, tensorflow-probability, tensorflow-estimator, flatbuffers, opt-einsum, grpcio, keras-nightly, h5py, wrapt, wheel, absl-py, tensorboard-data-server, tensorboard, tensorflow, numdifftools, dotmap, ordered-set, texttable, iminuit, colored, colorama, zfit\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\u001b[31mERROR: Could not install packages due to an EnvironmentError: [Errno 30] Read-only file system: '/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/site-packages/_foo.cpython-38-x86_64-linux-gnu.so'\n",
+      "\u001b[0m\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install zfit"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "bridal-tumor",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "prime-harris",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "ready-translation",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import uproot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "dramatic-adjustment",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "incident-father",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "optimum-respondent",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'mplhep'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-14-95a92a8da0c2>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'mplhep'"
+     ]
+    }
+   ],
+   "source": [
+    "import mplhep"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "false-initial",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from numpy import random"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "square-camping",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#from matplotlib import rc\n",
+    "#rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "#rc('text', usetex=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "rubber-homeless",
+   "metadata": {},
+   "source": [
+    "# Création d'un DataFrame contenant la masse du méson B"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "mysterious-personal",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "filename = 'root://eospublic.cern.ch//eos/opendata/lhcb/AntimatterMatters2017/data/B2HHH_MagnetDown.root'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "through-generation",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tree = uproot.open(filename)[\"DecayTree\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "opposed-frederick",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = tree.arrays(library=\"pandas\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "convinced-arthur",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.eval('H1_P = sqrt(H1_PX**2 + H1_PY**2 + H1_PZ**2)', inplace=True)\n",
+    "df.eval('H2_P = sqrt(H2_PX**2 + H2_PY**2 + H2_PZ**2)', inplace=True)\n",
+    "df.eval('H3_P = sqrt(H3_PX**2 + H3_PY**2 + H3_PZ**2)', inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "powered-pearl",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.eval('B_P = sqrt((H1_PX + H2_PX + H3_PX)**2 + (H1_PY + H2_PY + H3_PY)**2 + (H1_PZ + H2_PZ + H3_PZ)**2 )', inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "pressing-honduras",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.eval('B_M =(sqrt((sqrt(493.677**2 + H1_P**2) + sqrt(493.677**2 + H2_P**2) + sqrt(493.677**2 + H3_P**2))**2 - B_P**2 ))', inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "higher-street",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.keys()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "legislative-pregnancy",
+   "metadata": {},
+   "source": [
+    "# Application de filtres pour s'assurer que la masse que nous avons reconstruite est bien celle du méson B->K+K-K+"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "imperial-warning",
+   "metadata": {},
+   "source": [
+    "##### Filtre sur Hi_ProbK (proba que la particule Hi soit un kaon)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "checked-palestinian",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#df = df.query(\"H1_ProbK > 0.8 and H2_ProbK > 0.8 and H3_ProbK > 0.8\")\n",
+    "df = df.query(\"H1_ProbK > 0.5 and H2_ProbK > 0.5 and H3_ProbK > 0.5\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "imported-brooklyn",
+   "metadata": {},
+   "source": [
+    "##### Filtre sur Hi_ProbPi (proba que la particule Hi soit un pion)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "tired-sauce",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#df = df.query(\"H1_ProbPi < 0.2 and H2_ProbPi < 0.2 and H3_ProbPi < 0.2\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "featured-longitude",
+   "metadata": {},
+   "source": [
+    "##### Histogramme de la masse pour voir si notre résultat est satisfaisant"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "recovered-agriculture",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.hist(df['B_M'], range=(5200,5375), bins=100, histtype='step')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "extreme-edwards",
+   "metadata": {},
+   "source": [
+    "# Mise en place des outils nécessaires aux fits"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "brown-surveillance",
+   "metadata": {},
+   "source": [
+    "##### Définition de l'espace observable"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "extended-finish",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "obs = zfit.Space('x', limits=(5200.,5375.))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "weekly-victoria",
+   "metadata": {},
+   "source": [
+    "##### Définition des data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "surgical-catalog",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#B_M = df['B_M'].to_numpy()\n",
+    "B_M = df['B_M'].to_numpy()\n",
+    "data = zfit.Data.from_numpy(obs=obs, array=B_M, weights=None)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "pressed-keeping",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "arranged-sympathy",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'B_M' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-2-5deba1b98824>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'écart type de B_M = {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mB_M\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstd\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'nombre de données de B_M = {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mB_M\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'B_M' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "print('écart type de B_M = {}'.format(B_M.std()))\n",
+    "print('nombre de données de B_M = {}'.format(len(B_M)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "earlier-ecology",
+   "metadata": {},
+   "source": [
+    "# FITS"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "elect-index",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "minimizer = zfit.minimize.Minuit()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "nominated-polls",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lower, upper = obs.limits\n",
+    "nb_bins = 50"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "incredible-lucas",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "counts, bin_edges = np.histogram(df['B_M'], bins=nb_bins, range=(lower[0][0], upper[0][0]))\n",
+    "x_plot = np.linspace(lower[0][0], upper[0][0], num=1000)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "collective-donor",
+   "metadata": {},
+   "source": [
+    "Dans la partie histogramme, il vaut mieux utiliser df['B_M'] plutôt que data.\n",
+    "On réservera data pour mettre en argument des fonctions zfit (cela ne marche pas avec une série comme df['B_M'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "pressed-navigator",
+   "metadata": {},
+   "source": [
+    "## GAUSS"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "foreign-swing",
+   "metadata": {},
+   "source": [
+    "### Gauss classique"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "congressional-bidder",
+   "metadata": {},
+   "source": [
+    "##### Définition des paramètres"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "brown-james",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sigma_gauss = zfit.Parameter('sigma_gauss', 197.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "thousand-forwarding",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mu_gauss = zfit.Parameter('mu_gauss', 5279.)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "oriental-going",
+   "metadata": {},
+   "source": [
+    "##### Définition du modèle"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "straight-revision",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gauss = zfit.pdf.Gauss(obs=obs, mu=mu_gauss, sigma=sigma_gauss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "crucial-harassment",
+   "metadata": {},
+   "source": [
+    "##### Définition de la 'loss function'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "secondary-memorabilia",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_gauss = zfit.loss.UnbinnedNLL(model=gauss, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "inappropriate-russia",
+   "metadata": {},
+   "source": [
+    "##### Définition du minimizer"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "female-convention",
+   "metadata": {},
+   "source": [
+    "#voir en dessous de fit, je définis le même pour tout le monde"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "younger-postcard",
+   "metadata": {},
+   "source": [
+    "##### Minimisation du modèle et impression de résultats obtenus pour les paramètres"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "disturbed-austria",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_gauss = minimizer.minimize(nll_gauss)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "optional-filling",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_gauss.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "dependent-lafayette",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'result_gauss' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-3-07a2b7de82fe>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'The value of the B meson mass is : {}'\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresult_gauss\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mmu_gauss\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m: name 'result_gauss' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "print('The value of the B meson mass is : {}'.format(result_gauss.params[mu_gauss]))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "divided-samoa",
+   "metadata": {},
+   "source": [
+    "##### Vérification de la validité de notre fit"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "inside-breathing",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(result_gauss.valid)\n",
+    "print(result_gauss.converged)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "driven-keyboard",
+   "metadata": {},
+   "source": [
+    "##### Tracé de l'histogramme"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "decreased-basket",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot_gauss = zfit.run(gauss.pdf(x_plot, norm_range=obs))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "technical-brooks",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot_gauss*df['B_M'].shape[0]/100*obs.area(), color='pink')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "static-founder",
+   "metadata": {},
+   "source": [
+    "### Extended Gauss"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "animal-category",
+   "metadata": {},
+   "source": [
+    "##### Opérations zfit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fitting-bangladesh",
+   "metadata": {},
+   "source": [
+    "Le yield est un paramètre qu'il faut définir lorsque l'on veut effectuer un extended fit. On lui donnera comme valeur maximale la len(df['B_M'])."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "blond-swift",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "yield_ex_gauss = zfit.Parameter(\"yield_ex_gauss\", 100, 0, 2615)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "injured-netscape",
+   "metadata": {},
+   "source": [
+    "Un extended fit s'effectue à partir d'un modèle déjà défini. Ici on réutilise le model gauss défini précedemment."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "connected-trace",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ex_gauss = gauss.create_extended(yield_ex_gauss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "operating-incident",
+   "metadata": {},
+   "source": [
+    "La loss function est légeremment différente pour les extended fits."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "adopted-peeing",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_ex_gauss = zfit.loss.ExtendedUnbinnedNLL(model=ex_gauss, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "missing-jacket",
+   "metadata": {},
+   "source": [
+    "On obtient les résultats de la même manière que pour une extended fit."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "adequate-heather",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_ex_gauss = minimizer.minimize(nll_ex_gauss)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "virtual-purple",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_ex_gauss.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "wound-comedy",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print('The value of the B meson mass is : {}'.format(result_gauss.params[mu_gauss]))\n",
+    "print(result_gauss.valid)\n",
+    "print(result_gauss.converged)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "capital-tract",
+   "metadata": {},
+   "source": [
+    "##### Tracé de l'histogramme"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "color-connectivity",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-4-89820b1472d1>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0my_plot_ex_gauss\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mex_gauss\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnorm_range\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0mbin_edges\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0myerr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'blue'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mhisttype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'errorbar'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_plot_ex_gauss\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m/\u001b[0m\u001b[0;36m100\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0marea\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'pink'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshow\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "y_plot_ex_gauss = zfit.run(ex_gauss.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot_ex_gauss*df['B_M'].shape[0]/100*obs.area(), color='pink')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "different-defeat",
+   "metadata": {},
+   "source": [
+    "Remarque : l'histogramme est le même dans les deux cas. La seule chose qui a changé, c'est que l'on a accès au nombre d'évènements dans le pic."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dedicated-express",
+   "metadata": {},
+   "source": [
+    "  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cubic-description",
+   "metadata": {},
+   "source": [
+    "         "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "pending-tobago",
+   "metadata": {},
+   "source": [
+    "       "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "productive-ministry",
+   "metadata": {},
+   "source": [
+    "## CRISTAL BALL"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "satellite-affect",
+   "metadata": {},
+   "source": [
+    "##### Paramètres"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "signed-wesley",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mu_cb = zfit.Parameter('mu_cb', 5279., 5270., 5300.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "martial-opportunity",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sigma_cb = zfit.Parameter('sigma_cb', 20., 0., 400.)\n",
+    "#sigma max environ deux fois la sd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "prompt-recommendation",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "alpha_cb = zfit.Parameter('alpha_cb',0.5, 0., 5.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "conscious-family",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "n_cb = zfit.Parameter('n_cb', 1., 0., 100.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "legitimate-essay",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "yield_cb4 = zfit.Parameter(\"yield_cb4\", 2000., 0.5, 10000.)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "private-investing",
+   "metadata": {},
+   "source": [
+    "##### Model et Extended Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "meaning-direction",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cb = zfit.pdf.CrystalBall(obs=obs, mu=mu_cb, sigma=sigma_cb, alpha=alpha_cb, n=n_cb)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "expanded-director",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ex_cb = cb.create_extended(yield_cb4)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "downtown-skirt",
+   "metadata": {},
+   "source": [
+    "##### Loss functions"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "related-minimum",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_cb = zfit.loss.UnbinnedNLL(model=cb, data=data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "timely-forest",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_ex_cb = zfit.loss.ExtendedUnbinnedNLL(model=ex_cb, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "combined-briefs",
+   "metadata": {},
+   "source": [
+    "##### Résultas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "stupid-while",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_cb = minimizer.minimize(nll_cb)\n",
+    "result_cb.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "informal-maryland",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print('The value of the B meson mass is : {}'.format(result_cb.params[mu_cb]))\n",
+    "print(result_cb.valid)\n",
+    "print(result_cb.converged)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fourth-permit",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_ex_cb = minimizer.minimize(nll_ex_cb)\n",
+    "result_ex_cb.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "impressive-handling",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print('The value of the B meson mass is : {}'.format(result_ex_cb.params[mu_cb]))\n",
+    "print(result_ex_cb.valid)\n",
+    "print(result_ex_cb.converged)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "tender-participation",
+   "metadata": {},
+   "source": [
+    "##### Histogrammes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "corresponding-division",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot_ex_cb = zfit.run(ex_cb.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot_ex_cb*df['B_M'].shape[0]/100*obs.area(), color='pink')\n",
+    "plt.title('Fit with Extended Cristal Ball')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "contained-installation",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-5-e6ab57dd4240>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0my_plot_cb\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcb\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnorm_range\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mmplhep\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0mbin_edges\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0myerr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'blue'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mhisttype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'errorbar'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mplot\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx_plot\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my_plot_cb\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m/\u001b[0m\u001b[0;36m100\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0marea\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcolor\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'pink'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtitle\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Fit with Extended Cristal Ball'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mplt\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshow\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "y_plot_cb = zfit.run(cb.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot_cb*df['B_M'].shape[0]/100*obs.area(), color='pink')\n",
+    "plt.title('Fit with Extended Cristal Ball')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "comparable-enzyme",
+   "metadata": {},
+   "source": [
+    "  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "characteristic-original",
+   "metadata": {},
+   "source": [
+    "     "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "middle-separation",
+   "metadata": {},
+   "source": [
+    "      "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "latest-voice",
+   "metadata": {},
+   "source": [
+    "  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "commercial-pendant",
+   "metadata": {},
+   "source": [
+    "# FIT_TRAINING"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "medieval-square",
+   "metadata": {},
+   "source": [
+    "### _Paramètres_"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "rough-cameroon",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "mu_ = zfit.Parameter(f\"mu_{rand_int}\", 5278., 5270., 5300.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "duplicate-summary",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "mu_bis = zfit.Parameter(f\"mu_bis_{rand_int}\", 5278., 5270., 5300.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "noticed-nerve",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "sigma_ = zfit.Parameter(f\"sigma_{rand_int}\", 21., 0., 400.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "boxed-polls",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "sigma_bis = zfit.Parameter(f\"sigma__bis{rand_int}\", 50., 0., 400.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "pharmaceutical-belfast",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "alpha_ = zfit.Parameter(f\"alpha_{rand_int}\", 0.52, 0., 5.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "perfect-julian",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "n_ = zfit.Parameter(f\"n_{rand_int}\", 1., 0., 99.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "composed-representative",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "l = zfit.Parameter(f\"l_{rand_int}\", -0.5, -1., -0.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "civilian-orange",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "yield_ = zfit.Parameter(f\"yield_{rand_int}\", 2000., 0.5, 10000.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "vulnerable-finding",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "n_sig = zfit.Parameter(f\"n_sig_{rand_int}\", 2000., 0.5, 10000.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "occupational-german",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "n_bkg = zfit.Parameter(f\"n_bkg_{rand_int}\", 2000., 0.5, 10000.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fourth-congress",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rand_int = random.randint(0,1000000,size=1)\n",
+    "frac_ = zfit.Parameter(f\"frac_{rand_int}\", 0.8, 0., 1.)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "recreational-supplier",
+   "metadata": {},
+   "source": [
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "surgical-printing",
+   "metadata": {},
+   "source": [
+    "### _Modèles_"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "quarterly-significance",
+   "metadata": {},
+   "source": [
+    "**Exponentielle + Crystal Ball**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "daily-exclusive",
+   "metadata": {},
+   "source": [
+    "On va sommer des pdf extended qui vont donner un SumPDF qui le sera également. Pour cette raison, je ne précise pas ex pour extended sauf pour les composantes initiales."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ruled-providence",
+   "metadata": {},
+   "source": [
+    "On précise n_bkg_ et n_sig car il n'y a pas autant d'évènements de bruits que de signal."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "computational-istanbul",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "exp = zfit.pdf.Exponential(obs=obs, lambda_=l)\n",
+    "#il faut mettre un tiret du bas car sinon il pense que lambda définit une fonction\n",
+    "ex_exp = exp.create_extended(n_bkg)\n",
+    "ex_cb = cb.create_extended(n_sig)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "proper-cattle",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "exp_cb = zfit.pdf.SumPDF(pdfs=[ex_cb,ex_exp]) \n",
+    "#already extended because sum of extended"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "confused-airline",
+   "metadata": {},
+   "source": [
+    "**Two Crystall Ball pdfs**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "supposed-emergency",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cb_bis = zfit.pdf.CrystalBall(obs=obs, mu=mu_, sigma=sigma_, alpha=alpha_, n=n_)\n",
+    "ex_cb = cb.create_extended(n_sig)\n",
+    "ex_cb_bis = cb_bis.create_extended(n_bkg)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "respiratory-collaboration",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'zfit' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-6-7981b42f1698>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mtwo_cb\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mzfit\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpdf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSumPDF\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpdfs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mex_cb\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mex_cb_bis\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m: name 'zfit' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "two_cb = zfit.pdf.SumPDF(pdfs=[ex_cb, ex_cb_bis])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "liberal-implement",
+   "metadata": {},
+   "source": [
+    "   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "later-walnut",
+   "metadata": {},
+   "source": [
+    "**Two Gaussians**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "juvenile-stack",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gauss = zfit.pdf.Gauss(obs=obs, mu=mu_, sigma=sigma_)\n",
+    "gauss_bis = zfit.pdf.Gauss(obs=obs, mu=mu_bis, sigma=sigma_bis)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "reported-completion",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gaussians = zfit.pdf.SumPDF(pdfs=[gauss, gauss_bis], fracs=frac_)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "passing-cabin",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "two_gauss = gaussians.create_extended(yield_)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "transsexual-legislature",
+   "metadata": {},
+   "source": [
+    "**Two Gaussians + exp**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "thrown-fifty",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "exp = zfit.pdf.Exponential(obs=obs, lambda_=l)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "later-dance",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ex_exp = exp.create_extended(n_bkg)\n",
+    "ex_two_gauss = gaussians.create_extended(n_sig)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "seasonal-perth",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model = zfit.pdf.SumPDF(pdfs=[ex_two_gauss, ex_exp])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "young-badge",
+   "metadata": {},
+   "source": [
+    "### _Loss Function_"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "binary-northeast",
+   "metadata": {},
+   "source": [
+    "**Exponentielle + Crystal Ball**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "congressional-trick",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_exp_cb = zfit.loss.ExtendedUnbinnedNLL(model=exp_cb, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "typical-drawing",
+   "metadata": {},
+   "source": [
+    "**Two Crystall Ball pdfs**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "designing-completion",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_two_cb = zfit.loss.ExtendedUnbinnedNLL(model=two_cb, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "beginning-jerusalem",
+   "metadata": {},
+   "source": [
+    "**Two Gaussians**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "double-request",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_two_gauss = zfit.loss.ExtendedUnbinnedNLL(model=two_gauss, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "respected-cookie",
+   "metadata": {},
+   "source": [
+    "**Two Gaussians + exp**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "awful-pointer",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nll_model = zfit.loss.ExtendedUnbinnedNLL(model=model, data=data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "underlying-array",
+   "metadata": {},
+   "source": [
+    "    "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "thirty-essay",
+   "metadata": {},
+   "source": [
+    "### _Résultats_"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "offshore-connecticut",
+   "metadata": {},
+   "source": [
+    "**Exponential + CB**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "warming-investment",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_exp_cb = minimizer.minimize(nll_exp_cb)\n",
+    "result_exp_cb.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "reduced-supplier",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nsig = result_exp_cb.params[n_sig]['value']\n",
+    "nbkg = result_exp_cb.params[n_bkg]['value']\n",
+    "nevents = nsig + nbkg\n",
+    "#df['B_M'].shape[0]\n",
+    "print('Il y a {} évènements'.format(nevents))\n",
+    "print('Il y a {} évènements de signal'.format(nsig))\n",
+    "print('Il y a {} évènements de background'.format(nbkg))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "outdoor-guide",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot = zfit.run(exp_cb.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_exp = zfit.run(ex_exp.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_cb = zfit.run(ex_cb.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot*nevents/100*obs.area(), color='red', label='SumPDF')\n",
+    "plt.plot(x_plot, y_plot_exp*nbkg/100*obs.area(), color='pink', label='bkg (exp)')\n",
+    "plt.plot(x_plot, y_plot_cb*nsig/100*obs.area(), color='green', label='sig (cb)')\n",
+    "plt.title('Fit with Extended Cristal Ball + Exponential functions')\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "egyptian-factory",
+   "metadata": {},
+   "source": [
+    "Two CB"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "changed-variety",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_two_cb = minimizer.minimize(nll_two_cb)\n",
+    "result_two_cb.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "korean-planet",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nsig = result_two_cb.params[n_sig]['value']\n",
+    "nbkg = result_two_cb.params[n_bkg]['value']\n",
+    "nevents = nsig + nbkg"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bored-buffer",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot = zfit.run(two_cb.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_exp = zfit.run(ex_cb.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_cb = zfit.run(ex_cb_bis.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot*nevents/100*obs.area(), color='red', label='SumPDF')\n",
+    "plt.plot(x_plot, y_plot_exp*nbkg/100*obs.area(), color='pink', label='bkg (exp)')\n",
+    "plt.plot(x_plot, y_plot_cb*nsig/100*obs.area(), color='green', label='sig (cb)')\n",
+    "plt.title('Fit with two Crystal Ball functions')\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dramatic-solomon",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "retained-possible",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_two_gauss = minimizer.minimize(nll_two_gauss)\n",
+    "result_two_gauss.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "freelance-crossing",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nevents = result_two_gauss.params[yield_]['value']\n",
+    "fraction = result_two_gauss.params[frac_]['value']\n",
+    "ng = fraction*nevents\n",
+    "ng_bis = (1-fraction)*nevents"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dietary-convention",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot = zfit.run(two_gauss.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_g = zfit.run(gauss.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_g_bis = zfit.run(gauss_bis.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color = 'blue', histtype='errorbar')\n",
+    "plt.plot(x_plot, y_plot*nevents/100*obs.area(), color='red', label='SumPDF')\n",
+    "plt.plot(x_plot, y_plot_g*ng/100*obs.area(), color='pink', label='Bkg (gauss)')\n",
+    "plt.plot(x_plot, y_plot_g_bis*ng_bis/100*obs.area(), color='green', label='Sig (gauss)')\n",
+    "\n",
+    "plt.fill_between(x_plot, y_plot_g*ng/100*obs.area(), color='pink')\n",
+    "plt.fill_between(x_plot, y_plot_g_bis*ng_bis/100*obs.area(), color='green')\n",
+    "\n",
+    "plt.title('Fit with two Gaussians')\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "inside-sustainability",
+   "metadata": {},
+   "source": [
+    "**Two Gaussians + exp**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "computational-tuesday",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "result_model = minimizer.minimize(nll_model)\n",
+    "result_model.params"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ruled-purple",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nsig = result_model.params[n_sig]['value']\n",
+    "nbkg = result_model.params[n_bkg]['value']\n",
+    "nevents = nsig + nbkg\n",
+    "print('Il y a {} évènements'.format(nevents))\n",
+    "print('Il y a {} évènements de signal'.format(nsig))\n",
+    "print('Il y a {} évènements de background'.format(nbkg))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "critical-burns",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'obs' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-7-27b8d15ab39c>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mlower\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mobs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlimits\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mnb_bins\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;36m50\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mcounts\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbin_edges\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhistogram\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdf\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'B_M'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbins\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnb_bins\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrange\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlower\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0mx_plot\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlinspace\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlower\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mupper\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnum\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m1000\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mstarting_bin\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mbin_edges\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'obs' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "lower, upper = obs.limits\n",
+    "nb_bins = 50\n",
+    "counts, bin_edges = np.histogram(df['B_M'], bins=nb_bins, range=(lower[0][0], upper[0][0]))\n",
+    "x_plot = np.linspace(lower[0][0], upper[0][0], num=1000)\n",
+    "starting_bin = bin_edges[0]\n",
+    "final_bin = bin_edges[-1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "demonstrated-affiliate",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_plot = zfit.run(exp_cb.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_sig = zfit.run(ex_two_gauss.pdf(x_plot, norm_range=obs))\n",
+    "y_plot_bkg = zfit.run(ex_exp.pdf(x_plot, norm_range=obs))\n",
+    "mplhep.histplot((counts,bin_edges), yerr = True, color ='black', histtype='errorbar', label='Data')\n",
+    "plt.plot(x_plot, y_plot*nevents/nb_bins*obs.area(), color='black', label='Total Fit')\n",
+    "#plt.plot(x_plot, y_plot_bkg*nbkg/nb_bins*obs.area(), color='#3182bd', label='Combinatorial')\n",
+    "#plt.plot(x_plot, y_plot_sig*nsig/nb_bins*obs.area(), color='#de2d26', label='$B^+ \\longrightarrow K^+K^-K^+$')\n",
+    "\n",
+    "plt.fill_between(x_plot, y_plot*nevents/nb_bins*obs.area() , color= '#de2d26', label=\"$B^{+}$ $\\longrightarrow$ $K^{+}K^{-}K^{+}$\")\n",
+    "plt.fill_between(x_plot, y_plot_bkg*nbkg/nb_bins*obs.area(), color='#3182bd', label='Combinatorial')\n",
+    "\n",
+    "plt.xlim(starting_bin,final_bin)\n",
+    "plt.xlabel(\"$m(B^+)$ [MeV/$c^2$]\")\n",
+    "plt.ylabel(\"Candidates / ({} MeV/$c^2$)\".format(round((final_bin-starting_bin)/nb_bins,2)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "corrected-patch",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "collaborative-operator",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
