@@ -1,0 +1,379 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "speaking-curtis",
+   "metadata": {},
+   "source": [
+    "# Study of the best MVA1 & MVA2 cut with $Z^0 \\rightarrow b\\bar{b}$ and $B^+ \\rightarrow \\tau^+ \\nu_\\tau$ background"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "military-homework",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/_collections_abc.py:832: MatplotlibDeprecationWarning: Support for setting the 'text.latex.preamble' or 'pgf.preamble' rcParam to a list of strings is deprecated since 3.3 and will be removed two minor releases later; set it to a single string instead.\n",
+      "  self[key] = other[key]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "adequate-judges",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "faced-morgan",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bu_df = bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "enormous-jimmy",
+   "metadata": {},
+   "source": [
+    "#### Parameters"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "abandoned-posting",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N_Z0 = 5*10**(12)\n",
+    "BF_Zbb = 0.1512\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bulgarian-insider",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "total_nb_gen = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "\n",
+    "nb_signal_events = len(bc_df['EVT_MVA1'])\n",
+    "#nb_signal_events2 = len(bc_df['EVT_MVA2'])\n",
+    "nb_bkg_events1 = len(bu_df['EVT_MVA2'])\n",
+    "nb_bkg_events2 = len(bb_df['EVT_MVA2'])\n",
+    "\n",
+    "initial_eff_signal = nb_signal_events/total_nb_gen\n",
+    "#initial_eff_signal2 = nb_signal_events1/total_nb_gen\n",
+    "initial_eff_bkg = nb_bkg_events1/total_nb_gen\n",
+    "initial_eff_incl_bkg = nb_bkg_events2/total_nb_gen"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "marked-reynolds",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def S_cut(cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion*initial_eff_signal*cut_eff\n",
+    "def B_cut(cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bu*BF_Butaunu*BF_tau3pion*initial_eff_bkg*cut_eff\n",
+    "def B_incl_cut(cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*initial_eff_incl_bkg*cut_eff"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "complex-anchor",
+   "metadata": {},
+   "source": [
+    "cut_step = 0.00005\n",
+    "cut_value1 = 0.99\n",
+    "cut_value2 = 0.99\n",
+    "var1 = 'EVT_MVA1'\n",
+    "var2 = 'EVT_MVA2'\n",
+    "\n",
+    "#max_cut_value = max(bc_df[var].max(), bb_df[var].max())\n",
+    "max_cut_value1 = min(bb_df[var1].max(),bu_df[var1].max())\n",
+    "max_cut_value2 = min(bb_df[var2].max(),bu_df[var2].max())\n",
+    "\n",
+    "l_cut1 = []\n",
+    "l_cut2 = []\n",
+    "l_s = []\n",
+    "l_b = []\n",
+    "l_p = []\n",
+    "\n",
+    "while (cut_value1 < max_cut_value1) :\n",
+    "    \n",
+    "    while (cut_value2 < max_cut_value2) :\n",
+    "\n",
+    "        df_signal = bc_df[(bc_df[var1] > cut_value1)&(bc_df[var2] > cut_value2)]\n",
+    "        df_bkg1 = bb_df[(bu_df[var1] > cut_value1)&(bu_df[var2] > cut_value2)]\n",
+    "        df_bkg2 = bb_df[(bb_df[var1] > cut_value1)&(bb_df[var2] > cut_value2)]\n",
+    "\n",
+    "        cut_eff_signal = len(df_signal)/nb_signal_events\n",
+    "        cut_eff_bkg1 = len(df_bkg1)/nb_bkg_events1\n",
+    "        cut_eff_bkg2 = len(df_bkg2)/nb_bkg_events2\n",
+    "\n",
+    "        s = S_cut(cut_eff_signal)\n",
+    "        b = B_cut(cut_eff_bkg1) + B_incl_cut(cut_eff_bkg2)\n",
+    "\n",
+    "        l_cut1.append(cut_value1)\n",
+    "        l_cut2.append(cut_value2)\n",
+    "        l_s.append(s)\n",
+    "        l_b.append(b)\n",
+    "        l_p.append(s/(s+b))\n",
+    "        \n",
+    "        cut_value2 += cut_step\n",
+    "        \n",
+    "    cut_value1 += cut_step\n",
+    "    cut_value2 = 0.98\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "seasonal-passion",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cut_step = 0.005\n",
+    "var1 = 'EVT_MVA1'\n",
+    "var2 = 'EVT_MVA2'\n",
+    "\n",
+    "initial_cut_1 = 0.95\n",
+    "initial_cut_2 = 0.95\n",
+    "\n",
+    "max_cut_value1 = min(bb_df[var1].max(),bu_df[var1].max())\n",
+    "max_cut_value2 = min(bb_df[var2].max(),bu_df[var2].max())\n",
+    "\n",
+    "\n",
+    "cut_1 = np.arange(initial_cut_1, max_cut_value1, cut_step)\n",
+    "cut_2 = np.arange(initial_cut_2, max_cut_value2, cut_step)\n",
+    "p_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "\n",
+    "\n",
+    "for i1, cut_i1 in enumerate(cut_1) :\n",
+    "    df_signal = bc_df[(bc_df[var1] > cut_i1)]\n",
+    "    df_bkg_1 = bu_df[(bu_df[var1] > cut_i1)]\n",
+    "    df_bkg_2 = bb_df[(bb_df[var1] > cut_i1)]\n",
+    "    \n",
+    "    for i2, cut_i2 in enumerate(cut_2) :\n",
+    "\n",
+    "        df_signal = df_signal[(df_signal[var2] > cut_i2)]\n",
+    "        df_bkg_1 = df_bkg_1[(df_bkg_1[var2] > cut_i2)]\n",
+    "        df_bkg_2 = df_bkg_2[(df_bkg_2[var2] > cut_i2)]\n",
+    "\n",
+    "        cut_eff_signal = len(df_signal)/nb_signal_events\n",
+    "        cut_eff_bkg_1 = len(df_bkg_1)/nb_bkg_events1\n",
+    "        cut_eff_bkg_2 = len(df_bkg_2)/nb_bkg_events2\n",
+    "\n",
+    "        s = S_cut(cut_eff_signal)\n",
+    "        b = B_cut(cut_eff_bkg_1) + B_incl_cut(cut_eff_bkg_2)\n",
+    "        \n",
+    "        p_tab[i2,i1] = s/(s+b)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "official-vocabulary",
+   "metadata": {},
+   "source": [
+    "cut_step = 0.00005\n",
+    "cut_value1 = 0.98\n",
+    "cut_value2 = 0.98\n",
+    "var1 = 'EVT_MVA1'\n",
+    "var2 = 'EVT_MVA2'\n",
+    "\n",
+    "#max_cut_value = max(bc_df[var].max(), bb_df[var].max())\n",
+    "max_cut_value1 = min(bb_df[var1].max(),bu_df[var1].max())\n",
+    "max_cut_value2 = min(bb_df[var2].max(),bu_df[var2].max())\n",
+    "\n",
+    "l_cut1 = []\n",
+    "l_cut2 = []\n",
+    "l_s = []\n",
+    "l_b = []\n",
+    "l_p = []\n",
+    "\n",
+    "while (cut_value1 < max_cut_value1) :\n",
+    "    \n",
+    "    df_signal_1 = bc_df[bc_df[var1] > cut_value1]\n",
+    "    df_bkg1_1 = bb_df[bu_df[var1] > cut_value1]\n",
+    "    df_bkg2_1 = bb_df[bb_df[var1] > cut_value1]\n",
+    "    \n",
+    "    cut_eff_signal_1 = len(df_signal_1)/nb_signal_events\n",
+    "    cut_eff_bkg1_1 = len(df_bkg1_1)/nb_bkg_events1\n",
+    "    cut_eff_bkg2_1 = len(df_bkg2_1)/nb_bkg_events2\n",
+    "    \n",
+    "    while (cut_value2 < max_cut_value2) :\n",
+    "\n",
+    "        df_signal = df_signal_1[bc_df[var2] > cut_value2]\n",
+    "        df_bkg1 = df_bkg1_1[bc_df[var2] > cut_value2]\n",
+    "        df_bkg2 = df_bkg2_1[bc_df[var2] > cut_value2]\n",
+    "\n",
+    "        cut_eff_signal = len(df_signal)/len(df_signal_1)\n",
+    "        cut_eff_bkg1 = len(df_bkg1)/len(df_bkg1_1)\n",
+    "        cut_eff_bkg2 = len(df_bkg2)/len(df_bkg2_1)\n",
+    "\n",
+    "        s = S_cut(cut_eff_signal_1, cut_eff_signal)\n",
+    "        b = B_cut(cut_eff_bkg1_1, cut_eff_bkg1) + B_incl_cut(cut_eff_bkg2_1, cut_eff_bkg2)\n",
+    "\n",
+    "        l_cut1.append(cut_value1)\n",
+    "        l_cut2.append(cut_value2)\n",
+    "        l_s.append(s)\n",
+    "        l_b.append(b)\n",
+    "        l_p.append(s/(s+b))\n",
+    "        \n",
+    "        cut_value2 += cut_step\n",
+    "        \n",
+    "    cut_value1 += cut_step\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "numerical-third",
+   "metadata": {},
+   "source": [
+    "print(l_p)\n",
+    "print(l_cut1)\n",
+    "print(l_cut2)\n",
+    "print(len(l_p))\n",
+    "print(len(l_cut1))\n",
+    "print(len(l_cut2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "material-conditions",
+   "metadata": {},
+   "source": [
+    "plt.figure()\n",
+    "plt.scatter(l_cut1, l_cut2, c=l_p, cmap='magma',s=10, alpha=0.5)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.xlim(0.99,1)\n",
+    "plt.ylim(0.99,1)\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "#plt.title(r'$B_c^+ \\rightarrow \\tau^+ \\nu_\\tau$, $B^+ \\rightarrow \\tau^+ \\nu_\\tau$ and inclusive $b\\bar{b}$ background')\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "czech-journey",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.imshow(p_tab, cmap='Greens',extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1]),origin='lower') #(vmin=0, vmax=0.01)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "#plt.xlim(0.99,1)\n",
+    "#plt.ylim(0.99,1)\n",
+    "#plt.title(r'$B_c^+ \\rightarrow \\tau^+ \\nu_\\tau$, $B^+ \\rightarrow \\tau^+ \\nu_\\tau$ bkg and inclusive $b\\bar{b}$ bkg')\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sunrise-bundle",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "p_tab"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "instrumental-particle",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.imshow(np.log(p_tab), cmap='Greens',extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1]),origin='lower') #(vmin=0, vmax=0.01)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "#plt.xlim(0.99,1)\n",
+    "#plt.ylim(0.99,1)\n",
+    "#plt.title(r'$B_c^+ \\rightarrow \\tau^+ \\nu_\\tau$, $B^+ \\rightarrow \\tau^+ \\nu_\\tau$ bkg and inclusive $b\\bar{b}$ bkg')\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "pleased-interim",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

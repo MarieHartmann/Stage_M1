@@ -1,0 +1,877 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "welsh-disclaimer",
+   "metadata": {},
+   "source": [
+    "# First look at $B_c^+ \\rightarrow \\tau^+ \\nu_\\tau$ and $B^+ \\rightarrow \\tau^+ \\nu_\\tau$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "caring-termination",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import uproot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "celtic-story",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sought-grenada",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cutting-mexico",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "confident-characterization",
+   "metadata": {},
+   "source": [
+    "#print(Bc_tree.keys())\n",
+    "#print(Bu_tree.keys())\n",
+    "#Bc_df = Bc_tree.arrays(library=\"pd\")\n",
+    "#Bu_df = Bu_tree.arrays(library=\"pd\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "monthly-chicken",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df = Bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "lightweight-scholarship",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bu_df = Bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "certain-smart",
+   "metadata": {},
+   "source": [
+    "## Purity calculation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "trying-shopping",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")\n",
+    "N_gen = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "print(f\"Number generated: {N_gen}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "everyday-letter",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Nombre de Z0 produits\n",
+    "N_Z0 = 5*10**(12)\n",
+    "#Brancing fraction Z -> b bbar\n",
+    "BF_Zbb = 0.1512\n",
+    "\n",
+    "#Production rate of Bc+ and B+ mesons\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "\n",
+    "#Branching fraction Bc+ -> tau+ nu et B+ -> tau+ nu\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "greek-tobago",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "S= "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "vocational-seeker",
+   "metadata": {},
+   "source": [
+    "## Histogrammes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "finite-subsection",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "brutal-responsibility",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "alone-register",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df.keys()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "weird-result",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "worthy-symphony",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df[\"EVT_MVA1\"].min()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "applied-background",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bu_df[\"EVT_MVA1\"].min()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "polar-camel",
+   "metadata": {},
+   "source": [
+    "### *Histogramme pour $B_c^+ \\rightarrow \\tau^+ \\nu_\\tau$*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "convinced-norwegian",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "l=(Bc_df['EVT_MVA1']>0.8)\n",
+    "print('Il y a {} évènements au total'.format(len(Bc_df['EVT_MVA1']))+\" correspondant à la désintégration Bc et {} d'entre eux ont une probabilité entre 0.99 et 1 d'être du signal.\".format(l.sum()))\n",
+    "print('Cela correspond à {} % des évènements'.format(round(l.sum()/len(Bc_df['EVT_MVA1']),2)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "infrared-fellow",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0.6\n",
+    "f_bin = 1\n",
+    "nb_bins = 100\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sweet-mobility",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "proba_limit=0.8\n",
+    "l=(Bc_df['EVT_MVA1']>proba_limit)\n",
+    "print(\"Il y a {} évènements au total correspondant à la désintégration Bc et {} d'entre eux ont une probabilité entre {} et 1 d'être du signal.\".format(len(Bc_df['EVT_MVA1']),l.sum(),proba_limit))\n",
+    "print('Cela correspond à {} % des évènements'.format(round(l.sum()/len(Bc_df['EVT_MVA1']),2)))\n",
+    "\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df['EVT_MVA1'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA1 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA1 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "signal-beatles",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "proba_limit=0.8\n",
+    "l=(Bc_df['EVT_MVA2']>proba_limit)\n",
+    "print(\"Il y a {} évènements au total correspondant à la désintégration Bc et {} d'entre eux ont une probabilité entre {} et 1 d'être du signal.\".format(len(Bc_df['EVT_MVA2']),l.sum(),proba_limit))\n",
+    "print('Cela correspond à {} % des évènements'.format(round(l.sum()/len(Bc_df['EVT_MVA2']),2)))\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df['EVT_MVA2'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd',label=name_bc)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA2 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA2 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "authorized-morgan",
+   "metadata": {},
+   "source": [
+    "### *Histogramme pour $B^+ \\rightarrow \\tau^+ \\nu_\\tau$*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "anticipated-lodge",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "proba_limit=0.8\n",
+    "l=(Bu_df['EVT_MVA1']>proba_limit)\n",
+    "print(\"Il y a {} évènements au total correspondant à la désintégration Bu et {} d'entre eux ont une probabilité entre {} et 1 d'être du signal.\".format(len(Bu_df['EVT_MVA1']),l.sum(),proba_limit))\n",
+    "print('Cela correspond à {} % des évènements'.format(round(l.sum()/len(Bu_df['EVT_MVA1']),2)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "brief-virginia",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "proba_limit=0.8\n",
+    "l=(Bu_df['EVT_MVA2']>proba_limit)\n",
+    "print(\"Il y a {} évènements au total correspondant à la désintégration Bu et {} d'entre eux ont une probabilité entre {} et 1 d'être du signal.\".format(len(Bu_df['EVT_MVA2']),l.sum(),proba_limit))\n",
+    "print('Cela correspond à {} % des évènements'.format(round(l.sum()/len(Bu_df['EVT_MVA2']),2)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "excited-origin",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0.6\n",
+    "f_bin = 1\n",
+    "nb_bins = 100\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bu_df['EVT_MVA1'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bu)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA1 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA1 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bu_df['EVT_MVA2'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd',label=name_bu)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA2 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA2 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "taken-fancy",
+   "metadata": {},
+   "source": [
+    "### *Comparaison des deux decays*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "appointed-produce",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0.95\n",
+    "f_bin = 1\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_MVA1'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA1 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA1 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "consistent-nylon",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0.95\n",
+    "f_bin = 1\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df['EVT_MVA2'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd',label=name_bc, density=True)\n",
+    "plt.hist(Bu_df['EVT_MVA2'], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\",label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$MVA2 (signal probability)\")\n",
+    "plt.ylabel(\"Number of events / ({}) EVT$\\_$MVA2 value\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "electronic-lingerie",
+   "metadata": {},
+   "source": [
+    "##### Emin"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "spectacular-transparency",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmin_E'\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], density=True, histtype='step', color= '#3182bd', label=name_bc)\n",
+    "plt.hist(Bu_df[variable], density=True, histtype='step', color= \"#2ca25f\", label=name_bu)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "polished-bennett",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 45\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmin_E'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere minimum energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "royal-paper",
+   "metadata": {},
+   "source": [
+    "##### Emax"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bored-leonard",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmax_E'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "outdoor-joshua",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 15\n",
+    "f_bin = 55\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmax_E'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere maximum energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "opposed-interstate",
+   "metadata": {},
+   "source": [
+    "##### Echargedmin"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "lined-entrepreneur",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmin_Echarged'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "prescription-physiology",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 45\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmin_Echarged'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere minimum charged energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "medium-passport",
+   "metadata": {},
+   "source": [
+    "##### Emaxcharged"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eight-dream",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmax_Echarged'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "forward-blues",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 46\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmax_Echarged'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere maximum charged energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "embedded-beach",
+   "metadata": {},
+   "source": [
+    "##### Hemisphere neutral energy max"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "collaborative-conflict",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmax_Eneutral'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "weird-grade",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 43\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmax_Eneutral'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere maximum neutral energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "western-rhythm",
+   "metadata": {},
+   "source": [
+    "##### Hemisphere neutral min energy"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "induced-voltage",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_ThrustEmin_Eneutral'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "material-devices",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 17\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_ThrustEmin_Eneutral'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"Hemisphere minimum neutral energy [GeV]\")\n",
+    "plt.ylabel(\"Number of events / {} GeV\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "reliable-acrylic",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "vanilla-meter",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable= 'EVT_CandVtxFD'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "alive-tobacco",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 0\n",
+    "f_bin = 12\n",
+    "nb_bins = 50\n",
+    "name_bu = r\"$B^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "name_bc = r\"$B_c^{+}$ $\\longrightarrow$ $\\tau^{+}\\nu_\\tau$\"\n",
+    "variable= 'EVT_CandVtxFD'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(Bc_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= '#3182bd', label=name_bc, density=True)\n",
+    "plt.hist(Bu_df[variable], bins=nb_bins, range=(s_bin,f_bin), histtype='step', color= \"#2ca25f\", label=name_bu, density=True)\n",
+    "plt.xlim(s_bin,f_bin)\n",
+    "plt.xlabel(\"EVT$\\_$CandVtxFD\")\n",
+    "plt.ylabel(\"Number of events / {}\".format(round((f_bin-s_bin)/nb_bins,3)))\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "simplified-cowboy",
+   "metadata": {},
+   "source": [
+    "#### Histogramme à 2D "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "average-archives",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin_x = 0.9\n",
+    "f_bin_x = 1\n",
+    "n_bin_x = 70\n",
+    "x_var = 'EVT_MVA2'\n",
+    "\n",
+    "s_bin_y = 0\n",
+    "f_bin_y = 12\n",
+    "n_bin_y = 70\n",
+    "y_var = 'EVT_CandVtxFD'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "oriented-country",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.hist2d(Bu_df[x_var],Bu_df[y_var], bins=[n_bin_x, n_bin_y], range=[[s_bin_x,f_bin_x],[s_bin_y,f_bin_y]], density=True, cmap='magma')\n",
+    "plt.xlabel(\"MVA2\")\n",
+    "plt.ylabel(\"3$\\pi$ seperation from the PV [mm]\")\n",
+    "plt.xlim(0.97,1)\n",
+    "plt.ylim(0,6)\n",
+    "plt.title(r\"$B^{+}$ $\\rightarrow$ $\\tau^{+}\\nu_\\tau$\")\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sitting-sleep",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.hist2d(Bc_df[x_var],Bc_df[y_var], bins=[n_bin_x, n_bin_y], range=[[s_bin_x,f_bin_x],[s_bin_y,f_bin_y]], density=True, cmap='magma')\n",
+    "plt.xlabel(\"MVA2\")\n",
+    "plt.ylabel(\"3$\\pi$ seperation from the PV [mm]\")\n",
+    "plt.xlim(0.97,1)\n",
+    "plt.ylim(0,6)\n",
+    "plt.colorbar() #nous donne une idée du nombre d'évènements associés aux couleurs\n",
+    "plt.title(r\"$B_c^{+}$ $\\rightarrow$ $\\tau^{+}\\nu_\\tau$\")\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "modern-saver",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin_x = 0.995\n",
+    "f_bin_x = 1\n",
+    "n_bin_x = 50\n",
+    "x_var = 'EVT_MVA1'\n",
+    "\n",
+    "s_bin_y = 0.98\n",
+    "f_bin_y = 1\n",
+    "n_bin_y = 50\n",
+    "y_var = 'EVT_MVA2'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "hybrid-adelaide",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.hist2d(Bc_df[x_var],Bc_df[y_var], bins=[n_bin_x, n_bin_y], range=[[s_bin_x,f_bin_x],[s_bin_y,f_bin_y]], density=True, cmap='magma')\n",
+    "plt.xlabel(\"MVA1\")\n",
+    "plt.ylabel(\"MVA2\")\n",
+    "plt.xlim(s_bin_x,f_bin_x)\n",
+    "plt.ylim(s_bin_y,f_bin_y)\n",
+    "plt.colorbar() #nous donne une idée du nombre d'évènements associés aux couleurs\n",
+    "plt.title(r\"$B_c^{+}$ $\\rightarrow$ $\\tau^{+}\\nu_\\tau$\")\n",
+    "plt.show()\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist2d(Bu_df[x_var],Bu_df[y_var], bins=[n_bin_x, n_bin_y], range=[[s_bin_x,f_bin_x],[s_bin_y,f_bin_y]], density=True, cmap='magma')\n",
+    "plt.xlabel(\"MVA1\")\n",
+    "plt.ylabel(\"MVA2\")\n",
+    "plt.xlim(s_bin_x,f_bin_x)\n",
+    "plt.ylim(s_bin_y,f_bin_y)\n",
+    "plt.title(r\"$B^{+}$ $\\rightarrow$ $\\tau^{+}\\nu_\\tau$\")\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "small-robin",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

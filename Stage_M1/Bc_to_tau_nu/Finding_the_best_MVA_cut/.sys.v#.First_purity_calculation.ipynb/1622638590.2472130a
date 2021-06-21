@@ -1,0 +1,147 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "athletic-negotiation",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "neutral-holmes",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "found-console",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import uproot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "burning-crest",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "Bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "valued-delta",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df = Bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "Bu_df = Bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "approved-reasoning",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")\n",
+    "N_gen = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "N_event = len(Bc_df['EVT_MVA1'])\n",
+    "\n",
+    "print(f\"Number generated: {N_gen}\")\n",
+    "print(f\"Number of events in the tree: {N_event}\")\n",
+    "mva_e = N_event/N_gen\n",
+    "print(f\"Cut efficiency : {mva_e}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sticky-physiology",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Nombre de Z0 produits\n",
+    "N_Z0 = 5*10**(12)\n",
+    "\n",
+    "#Brancing fraction Z -> b bbar\n",
+    "BF_Zbb = 0.1512\n",
+    "\n",
+    "#Production rate of Bc+ and B+ mesons\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "\n",
+    "#Branching fraction Bc+ -> tau+ nu et B+ -> tau+ nu\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "flush-radical",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "S = N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion\n",
+    "B = N_Z0*BF_Zbb*2*f_Bu*BF_Butaunu*BF_tau3pion\n",
+    "print('S = {}'.format(S))\n",
+    "print('B = {}'.format(B))\n",
+    "P = S/(S+B)\n",
+    "print('P= {}'.format(P))\n",
+    "print('  ')\n",
+    "S_MVA = S*mva_e\n",
+    "B_MVA = B*mva_e\n",
+    "print('S(MVA) = {}'.format(S_MVA))\n",
+    "print('B(MVA) = {}'.format(B_MVA))\n",
+    "P_MVA = S_MVA/(S_MVA+B_MVA)\n",
+    "print('P(MVA) = {}'.format(P_MVA))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "presidential-phoenix",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

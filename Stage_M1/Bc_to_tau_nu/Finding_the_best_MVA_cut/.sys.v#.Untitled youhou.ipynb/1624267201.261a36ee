@@ -1,0 +1,239 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "supposed-helen",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/_collections_abc.py:832: MatplotlibDeprecationWarning: Support for setting the 'text.latex.preamble' or 'pgf.preamble' rcParam to a list of strings is deprecated since 3.3 and will be removed two minor releases later; set it to a single string instead.\n",
+      "  self[key] = other[key]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import scipy.interpolate as interpolate\n",
+    "import pickle\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "standing-alcohol",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "damaged-circuit",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bu_df = bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "sharing-brooklyn",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N_Z0 = 5*10**(12)\n",
+    "BF_Zbb = 0.1512\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "verbal-insurance",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spline_MVA1_log = pickle.load(open('2D_plot/Spline_functions/MVA1_spline_log.pkl','rb'))\n",
+    "spline_MVA2_log = pickle.load(open('2D_plot/Spline_functions/MVA2_spline_log.pkl','rb'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "fluid-planning",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def S_cut(initial_eff_signal, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion*initial_eff_signal*cut_eff\n",
+    "\n",
+    "def B_incl_cut(initial_eff_incl_bkg, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*initial_eff_incl_bkg*cut_eff\n",
+    "\n",
+    "def B_cut(initial_eff_signal, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bu*BF_Butaunu*BF_tau3pion*initial_eff_signal*cut_eff"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "adolescent-nursing",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "var1 = 'EVT_MVA1'\n",
+    "var2 = 'EVT_MVA2'\n",
+    "\n",
+    "MVA1_cut_log = -np.log(1-0.95)\n",
+    "MVA2_cut_log = -np.log(1-0.95)\n",
+    "max_cut_1_log = 9\n",
+    "max_cut_2_log = 8\n",
+    "\n",
+    "bc_init = bc_df[bc_df[var2]> 0.95]\n",
+    "bc_init = bc_init[bc_init[var1]> 0.95]\n",
+    "bu_init = bu_df[bu_df[var2]> 0.95]\n",
+    "bu_init = bu_init[bu_init[var1]> 0.95]\n",
+    "bb_init = bb_df[bb_df[var2]> 0.95]\n",
+    "bb_init = bb_init[bb_init[var1]> 0.95]\n",
+    "\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_bc_init = len(bc_init)\n",
+    "nb_bu_init = len(bu_init)\n",
+    "nb_bb_init = len(bb_init)\n",
+    "nb_bb1_init = interpolate.splint(MVA1_cut_log, max_cut_1_log, spline_MVA1_log)\n",
+    "nb_bb2_init = interpolate.splint(MVA2_cut_log, max_cut_2_log, spline_MVA2_log)\n",
+    "\n",
+    "initial_eff_bc = nb_bc_init / nb_total_events\n",
+    "initial_eff_bu = nb_bu_init / nb_total_events\n",
+    "initial_eff_bb = nb_bb_init / nb_total_events\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "presidential-karen",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "best_MVA1_cut = 0.999865\n",
+    "best_MVA2_cut = 0.998670\n",
+    "\n",
+    "best_MVA1_cut_log = -np.log(1-best_MVA1_cut)\n",
+    "best_MVA2_cut_log = -np.log(1-best_MVA2_cut)\n",
+    "max_cut_1_log = 9\n",
+    "max_cut_2_log = 8\n",
+    "\n",
+    "\n",
+    "bu_cut = bu_df[bu_df['EVT_MVA1'] > best_MVA1_cut]\n",
+    "bu_cut = bu_cut[bu_cut['EVT_MVA2'] > best_MVA2_cut]\n",
+    "\n",
+    "bc_cut = bc_df[bc_df['EVT_MVA1'] > best_MVA1_cut]\n",
+    "bc_cut = bc_cut[bc_cut['EVT_MVA2'] > best_MVA2_cut]\n",
+    "\n",
+    "bb_cut = bb_df[bb_df['EVT_MVA1'] > best_MVA1_cut]\n",
+    "bb_cut = bb_cut[bb_cut['EVT_MVA2'] > best_MVA2_cut]\n",
+    "\n",
+    "nb_bc_cut = len(bc_cut)\n",
+    "nb_bu_cut = len(bu_cut)\n",
+    "nb_bb_cut_i1 = interpolate.splint(best_MVA1_cut_log, max_cut_1_log, spline_MVA1_log)\n",
+    "nb_bb_cut_i2 = interpolate.splint(best_MVA2_cut_log, max_cut_2_log, spline_MVA2_log)\n",
+    "\n",
+    "eff_bc = nb_bc_cut/nb_bc_init \n",
+    "eff_bu = nb_bu_cut/nb_bu_init \n",
+    "eff_bb = (nb_bb_cut_i1/nb_bb1_init) * (nb_bb_cut_i2/nb_bb2_init)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "substantial-wallet",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N_BC = S_cut(initial_eff_bc, eff_bc)\n",
+    "N_BU = B_cut(initial_eff_bu, eff_bu)\n",
+    "N_BB = B_incl_cut(initial_eff_bb, eff_bb)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "recorded-humanity",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "6016\n",
+      "657.1598487552\n",
+      "18.4737242592\n",
+      "193.1041830805091\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(len(bc_cut))\n",
+    "print(N_BC)\n",
+    "print(N_BU)\n",
+    "print(N_BB)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "julian-trigger",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

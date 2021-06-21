@@ -1,0 +1,330 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "characteristic-astrology",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "powered-vampire",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/_collections_abc.py:832: MatplotlibDeprecationWarning: Support for setting the 'text.latex.preamble' or 'pgf.preamble' rcParam to a list of strings is deprecated since 3.3 and will be removed two minor releases later; set it to a single string instead.\n",
+      "  self[key] = other[key]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "owned-fancy",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "suitable-imaging",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "solved-entrepreneur",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "republican-falls",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "var_1 = 'EVT_MVA1'\n",
+    "var_2 = 'EVT_MVA2'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "difficult-royalty",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N_Z0 = 5*10**(12)\n",
+    "BF_Zbb = 0.1512\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "cleared-enclosure",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "total_nb_gen = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "\n",
+    "#Variable_1\n",
+    "nb_signal_events_1 = len(bc_df[var_1])\n",
+    "nb_incl_bkg_events_1 = len(bb_df[var_1])\n",
+    "\n",
+    "initial_eff_signal_1 = nb_signal_events_1/total_nb_gen\n",
+    "initial_eff_incl_bkg_1 = nb_incl_bkg_events_1/total_nb_gen\n",
+    "\n",
+    "#Variable_2\n",
+    "nb_signal_events_2 = len(bc_df[var_2])\n",
+    "nb_incl_bkg_events_2 = len(bb_df[var_2])\n",
+    "\n",
+    "initial_eff_signal_2 = nb_signal_events_2/total_nb_gen\n",
+    "initial_eff_incl_bkg_2 = nb_incl_bkg_events_2/total_nb_gen"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "growing-front",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def S_cut(initial_eff_signal, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion*initial_eff_signal*cut_eff\n",
+    "\n",
+    "def B_incl_cut(initial_eff_incl_bkg, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*initial_eff_incl_bkg*cut_eff"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cardiac-blade",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "uniform-strain",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[5.07350546e-05 5.10669782e-05 5.14018008e-05 5.17119066e-05\n",
+      " 5.20432036e-05 5.24020515e-05 5.27371935e-05 5.30614210e-05\n",
+      " 5.34276492e-05 5.38069430e-05 5.42094175e-05 5.45830463e-05\n",
+      " 5.49401294e-05 5.53315863e-05 5.57941855e-05 5.62164388e-05\n",
+      " 5.66759868e-05 5.70876984e-05 5.75370823e-05 5.80059626e-05\n",
+      " 5.84410111e-05 5.89055167e-05 5.93660485e-05 5.98810897e-05\n",
+      " 6.04017359e-05 6.09746330e-05 6.14809263e-05 6.20757070e-05\n",
+      " 6.25755264e-05 6.31110848e-05 6.37145302e-05 6.42934465e-05\n",
+      " 6.48990006e-05 6.55234686e-05 6.62281807e-05 6.69016028e-05\n",
+      " 6.74706996e-05 6.82213899e-05 6.89200336e-05 6.96681166e-05\n",
+      " 7.04636904e-05 7.12894129e-05 7.20992282e-05 7.29296673e-05\n",
+      " 7.37382884e-05 7.46476976e-05 7.55962989e-05 7.65843225e-05\n",
+      " 7.76624724e-05 7.86519171e-05 7.96620250e-05 8.08607706e-05\n",
+      " 8.19539159e-05 8.30520154e-05 8.42794114e-05 8.56149644e-05\n",
+      " 8.68704817e-05 8.81511020e-05 8.94551224e-05 9.09381582e-05\n",
+      " 9.24903873e-05 9.41408478e-05 9.58981863e-05 9.76714733e-05\n",
+      " 9.95369343e-05 1.01576938e-04 1.03679371e-04 1.05778572e-04\n",
+      " 1.07918814e-04 1.10469201e-04 1.13182873e-04 1.15715869e-04\n",
+      " 1.18769612e-04 1.22098983e-04 1.25441665e-04 1.29291519e-04\n",
+      " 1.33370871e-04 1.38006296e-04 1.42560443e-04 1.47930465e-04\n",
+      " 1.53241359e-04 1.59322528e-04 1.66164685e-04 1.73785292e-04\n",
+      " 1.81951552e-04 1.90772026e-04 2.01049453e-04 2.12610895e-04\n",
+      " 2.25959923e-04 2.40536365e-04 2.58673496e-04 2.81975335e-04\n",
+      " 3.08732034e-04 3.38327469e-04 3.82255086e-04 4.39348571e-04\n",
+      " 5.10928785e-04 6.44522813e-04 8.60494293e-04 1.41616902e-03]\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Variable 1\n",
+    "var = var_1 #:)\n",
+    "nb_signal_events = nb_signal_events_1 #:)\n",
+    "nb_incl_bkg_events = nb_incl_bkg_events_1 #:)\n",
+    "initial_eff_signal = initial_eff_signal_1 #:)\n",
+    "initial_eff_incl_bkg = initial_eff_incl_bkg_1 #:)\n",
+    "\n",
+    "initial_cut = 0.95\n",
+    "max_cut_value = bb_df[var].max()\n",
+    "cut_step = 0.0005\n",
+    "\n",
+    "cut = np.arange(initial_cut, max_cut_value, cut_step)\n",
+    "p_tab = np.zeros(np.size(cut))\n",
+    "\n",
+    "\n",
+    "for i, cut_i in enumerate(cut) :\n",
+    "    \n",
+    "    df_signal = bc_df[bc_df[var] > cut_i]\n",
+    "    df_bkg = bb_df[bb_df[var] > cut_i]\n",
+    "\n",
+    "    cut_eff_signal = len(df_signal)/nb_signal_events\n",
+    "    cut_eff_bkg = len(df_bkg)/nb_incl_bkg_events\n",
+    "\n",
+    "    s = S_cut(initial_eff_signal, cut_eff_signal)\n",
+    "    b = B_incl_cut(initial_eff_incl_bkg, cut_eff_bkg)\n",
+    "        \n",
+    "    p_tab[i] = s/(s+b)\n",
+    "    \n",
+    "print (p_tab)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "widespread-syria",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[]"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.figure()\n",
+    "plt.scatter(cut, p_tab, color= '#3182bd', s=2)\n",
+    "plt.xlabel('MVA1')\n",
+    "plt.ylabel('P(MVA1)')\n",
+    "plt.title(r'Inclusive Z^0 \\rightarrow b\\bar{b}')\n",
+    "plt.plot()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "chubby-manufacturer",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "SyntaxError",
+     "evalue": "Missing parentheses in call to 'print'. Did you mean print(p_tab)? (<ipython-input-21-360ba18ce217>, line 29)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-21-360ba18ce217>\"\u001b[0;36m, line \u001b[0;32m29\u001b[0m\n\u001b[0;31m    print p_tab\u001b[0m\n\u001b[0m          ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m Missing parentheses in call to 'print'. Did you mean print(p_tab)?\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Variable 2\n",
+    "var = var_2 #:)\n",
+    "nb_signal_events = nb_signal_events_2 #:)\n",
+    "nb_incl_bkg_events = nb_incl_bkg_events_2 #:)\n",
+    "initial_eff_signal = initial_eff_signal_2 #:)\n",
+    "initial_eff_incl_bkg = initial_eff_incl_bkg_2 #:)\n",
+    "\n",
+    "initial_cut = 0.95\n",
+    "max_cut_value = bb_df[var].max()\n",
+    "cut_step = 0.0005\n",
+    "\n",
+    "cut_bis = np.arange(initial_cut, max_cut_value, cut_step)\n",
+    "p_tab_bis = np.zeros(np.size(cut))\n",
+    "\n",
+    "\n",
+    "for i, cut_i in enumerate(cut) :\n",
+    "    \n",
+    "    df_signal = bc_df[bc_df[var] > cut_i]\n",
+    "    df_bkg = bb_df[bb_df[var] > cut_i]\n",
+    "\n",
+    "    cut_eff_signal = len(df_signal)/nb_signal_events\n",
+    "    cut_eff_bkg = len(df_bkg)/nb_incl_bkg_events\n",
+    "\n",
+    "    s = S_cut(initial_eff_signal, cut_eff_signal)\n",
+    "    b = B_incl_cut(initial_eff_incl_bkg, cut_eff_bkg)\n",
+    "        \n",
+    "    p_tab_bis[i] = s/(s+b)\n",
+    "    \n",
+    "print (p_tab_bis)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "exclusive-series",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

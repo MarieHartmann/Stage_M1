@@ -1,0 +1,723 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "cordless-receiver",
+   "metadata": {},
+   "source": [
+    "# Trouver la meilleure combinaison de cut MVA1 & MVA2 en utilisant les valeurs des intégrales de splines functions en logarithme"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "american-spectrum",
+   "metadata": {},
+   "source": [
+    "Les intégrales de spline functions seront uniquement utilisées pour calculer le nombre d'évenements de bkg restant (à hautes valeurs de MVA l'outil len nous indiquait 0 ce qui nous posait problème niveau calcul)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bright-fellowship",
+   "metadata": {},
+   "source": [
+    "   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "religious-corruption",
+   "metadata": {},
+   "source": [
+    "### Opérations préalables"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "studied-drunk",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import scipy.interpolate as interpolate\n",
+    "import pickle\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "floppy-blackjack",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "taken-textbook",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "damaged-graphic",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N_Z0 = 5*10**(12)\n",
+    "BF_Zbb = 0.1512\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "signed-extra",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def S_cut(initial_eff_signal, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion*initial_eff_signal*cut_eff\n",
+    "\n",
+    "def B_incl_cut(initial_eff_incl_bkg, cut_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*initial_eff_incl_bkg*cut_eff"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "regional-passage",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spline_MVA1_log = pickle.load(open('Spline_functions/MVA1_spline_log.pkl','rb'))\n",
+    "spline_MVA2_log = pickle.load(open('Spline_functions/MVA2_spline_log.pkl','rb'))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "blond-creation",
+   "metadata": {},
+   "source": [
+    "   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "burning-pharmacy",
+   "metadata": {},
+   "source": [
+    "    "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "plain-jefferson",
+   "metadata": {},
+   "source": [
+    "### Programme permettant de calucler les valeurs de S, B et P en fonction des valeurs de MVA1 & MVA2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "casual-bermuda",
+   "metadata": {},
+   "source": [
+    "##### Vérification des valeurs"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "english-economy",
+   "metadata": {},
+   "source": [
+    "cut_step = 0.00005\n",
+    "\n",
+    "#MVA1\n",
+    "var1 = 'EVT_MVA1'\n",
+    "min_cut_1 = 0.99\n",
+    "max_cut_1_log = 9\n",
+    "\n",
+    "min_cut_1_log = -np.log(1 - min_cut_1)\n",
+    "max_cut_1 = 1 - np.exp(-max_cut_1_log)\n",
+    "nb_bkg_events_1 = interpolate.splint(0.95, 9, spline_MVA1_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#MVA2\n",
+    "var2 = 'EVT_MVA2'\n",
+    "min_cut_2 = 0.99\n",
+    "max_cut_2_log =  8\n",
+    "\n",
+    "max_cut_2 = 1 - np.exp(-max_cut_2_log)\n",
+    "min_cut_2_log = -np.log(1 - min_cut_2)\n",
+    "nb_bkg_events_2 = interpolate.splint(0.95, 8, spline_MVA2_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#Parameters\n",
+    "sig = bc_df[bc_df[var2]> 0.95]\n",
+    "sig = sig[sig[var1]> 0.95]\n",
+    "bkg = bb_df[bb_df[var2]> 0.95]  #Il faut que l'on considère le même cut de départ pour tous\n",
+    "bkg = bkg[bkg[var1]> 0.95] # (pour les len ou pour les splines)\n",
+    "\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_signal_events = len(sig)\n",
+    "nb_bkg_events = len(bkg)\n",
+    "\n",
+    "print('nb total ={} nb sig events = {} et nb bkg events = {}'.format(nb_total_events, nb_signal_events,nb_bkg_events))\n",
+    "\n",
+    "initial_eff_signal = nb_signal_events / nb_total_events\n",
+    "initial_eff_incl_bkg = nb_bkg_events / nb_total_events\n",
+    "\n",
+    "print('eff sig {}'.format(initial_eff_signal))\n",
+    "print('eff bkg {}'.format(initial_eff_incl_bkg))\n",
+    "\n",
+    "sig_bis = bc_df[bc_df[var2]> 0.99]\n",
+    "sig_bis = sig_bis[sig_bis[var1]> 0.99]\n",
+    "print('eff sig = {}'.format(len(sig_bis)/nb_total_events))\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "jewish-lobby",
+   "metadata": {},
+   "source": [
+    "cut_1 = np.arange(min_cut_1, max_cut_1, cut_step)\n",
+    "cut_2 = np.arange(min_cut_2, max_cut_2, cut_step)\n",
+    "p_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "s_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "b_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "\n",
+    "cut_i1 = cut_1[0]\n",
+    "cut_i2 = cut_2[0]\n",
+    "print('cut_1 = {} cut_2 = {}'.format(cut_i1, cut_i2 ))\n",
+    "\n",
+    "cut_i1_log = -np.log(1-cut_i1)\n",
+    "cut_i2_log = -np.log(1-cut_i2) #log\n",
+    "\n",
+    "df_signal_ = bc_df[bc_df[var1]>cut_i1]\n",
+    "df_signal = df_signal_[df_signal_[var2]>cut_i2]\n",
+    "\n",
+    "nb_signal_both_cut = len(df_signal)\n",
+    "nb_bkg_cut_i1 = interpolate.splint(cut_i1_log, max_cut_1_log, spline_MVA1_log) \n",
+    "nb_bkg_cut_i2 = interpolate.splint(cut_i2_log, max_cut_2_log, spline_MVA2_log)\n",
+    "print('nb bkg events MVA1 {}, nb bkg events MVA1 {}'.format(nb_bkg_events_1, nb_bkg_events_2))\n",
+    "print('nb bkg events after MVA1 cut = {}, nb bkg events after MVA2 cut = {}'.format(nb_bkg_cut_i1, nb_bkg_cut_i2))\n",
+    "\n",
+    "\n",
+    "signal_cut_eff = nb_signal_both_cut / nb_signal_events\n",
+    "bkg_cut_eff = (nb_bkg_cut_i1 / nb_bkg_events_1) * (nb_bkg_cut_i2 / nb_bkg_events_2)\n",
+    "\n",
+    "print('sig_eff = {} et bkg_eff = {}'.format(signal_cut_eff, bkg_cut_eff))\n",
+    "\n",
+    "s = S_cut(initial_eff_incl_bkg, signal_cut_eff)\n",
+    "b = B_incl_cut(initial_eff_incl_bkg, bkg_cut_eff) \n",
+    "\n",
+    "print('S(MVA) = {} et B(MVA) = {}'.format(s,b))\n",
+    "\n",
+    "print('P(MVA) = {}'.format(s/(s+b)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "monetary-cycling",
+   "metadata": {},
+   "source": [
+    "print('mva1 calcul intégrale = {}'.format(interpolate.splint(-np.log(1-0.95), 9, spline_MVA1_log)))\n",
+    "print('mva1 calcul intégrale = {}'.format(interpolate.splint(-np.log(1-0.99), 9, spline_MVA1_log)))\n",
+    "print('mva2 calcul intégrale = {}'.format(interpolate.splint(-np.log(1-0.95), 8, spline_MVA2_log)))\n",
+    "print('mva2 calcul intégrale = {}'.format(interpolate.splint(-np.log(1-0.99), 8, spline_MVA2_log)))\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "innovative-adobe",
+   "metadata": {},
+   "source": [
+    "##### Programme qui fonctionne"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "superb-cleanup",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cut_step = 0.000065\n",
+    "#100 valeurs donne un effet continu\n",
+    "N_sig = 40000\n",
+    "\n",
+    "#MVA1\n",
+    "var1 = 'EVT_MVA1'\n",
+    "min_cut_1 = 0.999\n",
+    "max_cut_1_log = 9\n",
+    "\n",
+    "min_cut_1_log = -np.log(1 - min_cut_1)\n",
+    "max_cut_1 = 1 - np.exp(-max_cut_1_log)\n",
+    "nb_bkg_events_1 = interpolate.splint(0.95, 9, spline_MVA1_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#MVA2\n",
+    "var2 = 'EVT_MVA2'\n",
+    "min_cut_2 = 0.999\n",
+    "max_cut_2_log = 8\n",
+    "\n",
+    "max_cut_2 = 1 - np.exp(-max_cut_2_log)\n",
+    "min_cut_2_log = -np.log(1 - min_cut_2)\n",
+    "nb_bkg_events_2 = interpolate.splint(0.95, 8, spline_MVA2_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#Parameters\n",
+    "sig = bc_df[bc_df[var2]> 0.95]\n",
+    "sig = sig[sig[var1]> 0.95]\n",
+    "bkg = bb_df[bb_df[var2]> 0.95]  #Il faut que l'on considère le même cut de départ pour tous\n",
+    "bkg = bkg[bkg[var1]> 0.95] # (pour les len ou pour les splines)\n",
+    "\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_signal_events = len(sig)\n",
+    "nb_bkg_events = len(bkg)\n",
+    "\n",
+    "initial_eff_signal = nb_signal_events / nb_total_events\n",
+    "initial_eff_incl_bkg = nb_bkg_events / nb_total_events\n",
+    "\n",
+    "#print('eff sig {}'.format(initial_eff_signal))\n",
+    "#print('eff bkg {}'.format(initial_eff_incl_bkg))\n",
+    "\n",
+    "#np.array()\n",
+    "cut_1 = np.arange(min_cut_1, max_cut_1, cut_step)\n",
+    "cut_2 = np.arange(min_cut_2, max_cut_2, cut_step)\n",
+    "p_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "s_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "b_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "\n",
+    "\n",
+    "for i1, cut_i1 in enumerate(cut_1) :\n",
+    "   \n",
+    "    cut_i1_log = -np.log(1 - cut_i1)\n",
+    "    df_sig = bc_df[ bc_df[var1] > cut_i1 ]\n",
+    "    \n",
+    "    for i2, cut_i2 in enumerate(cut_2) :\n",
+    "        \n",
+    "        cut_i2_log = -np.log(1-cut_i2) #log\n",
+    "        df_signal = df_sig[df_sig[var2]>cut_i2]\n",
+    "\n",
+    "        nb_sig_cut_i1_i2 = len(df_signal)\n",
+    "        nb_bkg_cut_i1 = interpolate.splint(cut_i1_log, max_cut_1_log, spline_MVA1_log) #log\n",
+    "        nb_bkg_cut_i2 = interpolate.splint(cut_i2_log, max_cut_2_log, spline_MVA2_log) #log\n",
+    "        # print('Integral value MVA1 = {}. MVA1cut = {}'.format(nb_bkg_cut_i1, cut_i1_log))\n",
+    "        # print('Integral value MVA2 = {}. MVA2 cut = {}'.format(nb_bkg_cut_i2, cut_i2_log))\n",
+    "        if nb_sig_cut_i1_i2\n",
+    "        \n",
+    "        signal_cut_eff = nb_sig_cut_i1_i2 / nb_signal_events\n",
+    "        bkg_cut_eff = (nb_bkg_cut_i1 / nb_bkg_events_1) * (nb_bkg_cut_i2 / nb_bkg_events_2)\n",
+    "\n",
+    "        s = S_cut(initial_eff_signal, signal_cut_eff)\n",
+    "        b = B_incl_cut(initial_eff_incl_bkg, bkg_cut_eff) \n",
+    "        \n",
+    "        if b==0 :\n",
+    "            print('B(MVA1,MVA2)=0 pour le cut MVA1 = {} et pour le cut MVA2 = {} ce qui correspond à la coordonées ({},{})'.format(cut_i1,cut_i2,i2,i1))\n",
+    "            ##### Vérification qu'il n'y a pas de valeurs de background égales à 0\n",
+    "            \n",
+    "        s_tab[i2,i1] = s\n",
+    "        b_tab[i2,i1] = b\n",
+    "        p_tab[i2,i1] = s/(s+b)\n",
+    "        \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "interim-manual",
+   "metadata": {},
+   "source": [
+    "   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "decimal-sterling",
+   "metadata": {},
+   "source": [
+    "   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "running-pakistan",
+   "metadata": {},
+   "source": [
+    "### Graphiques représentant les valeurs de S, B et P en fonctions des valeurs de MVA1 & MVA2 "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "gross-dress",
+   "metadata": {},
+   "source": [
+    "##### Graphes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "engaged-disclosure",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.imshow(p_tab, cmap='Greens', origin='lower', extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1])) #(vmin=0, vmax=0.01)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "plt.title('P(MVA1,MVA2)')\n",
+    "plt.xlim(cut_1[0],cut_1[-1])\n",
+    "plt.ylim(cut_2[0],cut_2[-1])\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "innovative-genome",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.imshow(s_tab, cmap='Blues', origin='lower', extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1])) #(vmin=0, vmax=0.01)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "plt.title('S(MVA1,MVA2)')\n",
+    "plt.xlim(cut_1[0],cut_1[-1])\n",
+    "plt.ylim(cut_2[0],cut_2[-1])\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sunrise-ranking",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.imshow(b_tab, cmap='Purples', origin='lower', extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1])) #(vmin=0, vmax=0.01)\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "plt.title('B(MVA1,MVA2)')\n",
+    "plt.xlim(cut_1[0],cut_1[-1])\n",
+    "plt.ylim(cut_2[0],cut_2[-1])\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "likely-seating",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "b_tab.min()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "intellectual-commitment",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(-np.log(1-cut_2[-1]))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "planned-tobago",
+   "metadata": {},
+   "source": [
+    "##### Vérification des graphes en utilisant scatter plot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "excessive-moisture",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cut_step = 0.0005\n",
+    "\n",
+    "#MVA1\n",
+    "var1 = 'EVT_MVA1'\n",
+    "min_cut_1 = 0.99\n",
+    "max_cut_1_log = 9\n",
+    "\n",
+    "min_cut_1_log = -np.log(1 - min_cut_1)\n",
+    "max_cut_1 = 1 - np.exp(-max_cut_1_log)\n",
+    "nb_bkg_events_1 = interpolate.splint(0.95, 9, spline_MVA1_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#MVA2\n",
+    "var2 = 'EVT_MVA2'\n",
+    "min_cut_2 = 0.99\n",
+    "max_cut_2_log = 8\n",
+    "\n",
+    "max_cut_2 = 1 - np.exp(-max_cut_2_log)\n",
+    "min_cut_2_log = -np.log(1 - min_cut_2)\n",
+    "nb_bkg_events_2 = interpolate.splint(0.95, 8, spline_MVA2_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#Parameters\n",
+    "sig = bc_df[bc_df[var2]> 0.95]\n",
+    "sig = sig[sig[var1]> 0.95]\n",
+    "bkg = bb_df[bb_df[var2]> 0.95]  #Il faut que l'on considère le même cut de départ pour tous\n",
+    "bkg = bkg[bkg[var1]> 0.95] # (pour les len ou pour les splines)\n",
+    "\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_signal_events = len(sig)\n",
+    "nb_bkg_events = len(bkg)\n",
+    "\n",
+    "initial_eff_signal = nb_signal_events / nb_total_events\n",
+    "initial_eff_incl_bkg = nb_bkg_events / nb_total_events\n",
+    "\n",
+    "print('eff sig {}'.format(initial_eff_signal))\n",
+    "print('eff bkg {}'.format(initial_eff_incl_bkg))\n",
+    "\n",
+    "#np.array()\n",
+    "cut_1 = np.arange(min_cut_1, max_cut_1, cut_step)\n",
+    "cut_2 = np.arange(min_cut_2, max_cut_2, cut_step)\n",
+    "p_tab=[]\n",
+    "cut1_tab=[]\n",
+    "cut2_tab=[]\n",
+    "\n",
+    "\n",
+    "for i1, cut_i1 in enumerate(cut_1) :\n",
+    "   \n",
+    "    cut_i1_log = -np.log(1 - cut_i1)\n",
+    "    df_sig = bc_df[ bc_df[var1] > cut_i1 ]\n",
+    "    \n",
+    "    for i2, cut_i2 in enumerate(cut_2) :\n",
+    "        \n",
+    "        cut_i2_log = -np.log(1-cut_i2) #log\n",
+    "        df_signal = df_sig[df_sig[var2]>cut_i2]\n",
+    "\n",
+    "        nb_sig_cut_i1_i2 = len(df_signal)\n",
+    "        nb_bkg_cut_i1 = interpolate.splint(cut_i1_log, max_cut_1_log, spline_MVA1_log) #log\n",
+    "        nb_bkg_cut_i2 = interpolate.splint(cut_i2_log, max_cut_2_log, spline_MVA2_log) #log\n",
+    "        # print('Integral value MVA1 = {}. MVA1cut = {}'.format(nb_bkg_cut_i1, cut_i1_log))\n",
+    "       #  print('Integral value MVA2 = {}. MVA2 cut = {}'.format(nb_bkg_cut_i2, cut_i2_log))\n",
+    "\n",
+    "        signal_cut_eff = nb_sig_cut_i1_i2 / nb_signal_events\n",
+    "        bkg_cut_eff = (nb_bkg_cut_i1 / nb_bkg_events_1) * (nb_bkg_cut_i2 / nb_bkg_events_2)\n",
+    "\n",
+    "        s = S_cut(initial_eff_signal, signal_cut_eff)\n",
+    "        b = B_incl_cut(initial_eff_incl_bkg, bkg_cut_eff) \n",
+    "        \n",
+    "        cut1_tab.append(cut_i1)\n",
+    "        cut2_tab.append(cut_i2)\n",
+    "        p_tab.append(s/(s+b))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "pharmaceutical-battle",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.scatter(cut1_tab, cut2_tab, c=p_tab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "overhead-novel",
+   "metadata": {},
+   "source": [
+    "#### Best MVA_cut with best number of signal"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sporting-determination",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cut_step = 0.00007\n",
+    "#100 valeurs donne un effet continu\n",
+    "\n",
+    "#MVA1\n",
+    "var1 = 'EVT_MVA1'\n",
+    "min_cut_1 = 0.995\n",
+    "max_cut_1_log = 9\n",
+    "\n",
+    "min_cut_1_log = -np.log(1 - min_cut_1)\n",
+    "max_cut_1 = 1 - np.exp(-max_cut_1_log)\n",
+    "nb_bkg_events_1 = interpolate.splint(0.95, 9, spline_MVA1_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#MVA2\n",
+    "var2 = 'EVT_MVA2'\n",
+    "min_cut_2 = 0.995\n",
+    "max_cut_2_log = 8\n",
+    "\n",
+    "max_cut_2 = 1 - np.exp(-max_cut_2_log)\n",
+    "min_cut_2_log = -np.log(1 - min_cut_2)\n",
+    "nb_bkg_events_2 = interpolate.splint(0.95, 8, spline_MVA2_log) # Valeurs extrémales def spline\n",
+    "\n",
+    "#Parameters\n",
+    "sig = bc_df[bc_df[var2]> 0.95]\n",
+    "sig = sig[sig[var1]> 0.95]\n",
+    "bkg = bb_df[bb_df[var2]> 0.95]  #Il faut que l'on considère le même cut de départ pour tous\n",
+    "bkg = bkg[bkg[var1]> 0.95] # (pour les len ou pour les splines)\n",
+    "\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_signal_events = len(sig)\n",
+    "nb_bkg_events = len(bkg)\n",
+    "\n",
+    "initial_eff_signal = nb_signal_events / nb_total_events\n",
+    "initial_eff_incl_bkg = nb_bkg_events / nb_total_events\n",
+    "\n",
+    "#print('eff sig {}'.format(initial_eff_signal))\n",
+    "#print('eff bkg {}'.format(initial_eff_incl_bkg))\n",
+    "\n",
+    "#np.array()\n",
+    "cut_1 = np.arange(min_cut_1, max_cut_1, cut_step)\n",
+    "cut_2 = np.arange(min_cut_2, max_cut_2, cut_step)\n",
+    "p_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "s_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "b_tab = np.zeros((np.size(cut_2),np.size(cut_1)))\n",
+    "\n",
+    "#To help find a compromise between the purity and the number of signal events\n",
+    "N_sig = 4000\n",
+    "mva1 = []\n",
+    "mva2 = []\n",
+    "N_sig_list = []\n",
+    "\n",
+    "\n",
+    "for i1, cut_i1 in enumerate(cut_1) :\n",
+    "   \n",
+    "    cut_i1_log = -np.log(1 - cut_i1)\n",
+    "    df_sig = bc_df[ bc_df[var1] > cut_i1 ]\n",
+    "    \n",
+    "    for i2, cut_i2 in enumerate(cut_2) :\n",
+    "        \n",
+    "        cut_i2_log = -np.log(1-cut_i2) #log\n",
+    "        df_signal = df_sig[df_sig[var2]>cut_i2]\n",
+    "\n",
+    "        nb_sig_cut_i1_i2 = len(df_signal)\n",
+    "        nb_bkg_cut_i1 = interpolate.splint(cut_i1_log, max_cut_1_log, spline_MVA1_log) #log\n",
+    "        nb_bkg_cut_i2 = interpolate.splint(cut_i2_log, max_cut_2_log, spline_MVA2_log) #log\n",
+    "        # print('Integral value MVA1 = {}. MVA1cut = {}'.format(nb_bkg_cut_i1, cut_i1_log))\n",
+    "        # print('Integral value MVA2 = {}. MVA2 cut = {}'.format(nb_bkg_cut_i2, cut_i2_log))\n",
+    "        \n",
+    "        signal_cut_eff = nb_sig_cut_i1_i2 / nb_signal_events\n",
+    "        bkg_cut_eff = (nb_bkg_cut_i1 / nb_bkg_events_1) * (nb_bkg_cut_i2 / nb_bkg_events_2)\n",
+    "\n",
+    "        s = S_cut(initial_eff_signal, signal_cut_eff)\n",
+    "        b = B_incl_cut(initial_eff_incl_bkg, bkg_cut_eff) \n",
+    "        \n",
+    "        if b==0 :\n",
+    "            print('B(MVA1,MVA2)=0 pour le cut MVA1 = {} et pour le cut MVA2 = {} ce qui correspond à la coordonées ({},{})'.format(cut_i1,cut_i2,i2,i1))\n",
+    "            ##### Vérification qu'il n'y a pas de valeurs de background égales à 0\n",
+    "            \n",
+    "        s_tab[i2,i1] = s\n",
+    "        b_tab[i2,i1] = b\n",
+    "        p_tab[i2,i1] = s/(s+b)\n",
+    "        \n",
+    "        #\n",
+    "        if nb_sig_cut_i1_i2 > N_sig :\n",
+    "            mva1.append(cut_i1 + cut_step/2)\n",
+    "            mva2.append(cut_i2 + cut_step/2)\n",
+    "            N_sig_list.append(nb_sig_cut_i1_i2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "threatened-westminster",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(mva1)\n",
+    "print(mva2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "acknowledged-consumption",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure(figsize=(10,8))\n",
+    "\n",
+    "nb_sig = plt.scatter(mva1, mva2, c=N_sig_list, cmap='plasma', s=15, label='nb sig events $>$ {}'.format(N_sig))\n",
+    "cb_nb_sig = plt.colorbar(nb_sig)\n",
+    "cb_nb_sig.set_label('Number of signal events $>$ {}'.format(N_sig))\n",
+    "\n",
+    "purity = plt.imshow(p_tab, cmap='Greens', origin='lower', extent=(cut_1[0], cut_1[-1], cut_2[0], cut_2[-1])) #(vmin=0, vmax=0.01)\n",
+    "cb_purity = plt.colorbar(purity)\n",
+    "cb_purity.set_label('P(MVA1,MVA2)')\n",
+    "\n",
+    "plt.xlim(cut_1[0],cut_1[-1])\n",
+    "plt.ylim(cut_2[0],cut_2[-1])\n",
+    "plt.xlabel('Value of the MVA1 cut')\n",
+    "plt.ylabel('Value of the MVA2 cut')\n",
+    "#plt.title('P(MVA1,MVA2)')\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "thirty-strip",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

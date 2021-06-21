@@ -1,0 +1,614 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "danish-person",
+   "metadata": {},
+   "source": [
+    "# Nouvelle Méthode pour calculer l'efficacité d'un cut"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "handmade-shelf",
+   "metadata": {},
+   "source": [
+    "Comme on a pu le voir précedemment, pour des hautes valeurs de cut, il n'y a plus aucun évènement de background et on obtient une efficacité égale à 1. Pour résoudre ce problème, nous allons remplacer dans les programmes utilisés la valeur de la longueur du data frame après cut, par la valeur de l'intégrale de la courbe formé par l'histogramme pour la varaible de cut considérée."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "statutory-skiing",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/_collections_abc.py:832: MatplotlibDeprecationWarning: Support for setting the 'text.latex.preamble' or 'pgf.preamble' rcParam to a list of strings is deprecated since 3.3 and will be removed two minor releases later; set it to a single string instead.\n",
+      "  self[key] = other[key]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import scipy.interpolate as interpolate\n",
+    "import pickle\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "unlikely-avenue",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dressed-rover",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "productive-arrow",
+   "metadata": {},
+   "source": [
+    "#### Définition nouveaux dataframe"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "perceived-oriental",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cut=0.95\n",
+    "\n",
+    "bc_df_1 = bc_df[bc_df['EVT_MVA1']>cut]\n",
+    "bb_df_1= bb_df[bb_df['EVT_MVA1']>cut]\n",
+    "\n",
+    "bc_df_2 = bc_df[bc_df['EVT_MVA2']>cut]\n",
+    "bb_df_2= bb_df[bb_df['EVT_MVA2']>cut]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "sixth-viewer",
+   "metadata": {},
+   "source": [
+    "## Histogrammes des valeurs en log(1-MVA)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "damaged-width",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 3\n",
+    "f_bin = 10\n",
+    "nb_bins = 50\n",
+    "title = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(-np.log(1-bb_df_1['EVT_MVA1']), bins=nb_bins, range=(s_bin, f_bin), color= '#3182bd', histtype='step', label=title, density=True)\n",
+    "plt.xlim(3,10)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA1)\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA1$>$0.95\")\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "civic-seating",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 3\n",
+    "f_bin = 10\n",
+    "nb_bins = 50\n",
+    "title = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.hist(-np.log(1-bb_df_2['EVT_MVA2']), bins=nb_bins, range=(s_bin, f_bin), color= '#3182bd', histtype='step', label=title, density=True)\n",
+    "plt.xlim(3,10)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA2)\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA2$>$0.95\")\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ambient-suite",
+   "metadata": {},
+   "source": [
+    "## Histogrammes des valeurs en log(1-MVA) + splines functions tracée"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "complicated-prerequisite",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "s_bin = 3\n",
+    "f_bin = 10\n",
+    "nb_bins = 50\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "MVA1 = plt.hist(-np.log(1-bb_df_2['EVT_MVA1']), bins=nb_bins, range=(s_bin, f_bin), density=True, histtype='step', label=label_hist, color= '#3182bd')\n",
+    "x_MVA1_values = MVA1[1][:-1]\n",
+    "MVA1_bins = MVA1[0]\n",
+    "\n",
+    "MVA1_spline = interpolate.splrep(x=x_MVA1_values, y=MVA1_bins)\n",
+    "MVA1_spline_values = interpolate.splev(x_MVA1_values, MVA1_spline)\n",
+    "\n",
+    "plt.plot(x_MVA1_values, MVA1_spline_values, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(3,10)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA1)\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA1$>$0.95\")\n",
+    "\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "golden-tribune",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "s_bin = 3\n",
+    "f_bin = 10\n",
+    "nb_bins = 50\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "MVA2 = plt.hist(-np.log(1-bb_df_2['EVT_MVA2']), bins=nb_bins, range=(s_bin, f_bin), density=True, histtype='step', label=label_hist, color= '#3182bd')\n",
+    "x_MVA2_values = MVA2[1][:-1]\n",
+    "MVA2_bins = MVA2[0]\n",
+    "\n",
+    "MVA2_spline = interpolate.splrep(x=x_MVA2_values, y=MVA2_bins)\n",
+    "MVA2_spline_values = interpolate.splev(x_MVA2_values, MVA2_spline)\n",
+    "\n",
+    "plt.plot(x_MVA2_values, MVA2_spline_values, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "\n",
+    "plt.xlim(3,10)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA2)\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA2$>$0.95\")\n",
+    "plt.legend()\n",
+    "\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "private-bottle",
+   "metadata": {},
+   "source": [
+    "## Histogrammes des valeurs en MVA + spline function + enregistrement de la spline function"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "sticky-hours",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#MVA1\n",
+    "cut_var = 'EVT_MVA1' #:)\n",
+    "cut_min = 3\n",
+    "cut_max = 9\n",
+    "nb_bins = 50\n",
+    "\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(-np.log(1-bb_df_1[cut_var]), bins=nb_bins, range=(cut_min, cut_max))\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "#print(counts)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights)\n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min, cut_max)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA1)\") #:)\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA1$>$0.95\") #:)\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "infrared-hearts",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#MVA2\n",
+    "cut_var = 'EVT_MVA2'\n",
+    "cut_min = 3\n",
+    "cut_max = 8\n",
+    "nb_bins = 35\n",
+    "\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(-np.log(1-bb_df_2[cut_var]), bins=nb_bins, range=(cut_min, cut_max))\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "#print(counts)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights) \n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min,cut_max)\n",
+    "plt.yscale('log')\n",
+    "plt.xlabel(\"-log(1-MVA2)\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA2$>$0.95\")\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "configured-coverage",
+   "metadata": {},
+   "source": [
+    "### Définition des splines"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "floppy-century",
+   "metadata": {},
+   "source": [
+    "##### Définition de splines en log"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "subsequent-quality",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Modélisation du nb d'élèments de bkg pour différentes valeurs de MVA1\n",
+    "\n",
+    "\n",
+    "#Paramètres\n",
+    "cut_var = 'EVT_MVA1' #:)\n",
+    "\n",
+    "cut_min = -np.log(1-0.95) #log\n",
+    "cut_max = 9\n",
+    "\n",
+    "nb_bins = 50\n",
+    "cut_vals = -np.log(1-bb_df_1[cut_var]) #:) #log\n",
+    "\n",
+    "\n",
+    "\n",
+    "#Programme\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(cut_vals, bins=nb_bins, range=(cut_min, cut_max))\n",
+    "print(counts)\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "#print(err)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "print(weights)\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights)\n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "print(spline_vals.max())\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min, cut_max)\n",
+    "plt.xlabel(\"-log(1-MVA1)\") #:)\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA1$>$0.95\") #:)\n",
+    "#plt.ylim(0,counts.max())\n",
+    "plt.yscale('log')\n",
+    "plt.legend()\n",
+    "plt.show()\n",
+    "\n",
+    "#pickle.dump(spline, open('MVA1_spline_log.pkl','wb')) #:)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "hidden-beverage",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Modélisation du nb d'élèments de bkg pour différentes valeurs de MVA1\n",
+    "cut_var = 'EVT_MVA2' #:)\n",
+    "cut_min = -np.log(1-0.95) #log\n",
+    "cut_max = 8 #cut_vals.max()\n",
+    "nb_bins = 35\n",
+    "\n",
+    "cut_vals = -np.log(1-bb_df_2[cut_var]) #:) #log\n",
+    "\n",
+    "\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(cut_vals, bins=nb_bins, range=(cut_min, cut_max))\n",
+    "print(bin_edges)\n",
+    "print(counts)\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights)\n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min, cut_max)\n",
+    "plt.xlabel(\"-log(1-MVA2)\") #:)\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA2$>$0.95\") #:)\n",
+    "plt.ylim(0,counts.max())\n",
+    "plt.yscale('log')\n",
+    "plt.legend()\n",
+    "plt.show()\n",
+    "\n",
+    "#pickle.dump(spline, open('MVA2_spline_log.pkl','wb')) #:)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "transparent-screen",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(spline_vals.min())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "forced-executive",
+   "metadata": {},
+   "source": [
+    "##### Définitions de splines sans log"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "inside-greensboro",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "included-allergy",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#MVA1\n",
+    "cut_var = 'EVT_MVA1' #:)\n",
+    "cut_vals = bb_df_1[cut_var] #:) #log\n",
+    "cut_min = 0.95 #log\n",
+    "cut_max = cut_vals.max()\n",
+    "nb_bins = 50\n",
+    "print(cut_min)\n",
+    "print(cut_max)\n",
+    "\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(cut_vals, bins=nb_bins, range=(cut_min, cut_max))\n",
+    "print(counts)\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights)\n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min, cut_max)\n",
+    "plt.xlabel(\"-log(1-MVA1)\") #:)\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA1$>$0.95\") #:)\n",
+    "plt.ylim(0,counts.max())\n",
+    "plt.legend()\n",
+    "plt.show()\n",
+    "\n",
+    "#pickle.dump(spline, open('MVA1_spline.pkl','wb')) #:)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "hispanic-small",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#MVA2\n",
+    "cut_var = 'EVT_MVA2' #:)\n",
+    "cut_vals = bb_df_2[cut_var] #:)\n",
+    "cut_min = 0.95\n",
+    "cut_max = cut_vals.max()\n",
+    "nb_bins = 50\n",
+    "\n",
+    "label_hist = r'$Z \\rightarrow b\\bar{b}$'\n",
+    "label_spline = r\"Associated spline function\"\n",
+    "\n",
+    "counts, bin_edges = np.histogram(cut_vals, bins=nb_bins, range=(cut_min, cut_max))\n",
+    "\n",
+    "bin_centres = (bin_edges[:-1] + bin_edges[1:])/2.\n",
+    "err = np.sqrt(counts) #erreur en racine(N)\n",
+    "#print(counts)\n",
+    "\n",
+    "#Normalise\n",
+    "#err = err / np.sum(counts)\n",
+    "#counts = counts / np.sum(counts)\n",
+    "plt.errorbar(bin_centres, counts, yerr=err, fmt='o', color='k', markersize=2, label=label_hist) \n",
+    "\n",
+    "#Cubic spline of the MVA distribution\n",
+    "weights = 1./err\n",
+    "spline = interpolate.splrep(bin_centres, counts, w=weights) \n",
+    "\n",
+    "cut_vals = np.linspace(cut_min, cut_max, 1000) #pour avoir une courbe continue\n",
+    "spline_vals = interpolate.splev(cut_vals, spline)\n",
+    "\n",
+    "plt.plot(cut_vals, spline_vals, color='#de2d26', label=label_spline)\n",
+    "\n",
+    "plt.xlim(cut_min,cut_max)\n",
+    "plt.xlabel(\"MVA2\")\n",
+    "plt.ylabel(\"Number of events\")\n",
+    "plt.title(r\"$Z \\rightarrow b\\bar{b}$ data with MVA2$>$0.95\")\n",
+    "plt.legend()\n",
+    "plt.show()\n",
+    "\n",
+    "#pickle.dump(spline, open('MVA2_spline_log.pkl','wb'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "oriental-bangladesh",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "preliminary-course",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

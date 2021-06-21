@@ -1,0 +1,535 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "packed-winner",
+   "metadata": {},
+   "source": [
+    "# Déterminer le cut le plus efficient sur les valeurs de MVA2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "micro-attack",
+   "metadata": {},
+   "source": [
+    "On est interessés par MVA2 car l'histogramme de B+ pour ce paramètre différait pas mal de celui de Bc+"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "honest-bottle",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "prospective-maintenance",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "Bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "critical-unemployment",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Bc_df = Bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "Bu_df = Bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "pursuant-franklin",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "conscious-watershed",
+   "metadata": {},
+   "source": [
+    "#### Paramètres"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "absolute-pledge",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Nombre de Z0 produits\n",
+    "N_Z0 = 5*10**(12)\n",
+    "\n",
+    "#Brancing fraction Z -> b bbar\n",
+    "BF_Zbb = 0.1512\n",
+    "\n",
+    "#Production rate of Bc+ and B+ mesons\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "\n",
+    "#Branching fraction Bc+ -> tau+ nu , B+ -> tau+ nu and tau -> 3pions\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "social-interview",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Nombre total d'évènements (ie de collision e+e-)\n",
+    "N_gen = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "\n",
+    "#Nombre total d'évènements dans l'arbre\n",
+    "N_evn = len(Bc_df['EVT_MVA1'])\n",
+    "\n",
+    "#Initial efficiency\n",
+    "initial_eff = N_evn/N_gen"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "consistent-monroe",
+   "metadata": {},
+   "source": [
+    "## Youhou"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "attractive-connection",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def S_MVA(mva_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion*initial_eff*mva_eff\n",
+    "def B_MVA(mva_eff) :\n",
+    "    return N_Z0*BF_Zbb*2*f_Bu*BF_Butaunu*BF_tau3pion*initial_eff*mva_eff"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "after-platinum",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%%time\n",
+    "cut = 0.7\n",
+    "df_bc = Bc_df[Bc_df['EVT_MVA2']> cut]\n",
+    "print(Bc_df['EVT_MVA2'].max())\n",
+    "print(Bu_df['EVT_MVA2'].max())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "related-politics",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "max(Bc_df['EVT_MVA2'].max(),Bu_df['EVT_MVA2'].max())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "descending-saver",
+   "metadata": {},
+   "source": [
+    "##### P(MVA) de 0.6 à 1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "executive-privilege",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.6, 0.61, 0.62, 0.63, 0.64, 0.65, 0.66, 0.67, 0.68, 0.6900000000000001, 0.7000000000000001, 0.7100000000000001, 0.7200000000000001, 0.7300000000000001, 0.7400000000000001, 0.7500000000000001, 0.7600000000000001, 0.7700000000000001, 0.7800000000000001, 0.7900000000000001, 0.8000000000000002, 0.8100000000000002, 0.8200000000000002, 0.8300000000000002, 0.8400000000000002, 0.8500000000000002, 0.8600000000000002, 0.8700000000000002, 0.8800000000000002, 0.8900000000000002, 0.9000000000000002, 0.9100000000000003, 0.9200000000000003, 0.9300000000000003, 0.9400000000000003, 0.9500000000000003, 0.9600000000000003, 0.9700000000000003, 0.9800000000000003, 0.9900000000000003]\n",
+      "[0.2154758080115056, 0.2169152205907947, 0.21838930145930346, 0.21993082551680532, 0.22151573761891594, 0.22311619461585194, 0.22479802058705708, 0.2265501821040836, 0.2283478145777627, 0.23022897205274553, 0.23216620288918055, 0.23419452829512083, 0.23629696366102645, 0.23851918420112103, 0.24081156507569748, 0.24324946592384214, 0.24581603562970444, 0.2485582849489587, 0.25139028622040405, 0.254392112039598, 0.25761620552070236, 0.26104926262454364, 0.26475853177660874, 0.26879971606129466, 0.27314790160360963, 0.2778114110065969, 0.28301743834483517, 0.2887177796727469, 0.29501541370020745, 0.30208515549807946, 0.31009269206510987, 0.3193190833011861, 0.3299667145283145, 0.34263702961951453, 0.35799363692837977, 0.37738711911194367, 0.40260957445788464, 0.43791750363650916, 0.4924115181214034, 0.5945881074479379]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pas_cut = 0.01\n",
+    "mva_cut = 0.6\n",
+    "mva_max = max(Bc_df['EVT_MVA2'].max(), Bu_df['EVT_MVA2'].max())\n",
+    "l_cut = []\n",
+    "l_p = []\n",
+    "\n",
+    "while (mva_cut < mva_max) :\n",
+    "\n",
+    "    #apply the cut \n",
+    "    df_bc = Bc_df[Bc_df['EVT_MVA2']> mva_cut]\n",
+    "    df_bu = Bu_df[Bu_df['EVT_MVA2']> mva_cut]\n",
+    "    \n",
+    "    #compute the cut efficiency\n",
+    "    mva_eff_bc = len(df_bc)/N_evn\n",
+    "    mva_eff_bu = len(df_bu)/N_evn\n",
+    "    #print('efficiency')\n",
+    "    #print(mva_eff_bc)\n",
+    "    #print(mva_eff_bu)\n",
+    "    \n",
+    "    #compute the S and B values\n",
+    "    s = S_MVA(mva_eff_bc)\n",
+    "    b = B_MVA(mva_eff_bu)\n",
+    "    p = s/(s+b)\n",
+    "    #print('signal and background')\n",
+    "    #print(s)\n",
+    "    #print(b)\n",
+    "    #print(' ')\n",
+    "    \n",
+    "    #store them in a list with the cut value\n",
+    "    l_cut.append(mva_cut)\n",
+    "    l_p.append(s/(s+b))\n",
+    "    \n",
+    "    #set the next mva cut value\n",
+    "    mva_cut += pas_cut\n",
+    "      \n",
+    "\n",
+    "print(l_cut)\n",
+    "print(l_p)\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "stupid-madonna",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "plt.figure()\n",
+    "plt.plot(l_cut, l_p, color='#3182bd')\n",
+    "plt.xlabel('Value of the MVA2 cut (0.01 step)')\n",
+    "plt.ylabel('P(MVA2)')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "turned-removal",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "##### P(MVA) de 0.9 à 1 avec un pas de 0.001"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "exceptional-bargain",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pas_cut = 0.001\n",
+    "mva_cut = 0.95\n",
+    "mva_max = max(Bc_df['EVT_MVA2'].max(), Bu_df['EVT_MVA2'].max())\n",
+    "l_cut = []\n",
+    "l_p = []\n",
+    "\n",
+    "while (mva_cut < mva_max) :\n",
+    "\n",
+    "    #apply the cut \n",
+    "    df_bc = Bc_df[Bc_df['EVT_MVA2']> mva_cut]\n",
+    "    df_bu = Bu_df[Bu_df['EVT_MVA2']> mva_cut]\n",
+    "    \n",
+    "    #compute the cut efficiency\n",
+    "    mva_eff_bc = len(df_bc)/N_evn\n",
+    "    mva_eff_bu = len(df_bu)/N_evn\n",
+    "    #print('efficiency')\n",
+    "    #print(mva_eff_bc)\n",
+    "    #print(mva_eff_bu)\n",
+    "    \n",
+    "    #compute the S and B values\n",
+    "    s = S_MVA(mva_eff_bc)\n",
+    "    b = B_MVA(mva_eff_bu)\n",
+    "    p = s/(s+b)\n",
+    "    #print('signal and background')\n",
+    "    #print(s)\n",
+    "    #print(b)\n",
+    "    #print(' ')\n",
+    "    \n",
+    "    #store them in a list with the cut value\n",
+    "    l_cut.append(mva_cut)\n",
+    "    l_p.append(s/(s+b))\n",
+    "    \n",
+    "    #set the next mva cut value\n",
+    "    mva_cut += pas_cut\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.plot(l_cut, l_p, color='#3182bd')\n",
+    "plt.xlabel('Value of the MVA2 cut (0.001 step)')\n",
+    "plt.ylabel('P(MVA2)')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "creative-ballot",
+   "metadata": {},
+   "source": [
+    "#### Cut for MVA1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "certified-apparatus",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.6, 0.61, 0.62, 0.63, 0.64, 0.65, 0.66, 0.67, 0.68, 0.6900000000000001, 0.7000000000000001, 0.7100000000000001, 0.7200000000000001, 0.7300000000000001, 0.7400000000000001, 0.7500000000000001, 0.7600000000000001, 0.7700000000000001, 0.7800000000000001, 0.7900000000000001, 0.8000000000000002, 0.8100000000000002, 0.8200000000000002, 0.8300000000000002, 0.8400000000000002, 0.8500000000000002, 0.8600000000000002, 0.8700000000000002, 0.8800000000000002, 0.8900000000000002, 0.9000000000000002, 0.9100000000000003, 0.9200000000000003, 0.9300000000000003, 0.9400000000000003, 0.9500000000000003, 0.9600000000000003, 0.9700000000000003, 0.9800000000000003, 0.9900000000000003]\n",
+      "[0.2154758080115056, 0.2158600374525342, 0.21626159650832896, 0.21669487827900177, 0.21715160652532425, 0.21761146502180786, 0.21810934997957004, 0.21861787026262564, 0.2191580057748682, 0.21972512899326166, 0.2203464573195695, 0.22096790506896719, 0.22161804258870138, 0.22231532298464718, 0.22305074916300738, 0.22382780504549882, 0.2246559247328424, 0.22552620672582854, 0.22646810171465534, 0.22747568896148035, 0.2285819268702514, 0.22977097424219753, 0.23101681799451756, 0.23239195997250284, 0.23389803002240847, 0.23550527902240073, 0.23730004160141271, 0.23926965803675573, 0.24148940752291886, 0.24398308738084762, 0.24681887067034386, 0.2500156676318429, 0.253792732291671, 0.25833746125774265, 0.2638181624773751, 0.27065862311482664, 0.27974527234135876, 0.29238458697639186, 0.312322208792901, 0.35285335562881665]\n"
+     ]
+    }
+   ],
+   "source": [
+    "pas_cut = 0.01\n",
+    "mva_cut = 0.6\n",
+    "mva_max = max(Bc_df['EVT_MVA1'].max(), Bu_df['EVT_MVA1'].max())\n",
+    "l_cut1 = []\n",
+    "l_p1 = []\n",
+    "\n",
+    "while (mva_cut < mva_max) :\n",
+    "\n",
+    "    #apply the cut \n",
+    "    df_bc = Bc_df[Bc_df['EVT_MVA1']> mva_cut]\n",
+    "    df_bu = Bu_df[Bu_df['EVT_MVA1']> mva_cut]\n",
+    "    \n",
+    "    #compute the cut efficiency\n",
+    "    mva_eff_bc = len(df_bc)/N_evn\n",
+    "    mva_eff_bu = len(df_bu)/N_evn\n",
+    "    #print('efficiency')\n",
+    "    #print(mva_eff_bc)\n",
+    "    #print(mva_eff_bu)\n",
+    "    \n",
+    "    #compute the S and B values\n",
+    "    s = S_MVA(mva_eff_bc)\n",
+    "    b = B_MVA(mva_eff_bu)\n",
+    "    p = s/(s+b)\n",
+    "    #print('signal and background')\n",
+    "    #print(s)\n",
+    "    #print(b)\n",
+    "    #print(' ')\n",
+    "    \n",
+    "    #store them in a list with the cut value\n",
+    "    l_cut1.append(mva_cut)\n",
+    "    l_p1.append(s/(s+b))\n",
+    "    \n",
+    "    #set the next mva cut value\n",
+    "    mva_cut += pas_cut\n",
+    "      \n",
+    "\n",
+    "print(l_cut1)\n",
+    "print(l_p1)\n",
+    "\n",
+    "#plt.figure()\n",
+    "#plt.plot(l_cut1, l_p1, color='#3182bd')\n",
+    "#plt.xlabel('Value of the MVA1 cut (0.01 step)')\n",
+    "#plt.ylabel('P(MVA1)')\n",
+    "#plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "overall-series",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pas_cut = 0.01\n",
+    "mva_cut = 0.6\n",
+    "mva_max_1 = max(Bc_df['EVT_MVA1'].max(), Bu_df['EVT_MVA1'].max())\n",
+    "mva_max_2 = max(Bc_df['EVT_MVA2'].max(), Bu_df['EVT_MVA2'].max())\n",
+    "mva_max = max(mva_max_1, mva_max_2)\n",
+    "\n",
+    "l_cut_all = []\n",
+    "l_p_1 = []\n",
+    "l_p_2 = []\n",
+    "\n",
+    "while (mva_cut < mva_max) :\n",
+    "\n",
+    "    #apply the cut \n",
+    "    df_bc_1 = Bc_df[Bc_df['EVT_MVA1']> mva_cut]\n",
+    "    df_bu_1 = Bu_df[Bu_df['EVT_MVA1']> mva_cut]\n",
+    "    \n",
+    "    df_bc_2 = Bc_df[Bc_df['EVT_MVA2']> mva_cut]\n",
+    "    df_bu_2 = Bu_df[Bu_df['EVT_MVA2']> mva_cut]\n",
+    "    \n",
+    "    #compute the cut efficiency\n",
+    "    mva_eff_bc_1 = len(df_bc_1)/N_evn\n",
+    "    mva_eff_bu_1 = len(df_bu_1)/N_evn\n",
+    "    \n",
+    "    mva_eff_bc_2 = len(df_bc_2)/N_evn\n",
+    "    mva_eff_bu_2 = len(df_bu_2)/N_evn\n",
+    "    #print('efficiency')\n",
+    "    #print(mva_eff_bc)\n",
+    "    #print(mva_eff_bu)\n",
+    "    \n",
+    "    #compute the S and B values\n",
+    "    s_1 = S_MVA(mva_eff_bc_1)\n",
+    "    b_1 = B_MVA(mva_eff_bu_1)\n",
+    "    p_1 = s_1/(s_1+b_1)\n",
+    "    \n",
+    "    s_2 = S_MVA(mva_eff_bc_2)\n",
+    "    b_2 = B_MVA(mva_eff_bu_2)\n",
+    "    p_2 = s_2/(s_2+b_2)\n",
+    "    #print('signal and background')\n",
+    "    #print(s)\n",
+    "    #print(b)\n",
+    "    #print(' ')\n",
+    "    \n",
+    "    #store them in a list with the cut value\n",
+    "    l_cut_all.append(mva_cut)\n",
+    "    l_p_1.append(p_1)\n",
+    "    l_p_2.append(p_2)\n",
+    "    \n",
+    "    #set the next mva cut value\n",
+    "    mva_cut += pas_cut\n",
+    "    \n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "special-battlefield",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.figure()\n",
+    "plt.plot(l_cut, l_p, color='#3182bd', label='P(MVA2)')\n",
+    "plt.plot(l_cut1, l_p1, color=\"#2ca25f\", label='P(MVA1)')\n",
+    "plt.xlabel('Value of the MVA cut (0.01 step)')\n",
+    "plt.ylabel('P(MVA)')\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "descending-bermuda",
+   "metadata": {},
+   "source": [
+    "### Cut sur la distance PV et 3pions"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "resident-litigation",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "variable = \"EVT_CandVtxFD\"\n",
+    "pas_cut = 0.01\n",
+    "mva_cut = 0.6\n",
+    "mva_max = max(Bc_df[variable].max(), Bu_df[variable].max())\n",
+    "l_cut1 = []\n",
+    "l_p1 = []\n",
+    "\n",
+    "while (mva_cut < mva_max) :\n",
+    "\n",
+    "    #apply the cut \n",
+    "    df_bc = Bc_df[Bc_df['EVT_MVA1']> mva_cut]\n",
+    "    df_bu = Bu_df[Bu_df['EVT_MVA1']> mva_cut]\n",
+    "    \n",
+    "    #compute the cut efficiency\n",
+    "    mva_eff_bc = len(df_bc)/N_evn\n",
+    "    mva_eff_bu = len(df_bu)/N_evn\n",
+    "    #print('efficiency')\n",
+    "    #print(mva_eff_bc)\n",
+    "    #print(mva_eff_bu)\n",
+    "    \n",
+    "    #compute the S and B values\n",
+    "    s = S_MVA(mva_eff_bc)\n",
+    "    b = B_MVA(mva_eff_bu)\n",
+    "    p = s/(s+b)\n",
+    "    #print('signal and background')\n",
+    "    #print(s)\n",
+    "    #print(b)\n",
+    "    #print(' ')\n",
+    "    \n",
+    "    #store them in a list with the cut value\n",
+    "    l_cut1.append(mva_cut)\n",
+    "    l_p1.append(s/(s+b))\n",
+    "    \n",
+    "    #set the next mva cut value\n",
+    "    mva_cut += pas_cut\n",
+    "      \n",
+    "\n",
+    "print(l_cut1)\n",
+    "print(l_p1)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
