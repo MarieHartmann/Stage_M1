@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "danish-person",
+   "id": "through-rehabilitation",
    "metadata": {},
    "source": [
     "# Nouvelle Méthode pour calculer l'efficacité d'un cut"
@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "handmade-shelf",
+   "id": "minor-variance",
    "metadata": {},
    "source": [
     "Comme on a pu le voir précedemment, pour des hautes valeurs de cut, il n'y a plus aucun évènement de background et on obtient une efficacité égale à 1. Pour résoudre ce problème, nous allons remplacer dans les programmes utilisés la valeur de la longueur du data frame après cut, par la valeur de l'intégrale de la courbe formé par l'histogramme pour la varaible de cut considérée."
@@ -19,7 +19,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "statutory-skiing",
+   "id": "hired-directive",
    "metadata": {},
    "outputs": [
     {
@@ -50,19 +50,22 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "unlikely-avenue",
+   "id": "inside-oliver",
    "metadata": {},
    "outputs": [],
    "source": [
     "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
     "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "bu_tree = \n",
+    "cc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zcc_ecm91.root')['events']\n",
+    "uds_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zuds_ecm91.root')['events']\n",
     "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "dressed-rover",
+   "id": "modified-resident",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -73,7 +76,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "productive-arrow",
+   "id": "brave-force",
    "metadata": {},
    "source": [
     "#### Définition nouveaux dataframe"
@@ -82,7 +85,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "perceived-oriental",
+   "id": "equipped-muscle",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -97,7 +100,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "sixth-viewer",
+   "id": "plastic-nursing",
    "metadata": {},
    "source": [
     "## Histogrammes des valeurs en log(1-MVA)"
@@ -106,7 +109,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "damaged-width",
+   "id": "accepted-frank",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -129,7 +132,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "civic-seating",
+   "id": "conservative-arctic",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -151,7 +154,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "ambient-suite",
+   "id": "special-detail",
    "metadata": {},
    "source": [
     "## Histogrammes des valeurs en log(1-MVA) + splines functions tracée"
@@ -160,7 +163,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "complicated-prerequisite",
+   "id": "manufactured-opinion",
    "metadata": {
     "scrolled": true
    },
@@ -194,7 +197,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "golden-tribune",
+   "id": "mathematical-nightmare",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -226,7 +229,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "private-bottle",
+   "id": "absent-mexican",
    "metadata": {},
    "source": [
     "## Histogrammes des valeurs en MVA + spline function + enregistrement de la spline function"
@@ -235,7 +238,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "sticky-hours",
+   "id": "adverse-nirvana",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -280,7 +283,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "infrared-hearts",
+   "id": "overall-external",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -324,7 +327,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "configured-coverage",
+   "id": "endless-reporter",
    "metadata": {},
    "source": [
     "### Définition des splines"
@@ -332,7 +335,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "floppy-century",
+   "id": "amber-favorite",
    "metadata": {},
    "source": [
     "##### Définition de splines en log"
@@ -341,7 +344,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "subsequent-quality",
+   "id": "constitutional-construction",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -401,7 +404,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "hidden-beverage",
+   "id": "centered-hardwood",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -453,7 +456,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "transparent-screen",
+   "id": "continuous-friday",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -462,7 +465,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "forced-executive",
+   "id": "official-substance",
    "metadata": {},
    "source": [
     "##### Définitions de splines sans log"
@@ -471,7 +474,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "inside-greensboro",
+   "id": "frank-expression",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -479,7 +482,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "included-allergy",
+   "id": "practical-registration",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -529,7 +532,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "hispanic-small",
+   "id": "statistical-manitoba",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -576,7 +579,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "oriental-bangladesh",
+   "id": "impressive-freeze",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -584,7 +587,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "preliminary-course",
+   "id": "afraid-resort",
    "metadata": {},
    "outputs": [],
    "source": []
