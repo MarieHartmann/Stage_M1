@@ -1,0 +1,358 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "affiliated-tribe",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/cvmfs/sft.cern.ch/lcg/releases/Python/3.8.6-3199b/x86_64-centos7-gcc8-opt/lib/python3.8/_collections_abc.py:832: MatplotlibDeprecationWarning: Support for setting the 'text.latex.preamble' or 'pgf.preamble' rcParam to a list of strings is deprecated since 3.3 and will be removed two minor releases later; set it to a single string instead.\n",
+      "  self[key] = other[key]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas\n",
+    "import uproot\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import scipy.interpolate as interpolate\n",
+    "import pickle\n",
+    "\n",
+    "from matplotlib import rc\n",
+    "rc('font',**{'family':'serif','serif':['Roman']})\n",
+    "rc('text', usetex=True)\n",
+    "params= {'text.latex.preamble' : [r'\\usepackage{amsmath}']}\n",
+    "plt.rcParams.update(params)\n",
+    "plt.rcParams['text.latex.preamble'] = r\"\\usepackage{bm} \\usepackage{amsmath}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "selective-conclusion",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Dowloading the data\n",
+    "bc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root')['events']\n",
+    "bu_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bu2TauNuTAUHADNU.root')['events']\n",
+    "bb_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen.root')['events']\n",
+    "cc_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zcc_ecm91.root')['events']\n",
+    "qq_tree = uproot.open('/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zuds_ecm91.root')['events']\n",
+    "tree_gen = uproot.open(\"/eos/experiment/fcc/ee/analyses/case-studies/flavour/Bc2TauNu/flatNtuples/spring2021/prod_04/Analysis_stage2/p8_ee_Zbb_ecm91_EvtGen_Bc2TauNuTAUHADNU.root\")[\"metadata\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "casual-terror",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Transforming the data into a dataframe\n",
+    "bc_df = bc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bu_df = bu_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "bb_df = bb_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "cc_df = cc_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "qq_df = qq_tree.arrays(library=\"pd\", how=\"zip\", filter_name=[\"EVT_*\"])\n",
+    "\n",
+    "#Getting general information on the data\n",
+    "df_gen = tree_gen.arrays(library=\"pd\", how=\"zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "colored-period",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#We consider as initial data the data whose MVAs are between 0.95 and 1\n",
+    "\n",
+    "bc_sig = bc_df[bc_df['EVT_MVA2']> 0.95]\n",
+    "bc_sig = bc_sig[bc_sig['EVT_MVA1']> 0.95]\n",
+    "\n",
+    "bu_bkg = bu_df[bu_df['EVT_MVA2']> 0.95]\n",
+    "bu_bkg = bu_bkg[bu_bkg['EVT_MVA1']> 0.95] \n",
+    "\n",
+    "bb_bkg = bb_df[bb_df['EVT_MVA2']> 0.95]\n",
+    "bb_bkg = bb_bkg[bb_bkg['EVT_MVA1']> 0.95] \n",
+    "\n",
+    "cc_bkg = cc_df[cc_df['EVT_MVA2']> 0.95]\n",
+    "cc_bkg = cc_bkg[cc_bkg['EVT_MVA1']> 0.95] \n",
+    "\n",
+    "qq_bkg = qq_df[qq_df['EVT_MVA2']> 0.95]\n",
+    "qq_bkg = qq_bkg[qq_bkg['EVT_MVA1']> 0.95]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "coral-contact",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Number of Z0 produced\n",
+    "N_Z0 = 5*10**(12)\n",
+    "\n",
+    "#Branching fraction Z->quark-pair\n",
+    "BF_Zbb = 0.1512\n",
+    "BF_Zcc = 0.1203\n",
+    "BF_Zqq = 0.4276\n",
+    "\n",
+    "#Production ratio of Bc+ and B+\n",
+    "f_Bc = 0.0004\n",
+    "f_Bu = 0.43\n",
+    "\n",
+    "#Branching fraction Bc+->tau nu B+->tau nu and tau->3pions\n",
+    "BF_Bctaunu = 0.0194\n",
+    "BF_Butaunu = 1.09*10**(-4)\n",
+    "BF_tau3pion = 0.0931"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "fewer-classroom",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Definition of the functions computing the different yields\n",
+    "def S_bc_cut(initial_eff, cut_eff) :\n",
+    "    return (N_Z0*BF_Zbb*2*f_Bc*BF_Bctaunu*BF_tau3pion)*initial_eff*cut_eff\n",
+    "\n",
+    "def B_bu_cut(initial_eff, cut_eff) :\n",
+    "    return (N_Z0*BF_Zbb*2*f_Bu*BF_Butaunu*BF_tau3pion)*initial_eff*cut_eff\n",
+    "\n",
+    "def B_bb_cut(initial_eff, cut_eff) :\n",
+    "    return (N_Z0*BF_Zbb*2)*initial_eff*cut_eff\n",
+    "\n",
+    "def B_cc_cut(initial_eff, cut_eff) :\n",
+    "    return (N_Z0*BF_Zcc*2)*initial_eff*cut_eff\n",
+    "\n",
+    "def B_qq_cut(initial_eff, cut_eff) :\n",
+    "    return (N_Z0*BF_Zqq*2)*initial_eff*cut_eff\n",
+    "\n",
+    "#Dowloading the splines to compute the number of inclusive background events\n",
+    "bb_spline_MVA1_log = pickle.load(open('../Spline_functions/MVA1_spline_log.pkl','rb'))\n",
+    "bb_spline_MVA2_log = pickle.load(open('../Spline_functions/MVA2_spline_log.pkl','rb'))\n",
+    "\n",
+    "cc_spline_MVA1_log = pickle.load(open('../Spline_functions/cc_MVA1_spline_log.pkl','rb'))\n",
+    "cc_spline_MVA2_log = pickle.load(open('../Spline_functions/cc_MVA2_spline_log.pkl','rb'))\n",
+    "\n",
+    "qq_spline_MVA1_log = pickle.load(open('../Spline_functions/uds_MVA1_spline_log.pkl','rb'))\n",
+    "qq_spline_MVA2_log = pickle.load(open('../Spline_functions/uds_MVA2_spline_log.pkl','rb'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "incident-flour",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "eff sig 0.2320645\n",
+      "eff bkg 8.5e-06\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Initialization of the number of events in the MVAs for all contributions\n",
+    "nb_total_events = df_gen.iloc[0][\"eventsProcessed\"]\n",
+    "nb_bc_events = len(bc_sig)\n",
+    "nb_bu_events = len(bu_bkg)\n",
+    "nb_bb_events = len(bb_bkg)\n",
+    "nb_cc_events = len(cc_bkg)\n",
+    "nb_qq_events = len(qq_bkg)\n",
+    "\n",
+    "#Initialization of the number of events for both MVAs for inclusive backgrounds\n",
+    "nb_bb_events_1 = interpolate.splint(-np.log(1-0.95), 9, bb_spline_MVA1_log)\n",
+    "nb_cc_events_1 = interpolate.splint(-np.log(1-0.95), 9, cc_spline_MVA1_log)\n",
+    "nb_qq_events_1 = interpolate.splint(-np.log(1-0.95), 8, qq_spline_MVA1_log)\n",
+    "\n",
+    "nb_bb_events_2 = interpolate.splint(-np.log(1-0.95), 8, bb_spline_MVA2_log)\n",
+    "nb_cc_events_2 = interpolate.splint(-np.log(1-0.95), 7, cc_spline_MVA2_log)\n",
+    "nb_qq_events_2 = interpolate.splint(-np.log(1-0.95), 5.8, qq_spline_MVA2_log)\n",
+    "\n",
+    "#Computing of the initial efficiencies for all backgrounds\n",
+    "initial_eff_bc_sig = nb_bc_events / nb_total_events\n",
+    "initial_eff_bu_bkg = nb_bu_events / nb_total_events\n",
+    "initial_eff_bb_bkg = nb_bb_events / nb_total_events\n",
+    "initial_eff_cc_bkg = nb_cc_events / nb_total_events\n",
+    "initial_eff_qq_bkg = nb_qq_events / nb_total_events\n",
+    "\n",
+    "print('eff sig {}'.format(initial_eff_bc_sig))\n",
+    "print('eff bkg {}'.format(initial_eff_qq_bkg))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "expired-palestine",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.0021897997587073665\n",
+      "6.362229172433942e-05\n",
+      "0.00011559111059700841\n",
+      "4.847119514374763e-09\n",
+      "Number of signal events = 7663.733488857601\n",
+      "Number of bkg events = 113650.99389882328\n",
+      "Purity = 0.06317232584933317\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Optimized MVAs\n",
+    "Optimized_MVA1 = 0.9998599999999961  #+-0.00001\n",
+    "Optimized_MVA2 = 0.9963399999999984 #+-0.00001\n",
+    "\n",
+    "Optimized_MVA1_log = -np.log(1-Optimized_MVA1)\n",
+    "Optimized_MVA2_log = -np.log(1-Optimized_MVA2)\n",
+    "\n",
+    "#Applying the MVA2 cut on the dataframe\n",
+    "df_bc_sig = bc_sig[bc_sig['EVT_MVA1']>Optimized_MVA1]\n",
+    "df_bc_sig = df_bc_sig[df_bc_sig['EVT_MVA2']>Optimized_MVA2]\n",
+    "\n",
+    "df_bu_bkg = bu_bkg[bu_bkg['EVT_MVA1']>Optimized_MVA1]\n",
+    "df_bu_bkg = df_bu_bkg[df_bu_bkg['EVT_MVA2']>Optimized_MVA2]\n",
+    "          \n",
+    "#Counting the number of events in the Bc+ and B+ dataframes after the cut\n",
+    "nb_bc_after_cut = len(df_bc_sig)\n",
+    "nb_bu_after_cut = len(df_bu_bkg)\n",
+    "          \n",
+    "#Counting the number of events left for each MVAs for inclusive backgrounds\n",
+    "nb_bb_after_cut_1 = interpolate.splint(Optimized_MVA1_log, 9, bb_spline_MVA1_log)\n",
+    "nb_bb_after_cut_2 = interpolate.splint(Optimized_MVA2_log, 8, bb_spline_MVA2_log)\n",
+    "        \n",
+    "nb_cc_after_cut_1 = interpolate.splint(Optimized_MVA1_log, 9, cc_spline_MVA1_log)\n",
+    "nb_cc_after_cut_2 = interpolate.splint(Optimized_MVA2_log, 7, cc_spline_MVA2_log)\n",
+    "        \n",
+    "nb_qq_after_cut_1 = interpolate.splint(Optimized_MVA1_log, 8, qq_spline_MVA1_log)\n",
+    "nb_qq_after_cut_2 = interpolate.splint(Optimized_MVA2_log, 5.8, qq_spline_MVA2_log)\n",
+    "\n",
+    "        \n",
+    "#Computing the efficiencies\n",
+    "cut_eff_bc_sig = nb_bc_after_cut / nb_bc_events\n",
+    "        \n",
+    "cut_eff_bu_bkg = nb_bu_after_cut / nb_bu_events\n",
+    "cut_eff_bb_bkg = (nb_bb_after_cut_1 / nb_bb_events_1) * (nb_bb_after_cut_2 / nb_bb_events_2)\n",
+    "cut_eff_cc_bkg = (nb_cc_after_cut_1 / nb_cc_events_1) * (nb_cc_after_cut_2 / nb_cc_events_2)\n",
+    "cut_eff_qq_bkg = (nb_qq_after_cut_1 / nb_qq_events_1) * (nb_qq_after_cut_2 / nb_qq_events_2)\n",
+    "print(cut_eff_bu_bkg)\n",
+    "print(cut_eff_bb_bkg)\n",
+    "print(cut_eff_cc_bkg)\n",
+    "print(cut_eff_qq_bkg)\n",
+    "        \n",
+    "    \n",
+    "#Signal, Background and Purity\n",
+    "S = S_bc_cut(initial_eff_bc_sig, cut_eff_bc_sig)\n",
+    "B = B_bb_cut(initial_eff_bb_bkg, cut_eff_bb_bkg) + B_cc_cut(initial_eff_cc_bkg, cut_eff_cc_bkg) + B_qq_cut(initial_eff_qq_bkg, cut_eff_qq_bkg) + B_bu_cut(initial_eff_bu_bkg, cut_eff_bu_bkg)\n",
+    "P = S/(S+B)\n",
+    "\n",
+    "print('Number of signal events = {}'.format(S))\n",
+    "print('Number of bkg events = {}'.format(B))\n",
+    "print('Purity = {}'.format(P))\n",
+    "\n",
+    "N_BC = S_bc_cut(initial_eff_bc_sig, cut_eff_bc_sig)\n",
+    "\n",
+    "N_BU = B_bu_cut(initial_eff_bu_bkg, cut_eff_bu_bkg)\n",
+    "N_BB = B_bb_cut(initial_eff_bb_bkg, cut_eff_bb_bkg)\n",
+    "N_CC = B_cc_cut(initial_eff_cc_bkg, cut_eff_cc_bkg)\n",
+    "N_QQ = B_qq_cut(initial_eff_qq_bkg, cut_eff_qq_bkg)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "square-venue",
+   "metadata": {},
+   "source": [
+    "0.0021897997587073665\n",
+    "6.362229172433942e-05\n",
+    "0.00011559111059700841\n",
+    "4.847119514374763e-09\n",
+    "Number of signal events = 7663.733488857601\n",
+    "Number of bkg events = 113650.99389882328\n",
+    "Purity = 0.06317232584933317"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "respiratory-cheese",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "N_BC = 7663.733488857601\n",
+      "N_BU = 46288.5552348912\n",
+      "N_BB = 73302.04167644732\n",
+      "N_CC = 39617.0846131325\n",
+      "N_QQ = 0.17617340586946514\n"
+     ]
+    }
+   ],
+   "source": [
+    "print('N_BC = {}'.format(N_BC))\n",
+    "print('N_BU = {}'.format(N_BU))\n",
+    "print('N_BB = {}'.format(N_BB))\n",
+    "print('N_CC = {}'.format(N_CC))\n",
+    "print('N_QQ = {}'.format(N_QQ))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "marked-concept",
+   "metadata": {},
+   "source": [
+    "N_BC = 7663.733488857601\n",
+    "N_BU = 46288.5552348912\n",
+    "N_BB = 73302.04167644732\n",
+    "N_CC = 39617.0846131325\n",
+    "N_QQ = 0.17617340586946514"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "quiet-grain",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

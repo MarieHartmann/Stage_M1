@@ -3,7 +3,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "canadian-spirituality",
+   "id": "removable-eating",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -25,7 +25,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "ranking-warren",
+   "id": "fancy-victor",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -41,7 +41,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "fluid-growing",
+   "id": "incorporated-findings",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -59,7 +59,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "alternative-layer",
+   "id": "bronze-guard",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -83,7 +83,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "acceptable-museum",
+   "id": "waiting-terrorist",
    "metadata": {},
    "source": [
     "nombre_bins = 50\n",
@@ -163,7 +163,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "settled-basketball",
+   "id": "independent-integer",
    "metadata": {},
    "source": [
     "### Initialization of the general parameters and the functions"
@@ -172,7 +172,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "photographic-springfield",
+   "id": "postal-culture",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -197,7 +197,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "armed-iceland",
+   "id": "threatened-burden",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -231,7 +231,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "id": "moving-disposal",
+   "id": "going-architecture",
    "metadata": {
     "scrolled": true
    },
@@ -278,14 +278,14 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "parliamentary-taxation",
+   "id": "technical-lounge",
    "metadata": {},
    "outputs": [],
    "source": []
   },
   {
    "cell_type": "markdown",
-   "id": "raised-warrant",
+   "id": "southern-silicon",
    "metadata": {},
    "source": [
     "### Initialisation of the desired behaviour of the optimisation program"
@@ -294,7 +294,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "temporal-visiting",
+   "id": "distinguished-monkey",
    "metadata": {},
    "outputs": [
     {
@@ -346,7 +346,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "alternate-polyester",
+   "id": "economic-warrior",
    "metadata": {},
    "source": [
     "### Optimization program"
@@ -354,8 +354,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "id": "important-corporation",
+   "execution_count": null,
+   "id": "affiliated-absolute",
    "metadata": {},
    "outputs": [
     {
@@ -410,39 +410,7 @@
       " 58.442 %\n",
       " 59.74 %\n",
       " 61.039 %\n",
-      " 62.338 %\n",
-      " 63.636 %\n",
-      " 64.935 %\n",
-      " 66.234 %\n",
-      " 67.532 %\n",
-      " 68.831 %\n",
-      " 70.13 %\n",
-      " 71.429 %\n",
-      " 72.727 %\n",
-      " 74.026 %\n",
-      " 75.325 %\n",
-      " 76.623 %\n",
-      " 77.922 %\n",
-      " 79.221 %\n",
-      " 80.519 %\n",
-      " 81.818 %\n",
-      " 83.117 %\n",
-      " 84.416 %\n",
-      " 85.714 %\n",
-      " 87.013 %\n",
-      " 88.312 %\n",
-      " 89.61 %\n",
-      " 90.909 %\n",
-      " 92.208 %\n",
-      " 93.506 %\n",
-      " 94.805 %\n",
-      " 96.104 %\n",
-      " 97.403 %\n",
-      " 98.701 %\n",
-      "The best purity for a target of 4000 sig events is equal to = 0.5328895029940405\n",
-      "It is associated to a MVA1 cut = 0.9998620000000018 and a MVA2 cut = 0.9963040000000001\n",
-      "Total number of signal = 4001.0722972416006 and total number of background = 3507.186497051718\n",
-      "starting MVA1 = 0.9998, MVA2=0.9963 and cut step = 1e-06\n"
+      " 62.338 %\n"
      ]
     }
    ],
@@ -529,7 +497,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "id": "furnished-treat",
+   "id": "realistic-clerk",
    "metadata": {},
    "outputs": [
     {
@@ -559,7 +527,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "waiting-tablet",
+   "id": "secondary-hotel",
    "metadata": {},
    "source": [
     "MVA1 = 0.99960\n",
@@ -580,7 +548,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "desirable-montreal",
+   "id": "announced-banner",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.00762053342286017\n",
@@ -591,7 +559,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "excessive-justice",
+   "id": "military-bahrain",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.10338941235492337\n",
@@ -602,7 +570,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "subtle-aaron",
+   "id": "liked-mouse",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.1417545865165297\n",
@@ -613,7 +581,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "fewer-government",
+   "id": "hispanic-buying",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.14203635521496488\n",
@@ -624,7 +592,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "collectible-antibody",
+   "id": "progressive-grocery",
    "metadata": {},
    "source": [
     "###### Z->bb only"
@@ -632,7 +600,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "handled-cathedral",
+   "id": "serious-divide",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9997076566536363\n",
@@ -643,7 +611,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "textile-genre",
+   "id": "flush-conflict",
    "metadata": {},
    "source": [
     "##### Z->cc only"
@@ -651,7 +619,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "official-dragon",
+   "id": "affiliated-astrology",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.13806534902436324\n",
@@ -662,7 +630,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "greek-portuguese",
+   "id": "disciplinary-generic",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.4717904361823947\n",
@@ -673,7 +641,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "naughty-westminster",
+   "id": "modern-hardwood",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9939549247887912\n",
@@ -684,7 +652,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "cosmetic-blackjack",
+   "id": "civic-ability",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9939549247887616\n",
@@ -695,7 +663,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "spoken-trial",
+   "id": "complicated-taste",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9997899203196045\n",
@@ -707,7 +675,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "identified-memorabilia",
+   "id": "resident-brunswick",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -726,7 +694,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "increasing-attraction",
+   "id": "according-thesis",
    "metadata": {},
    "source": [
     "##### Z -> cc, Z->qq "
@@ -734,7 +702,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "ordered-headline",
+   "id": "criminal-feeling",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.1286513704912971\n",
@@ -745,7 +713,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "passing-diesel",
+   "id": "satellite-marine",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.46888797545954825\n",
@@ -756,7 +724,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "facial-audio",
+   "id": "external-behalf",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9939549247888675\n",
@@ -767,7 +735,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "recent-forge",
+   "id": "level-norwegian",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9997899203192959\n",
@@ -778,7 +746,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "optimum-alliance",
+   "id": "digital-faith",
    "metadata": {},
    "source": [
     "##### All backgrounds"
@@ -786,7 +754,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "revised-balloon",
+   "id": "synthetic-nepal",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.05794107994739463\n",
@@ -797,7 +765,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "therapeutic-attribute",
+   "id": "subject-catholic",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.7771910921708424\n",
@@ -808,7 +776,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "premium-configuration",
+   "id": "conscious-apollo",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9062601882796778\n",
@@ -819,7 +787,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "guilty-charter",
+   "id": "pressed-bridal",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9194429039125283\n",
@@ -831,7 +799,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "deluxe-kazakhstan",
+   "id": "controlling-richardson",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -841,7 +809,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "swiss-riverside",
+   "id": "compact-representation",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -849,7 +817,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "little-settlement",
+   "id": "organized-depth",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -857,7 +825,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "warming-rough",
+   "id": "spiritual-worth",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -865,14 +833,14 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "alive-berkeley",
+   "id": "identical-breast",
    "metadata": {},
    "outputs": [],
    "source": []
   },
   {
    "cell_type": "markdown",
-   "id": "still-bahrain",
+   "id": "decimal-crest",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.6355602247488397\n",
@@ -883,7 +851,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "complimentary-spanking",
+   "id": "available-roots",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.10500350724294667\n",
@@ -894,7 +862,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "seven-assault",
+   "id": "persistent-moderator",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.007747494248010196\n",
@@ -905,7 +873,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "immediate-partnership",
+   "id": "local-musical",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.03581884843286743\n",
@@ -916,7 +884,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "american-joint",
+   "id": "digital-genome",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.0929930459752499\n",
@@ -927,7 +895,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "answering-august",
+   "id": "olympic-bundle",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.10803288566298305\n",
@@ -938,7 +906,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "sized-directive",
+   "id": "mathematical-education",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.10916608489854127\n",
@@ -949,7 +917,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "acquired-logging",
+   "id": "conscious-riding",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.03581884843286743\n",
@@ -960,7 +928,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "hydraulic-canberra",
+   "id": "spare-christopher",
    "metadata": {},
    "source": [
     "## Good values"
@@ -968,7 +936,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "presidential-vessel",
+   "id": "built-exercise",
    "metadata": {},
    "source": [
     "### Pourquoi pas les même résultats quand on considère Z->bb seulement"
@@ -976,7 +944,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "piano-piece",
+   "id": "fifty-behalf",
    "metadata": {},
    "source": [
     "##### C'est à cause de la valeur limite des cuts qui est imposée par l'espace de définition des splines MVA1 de Z->cc et Z->qq"
@@ -984,7 +952,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "loved-toronto",
+   "id": "cleared-guyana",
    "metadata": {},
    "source": [
     "MVA1_log = 8 : The best purity for a target of 4000 sig events is equal to = 0.10500350724299926\n",
@@ -995,7 +963,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "latest-father",
+   "id": "fourth-worship",
    "metadata": {},
    "source": [
     "MVA1_log = 9 : The best purity for a target of 4000 sig events is equal to = 0.36811026108634637\n",
@@ -1006,7 +974,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "contrary-restaurant",
+   "id": "female-salad",
    "metadata": {},
    "source": [
     "MVA1_log = 9 : The best purity for a target of 4000 sig events is equal to = 0.5258430336579484\n",
@@ -1017,7 +985,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "accepted-opera",
+   "id": "collaborative-hampton",
    "metadata": {},
    "source": [
     "MVA1_log = 8 : The best purity for a target of 4000 sig events is equal to = 0.10803288566204854\n",
@@ -1028,7 +996,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "limited-hybrid",
+   "id": "sonic-fleet",
    "metadata": {},
    "source": [
     "### Valeurs de puretés et cuts les plus optimaux lorsque l'on considère tout les bruits de fonds"
@@ -1036,7 +1004,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "charitable-reality",
+   "id": "ahead-combat",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.06317232584933317\n",
@@ -1047,7 +1015,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "equal-origin",
+   "id": "marked-optimization",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.06317232584933317\n",
@@ -1058,7 +1026,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "wrong-primary",
+   "id": "fixed-rainbow",
    "metadata": {},
    "source": [
     "### Z->cc only"
@@ -1066,7 +1034,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "constant-documentation",
+   "id": "interstate-yemen",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.19037206699734036\n",
@@ -1077,7 +1045,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "german-democrat",
+   "id": "narrative-notion",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.9997899203196045 It is associated to a MVA1 cut = 0.9996599999999993 and a MVA2 cut = 0.9969699999999979 Total number of signal = 6104.5081429248 starting MVA1 = 0.9995, MVA2=0.9965 and cut step = 1e-05"
@@ -1085,7 +1053,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "super-conviction",
+   "id": "anticipated-comparison",
    "metadata": {},
    "source": [
     "### Z->bb, Z->cc and B+"
@@ -1093,7 +1061,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "respected-darwin",
+   "id": "indie-theology",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.4726705082061383\n",
@@ -1104,7 +1072,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "super-authority",
+   "id": "coordinate-quilt",
    "metadata": {},
    "source": [
     "The best purity for a target of 4000 sig events is equal to = 0.47308794085013783\n",
@@ -1114,20 +1082,9 @@
    ]
   },
   {
-   "cell_type": "markdown",
-   "id": "special-bacon",
-   "metadata": {},
-   "source": [
-    "The best purity for a target of 4000 sig events is equal to = 0.5328895029940405\n",
-    "It is associated to a MVA1 cut = 0.9998620000000018 and a MVA2 cut = 0.9963040000000001\n",
-    "Total number of signal = 4001.0722972416006 and total number of background = 3507.186497051718\n",
-    "starting MVA1 = 0.9998, MVA2=0.9963 and cut step = 1e-06"
-   ]
-  },
-  {
    "cell_type": "code",
    "execution_count": null,
-   "id": "attached-weekend",
+   "id": "characteristic-broad",
    "metadata": {},
    "outputs": [],
    "source": []
